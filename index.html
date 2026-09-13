@@ -81,10 +81,21 @@
         }
 
         .logo-img {
-            height: 50px;
-            width: auto;
+            height: 44px;
+            width: 44px;
             display: block;
+            border-radius: 50%;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
+
+        /* 라이트 = 오버워치, 다크 = 블랙워치 */
+        #dark-logo { display: none; }
+        body.dark-mode #light-logo { display: none; }
+        body.dark-mode #dark-logo { display: block; }
+        body.dark-mode header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #3a0d0d 100%);
+        }
+        body.dark-mode .logo-text-sub { color: #e53935; }
 
         .theme-toggle {
             background: rgba(255,255,255,0.2);
@@ -540,8 +551,9 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <span>🎮 OW</span>
-                <span>오버워치 뉴비 가이드</span>
+                <img id="light-logo" class="logo-img" src="assets/overwatch.svg" alt="Overwatch">
+                <img id="dark-logo" class="logo-img" src="assets/blackwatch.webp" alt="Blackwatch">
+                <span>오버워치 뉴비 가이드 <span class="logo-text-sub" id="logo-sub"></span></span>
             </div>
             <button class="theme-toggle" onclick="toggleTheme()" title="다크모드 전환">
                 <span id="theme-icon">🌙</span>
@@ -1205,6 +1217,12 @@
                 icon.textContent = '🌙';
                 localStorage.setItem('theme', 'light');
             }
+            updateLogoSub();
+        }
+
+        function updateLogoSub() {
+            document.getElementById('logo-sub').textContent =
+                document.body.classList.contains('dark-mode') ? '· BLACKWATCH' : '';
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -1212,6 +1230,7 @@
                 document.body.classList.add('dark-mode');
                 document.getElementById('theme-icon').textContent = '☀️';
             }
+            updateLogoSub();
             renderHeroes();
             loadState();
             // 저장된 답안 복원
