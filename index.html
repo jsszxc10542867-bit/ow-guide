@@ -455,6 +455,47 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; }
         }
+
+        /* ===== 콘텐츠 컴포넌트 ===== */
+        .table-wrap { overflow-x: auto; margin: .75rem 0 .5rem; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+        .tbl { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 520px; }
+        .tbl th, .tbl td { padding: .7rem .85rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+        .tbl th { background: var(--bg-soft); font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--text-2); }
+        .tbl tbody tr:last-child td { border-bottom: none; }
+        .tbl tbody tr:hover td { background: var(--accent-soft); }
+        .tbl td small { color: var(--text-3); }
+        .tbl td { color: var(--text-2); }
+        .tbl td strong { color: var(--text); }
+
+        .steps { list-style: none; counter-reset: step; margin: .5rem 0; display: grid; gap: .55rem; }
+        .steps li { position: relative; padding-left: 2.4rem; color: var(--text-2); font-size: .95rem; counter-increment: step; }
+        .steps li::before {
+            content: counter(step); position: absolute; left: 0; top: .05rem;
+            width: 1.7rem; height: 1.7rem; border-radius: 8px; display: grid; place-items: center;
+            background: var(--accent); color: var(--accent-ink); font-size: .8rem; font-weight: 800;
+        }
+        .steps li strong { color: var(--text); }
+
+        .kv { list-style: none; margin: .5rem 0; display: grid; gap: .45rem; }
+        .kv li { display: grid; grid-template-columns: 150px 1fr; gap: .75rem; padding: .6rem .8rem; background: var(--bg-soft); border-radius: 10px; font-size: .92rem; }
+        .kv li span { font-weight: 700; color: var(--text); }
+        .kv li strong { font-weight: 500; color: var(--text-2); }
+        .kv li strong em { font-style: normal; font-weight: 700; color: var(--text); }
+        @media (max-width: 600px) { .kv li { grid-template-columns: 1fr; gap: .2rem; } }
+
+        .pill { display: inline-block; padding: .2rem .7rem; border-radius: 999px; background: var(--accent-soft); color: var(--text); font-size: .85rem; font-weight: 700; margin: .15rem .15rem 0 0; border: 1px solid transparent; }
+        .card p .pill { color: var(--text); }
+
+        .formation { display: grid; gap: .5rem; padding: 1rem; margin: .75rem 0; background: var(--bg-soft); border-radius: var(--radius-sm); }
+        .f-row { display: flex; justify-content: center; gap: .6rem; }
+        .f-tag { padding: .35rem .9rem; border-radius: 999px; font-size: .85rem; font-weight: 700; color: #fff; }
+        .f-enemy { background: #6b7280; } .f-tank { background: #3d7bd9; } .f-dps { background: #e04a4a; } .f-sup { background: #2fae6c; }
+
+        .glossary { display: grid; grid-template-columns: max-content 1fr; gap: .5rem 1rem; margin-top: .5rem; font-size: .93rem; }
+        .glossary dt { font-weight: 800; color: var(--accent); }
+        body.dark-mode .glossary dt { color: #ff8a86; }
+        .glossary dd { color: var(--text-2); }
+        @media (max-width: 600px) { .glossary { grid-template-columns: 1fr; gap: .1rem; } .glossary dd { margin-bottom: .5rem; } }
     </style>
 </head>
 <body>
@@ -478,7 +519,8 @@
             <button class="nav-tab" onclick="switchSection(2)">기초 전술</button>
             <button class="nav-tab" onclick="switchSection(3)">맵과 포지셔닝</button>
             <button class="nav-tab" onclick="switchSection(4)">🔥 실전 팁</button>
-            <button class="nav-tab" onclick="switchSection(5)">🦸 영웅 도감</button>
+            <button class="nav-tab" onclick="switchSection(5)">🧠 고급 전략</button>
+            <button class="nav-tab" onclick="switchSection(6)">🦸 영웅 도감</button>
         </div>
 
         <div class="progress-container">
@@ -501,14 +543,54 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">❓</span>오버워치란?</h3>
-                <p>오버워치는 5v5 팀 기반 슈팅 게임입니다. 두 팀이 목표를 놓고 경쟁하며, 정해진 시간 안에 작전을 완수하거나 상대팀을 막아야 합니다.</p>
+                <h3><span class="card-icon">❓</span>오버워치 2는 어떤 게임인가요?</h3>
+                <p><strong>5 대 5 팀 슈팅</strong>입니다. 각 팀은 <strong>돌격 1 · 공격 2 · 지원 2</strong>로 구성되고(역할 고정 큐 기준), 서로 다른 능력을 가진 영웅을 골라 <strong>목표</strong>를 두고 싸웁니다.</p>
+                <p>총 잘 쏘는 사람이 이기는 게임이 아니라, <strong>5명이 같은 타이밍에 같은 곳에서 싸우는 팀</strong>이 이기는 게임입니다. 이 한 문장만 기억해도 절반은 배운 겁니다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🎯</span>게임 목표</h3>
-                <p><strong>공격팀:</strong> 페이로드를 결승점까지 밀거나 목표 지점을 장악합니다.</p>
-                <p><strong>수비팀:</strong> 공격팀이 목표를 달성하지 못하도록 막습니다.</p>
+                <h3><span class="card-icon">🗂️</span>게임 모드 6가지 (실제 게임에 있는 것만)</h3>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>모드</th><th>어떻게 이기나</th><th>뉴비 핵심</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>호위</strong><br><small>Escort</small></td><td>공격팀이 화물(페이로드)을 끝까지 밀면 승리. 공수 교대 후 더 멀리 민 팀이 이김</td><td>화물 근처에 있으면 <strong>자동 회복</strong>. 공격이면 화물 붙어 있기, 수비면 화물 앞 코너 지키기</td></tr>
+                    <tr><td><strong>혼합</strong><br><small>Hybrid</small></td><td>거점 먼저 점령 → 화물이 나타나면 호위</td><td>1거점 뚫기가 제일 어려움. 5명이 모여서 한 번에 진입</td></tr>
+                    <tr><td><strong>쟁탈</strong><br><small>Control</small></td><td>중앙 거점을 점령해 100%까지 채우면 1라운드 승. <strong>2선승</strong></td><td>거점 안에 있어야 게이지가 참. 다만 5명 다 서 있을 필요는 없음 (1명이면 충분)</td></tr>
+                    <tr><td><strong>밀기</strong><br><small>Push</small></td><td>로봇(TS-1)을 상대 진영으로 더 멀리 민 팀이 승리</td><td>로봇은 <strong>바리케이드</strong>를 밀어야 전진. 죽으면 리스폰이 멀어지니 스폰 위치(전진 스폰) 확인</td></tr>
+                    <tr><td><strong>플래시포인트</strong><br><small>Flashpoint</small></td><td>맵 안 5개 거점이 순서대로 활성화. 먼저 <strong>3개</strong> 점령하면 승리</td><td>다음 거점이 어디인지 화면 상단 표시를 보고 <strong>미리 이동</strong></td></tr>
+                    <tr><td><strong>격돌</strong><br><small>Clash</small></td><td>일직선 5개 거점. 상대 진영 쪽 거점을 점령하며 <strong>5점</strong> 먼저 획득</td><td>상대 마지막 거점은 점령 시 큰 점수. 무리하게 뚫다 전멸하면 반대로 밀림</td></tr>
+                    </tbody>
+                </table></div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🔁</span>한 판은 이렇게 흘러갑니다</h3>
+                <ol class="steps">
+                    <li><strong>영웅 선택 & 준비 시간</strong> — 팀 조합 보고 고르기. 몰라도 괜찮음, 나중에 바꿀 수 있음(스폰에서 교체)</li>
+                    <li><strong>이동</strong> — 5명이 함께 목표로. 혼자 먼저 가서 죽으면 4:5로 싸움</li>
+                    <li><strong>교전(팀파이트)</strong> — 보통 20~40초. 여기서 승부가 갈림</li>
+                    <li><strong>리스폰</strong> — 죽으면 <strong>약 10초</strong> 뒤 스폰에서 부활. 먼 맵은 복귀까지 10초 더</li>
+                    <li><strong>재정비</strong> — 죽은 팀원을 기다렸다가 다시 5명으로 진입 → 2번으로</li>
+                </ol>
+                <p>결국 오버워치는 <strong>"5명이 모인 상태로 교전에 들어가느냐"</strong>의 반복입니다. 한 명씩 따로 죽어주는 것(스태거)이 뉴비 팀이 지는 가장 흔한 이유입니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🎮</span>꼭 알아야 할 조작 & 시스템</h3>
+                <ul class="kv">
+                    <li><span>핑 (기본 G)</span><strong>적을 보고 누르면 "적 발견!" 마크. 마이크 없이도 정보 공유 가능. 꾹 누르면 핑 휠(집결, 후퇴 등)</strong></li>
+                    <li><span>자동 회복</span><strong>피해를 안 받고 잠시 지나면 모든 역할이 서서히 회복. 지원가는 더 빠름</strong></li>
+                    <li><span>힐팩</span><strong>작은 팩 75 · 큰 팩 250 회복. 각각 약 10초 / 15초 후 다시 생김</strong></li>
+                    <li><span>궁극기 (Q)</span><strong>피해·치유를 주면 충전. 시간이 지나도 조금씩 참. 100%일 때 큰 기술</strong></li>
+                    <li><span>영웅 교체</span><strong>스폰룸 안에서 H. 상대 조합이 나를 너무 괴롭히면 바꾸는 게 정상</strong></li>
+                    <li><span>특전 (Perk)</span><strong>경기 중 레벨이 오르면 영웅별로 소·대 특전 하나씩 선택. 처음엔 설명 읽고 아무거나 골라도 OK</strong></li>
+                    <li><span>훈련장 & 연습 게임</span><strong>메뉴 → 훈련 → 훈련장. 영웅 기술 5분만 눌러보고 실전 들어가면 훨씬 편함</strong></li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 첫 10판을 위한 목표</div>
+                <div class="tip-content">킬 수는 신경 쓰지 마세요. <strong>① 팀과 같이 움직였는가 ② 죽은 뒤 혼자 뛰어들지 않았는가 ③ 목표(거점/화물) 근처에 있었는가</strong> — 이 세 가지만 지켜도 팀에 도움이 되는 플레이어입니다.</div>
             </div>
 
             <!-- Quiz 1-1 -->
@@ -559,31 +641,45 @@
             </div>
 
             <div class="card">
-                <h3>3가지 주요 역할</h3>
-                <p>모든 캐릭터는 탱커, 딜러, 힐러 중 하나의 역할을 담당합니다.</p>
+                <h3><span class="card-icon">🧩</span>1-2-2 역할 구성</h3>
+                <p>역할 고정 큐에서는 <strong>돌격 1명, 공격 2명, 지원 2명</strong>입니다. 돌격이 한 명뿐이라 돌격의 판단이 팀 전체 위치를 결정하고, 지원 2명이 그 뒤를 받쳐줍니다. 각 역할엔 <strong>역할 패시브</strong>(기본 보너스)가 있어서 같은 총이라도 역할에 따라 결과가 다릅니다.</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>역할</th><th>역할 패시브(요약)</th><th>한 줄 정의</th></tr></thead>
+                    <tbody>
+                    <tr><td>🛡️ 돌격</td><td>밀쳐내기 저항, 받는 치명타 피해 감소, 상대에게 궁 충전 덜 줌</td><td>싸움이 <strong>어디서, 언제</strong> 일어날지 정한다</td></tr>
+                    <tr><td>⚔️ 공격</td><td>피해를 입힌 적의 <strong>회복량 감소</strong>, 처치 시 잠깐 이동속도 증가</td><td>상대를 <strong>죽여서</strong> 숫자 우위를 만든다</td></tr>
+                    <tr><td>💚 지원</td><td>전투에서 벗어나면 <strong>더 빨리 자동 회복</strong></td><td>팀이 <strong>죽지 않게</strong> 하고 교전을 오래 끈다</td></tr>
+                    </tbody>
+                </table></div>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🛡️</span>탱커</h3>
-                <p><strong>역할:</strong> 팀의 방패 역할 | <strong>특징:</strong> 높은 체력과 방어력<br>
-                <strong>팀 역할:</strong> 전선의 가장 앞에서 적의 공격을 막고 팀을 보호</p>
+                <h3><span class="card-icon">🛡️</span>돌격 (탱커) — "내가 서 있는 곳이 전선이다"</h3>
+                <p><strong>해야 할 일:</strong> 팀이 안전하게 싸울 수 있는 <strong>공간</strong>을 만듭니다. 앞에 서서 적의 시선을 끌고, 팀이 뒤에서 딜을 넣게 합니다.</p>
+                <p><strong>판단 기준:</strong> "내 뒤에 팀이 있는가?" 뒤를 한 번 돌아보고 아무도 없으면 <strong>즉시 후퇴</strong>. 탱커 혼자 앞에 있으면 5명이 나만 때립니다.</p>
+                <p><strong>흔한 실수:</strong> 방벽을 계속 들고만 있기(방벽은 팀이 지나갈 때만) · 체력 50% 이하에 계속 전진 · 힐러 시야 밖으로 돌진.</p>
+                <p><strong>첫 영웅 추천:</strong> <span class="pill">라인하르트</span> <span class="pill">오리사</span> <span class="pill">자리야</span></p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">⚔️</span>딜러</h3>
-                <p><strong>역할:</strong> 높은 피해로 적을 처치 | <strong>특징:</strong> 빠르고 강력<br>
-                <strong>팀 역할:</strong> 탱커 뒤에서 안전하게 적을 공격</p>
+                <h3><span class="card-icon">⚔️</span>공격 (딜러) — "안전하게 오래 쏘는 사람이 이긴다"</h3>
+                <p><strong>해야 할 일:</strong> 죽지 않으면서 <strong>계속 피해를 넣는 것</strong>. 킬은 그 결과로 따라옵니다. 딜러의 진짜 실력은 에임보다 <strong>위치 선정</strong>에서 갈립니다.</p>
+                <p><strong>판단 기준:</strong> "지금 나를 쏠 수 있는 적이 몇 명인가?" 2명 이상이면 엄폐. 1명이면 싸우고, 0명이면 최고의 자리입니다(하이그라운드, 측면).</p>
+                <p><strong>흔한 실수:</strong> 탱커보다 앞에 서기 · 체력 낮은데 마지막 한 발 욕심 · 적 뒤로 혼자 우회(플랭크)해서 아무도 못 보는 곳에서 죽기.</p>
+                <p><strong>첫 영웅 추천:</strong> <span class="pill">솔저: 76</span> <span class="pill">바스티온</span> <span class="pill">토르비욘</span> <span class="pill">리퍼</span></p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">✨</span>힐러</h3>
-                <p><strong>역할:</strong> 팀원의 체력 회복 | <strong>특징:</strong> 공격력은 낮음<br>
-                <strong>팀 역할:</strong> 팀이 전투를 계속할 수 있도록 지원</p>
+                <h3><span class="card-icon">💚</span>지원 (힐러) — "힐은 절반, 나머지 절반은 생존과 딜"</h3>
+                <p><strong>해야 할 일:</strong> ① 탱커를 살려서 전선 유지 ② 위험한 팀원에게 우선 치유 ③ 여유 있을 때 <strong>적을 쏘기</strong>(지원가 딜은 생각보다 셉니다) ④ 무엇보다 <strong>본인이 안 죽기</strong>.</p>
+                <p><strong>판단 기준:</strong> 치유 우선순위는 <em>체력 %가 아니라 "지금 맞고 있는 사람"</em>. 체력 40%지만 엄폐 중인 딜러보다, 체력 80%지만 지금 5명에게 맞는 탱커가 먼저입니다.</p>
+                <p><strong>흔한 실수:</strong> 팀 맨 뒤 혼자 서 있다가 뒤에서 오는 겐지·트레이서에게 죽기 · 탱커만 계속 힐하고 딜러가 죽는 걸 방치 · 힐만 하고 총 한 발 안 쏘기.</p>
+                <p><strong>첫 영웅 추천:</strong> <span class="pill">메르시</span> <span class="pill">모이라</span> <span class="pill">루시우</span></p>
             </div>
 
             <div class="tip-box">
-                <div class="tip-title">💡 팁: 첫 캐릭터 선택</div>
-                <div class="tip-content">뉴비라면 탱커부터 시작하세요. 생존이 쉽고 게임을 배우기에 최적입니다!</div>
+                <div class="tip-title">💡 어떤 역할부터 시작할까?</div>
+                <div class="tip-content"><strong>돌격(라인하르트/오리사)</strong>부터 추천합니다. 체력이 많아 생존이 쉽고, 맨 앞에서 보기 때문에 "왜 팀이 이겼고 졌는지"가 제일 잘 보입니다. 큐 대기 시간이 길다면 <strong>지원(모이라/메르시)</strong>도 부담 없는 선택입니다.</div>
             </div>
 
             <!-- Quiz 2-1 -->
@@ -634,30 +730,59 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">👫</span>팀 플레이의 중요성</h3>
-                <p>오버워치에서 가장 중요한 것은 팀과 함께 움직이는 것입니다. 혼자 돌아다니면 금방 처치됩니다!</p>
+                <h3><span class="card-icon">🔄</span>팀파이트는 5단계로 돌아갑니다</h3>
+                <ol class="steps">
+                    <li><strong>집결</strong> — 5명이 목표 근처 안전한 곳(코너)에 모임. 여기서 궁극기 % 확인</li>
+                    <li><strong>포킹</strong> — 엄폐물 뒤에서 멀리서 툭툭 쏘며 상대 체력·쿨타임을 뺌. 서두르지 않기</li>
+                    <li><strong>개시</strong> — 누군가 큰 기술(라인 돌진, 궁)로 <strong>첫 킬</strong>을 만들면 전원 같이 진입</li>
+                    <li><strong>정리</strong> — 4:5가 된 상대는 무너짐. 남은 적을 쫓되 스폰 앞까지는 가지 않기</li>
+                    <li><strong>재정비</strong> — 목표 잡고, 힐 받고, 다음 교전 위치 잡기. 죽은 팀원 기다리기</li>
+                </ol>
+                <p>뉴비 팀은 2단계(포킹)를 생략하고 바로 뛰어들거나, 4단계에서 너무 깊이 쫓아가서 다음 교전을 4명으로 시작합니다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📍</span>기본 포메이션</h3>
-                <p><strong>탱커:</strong> 전선 앞 | <strong>딜러:</strong> 탱커 뒤 | <strong>힐러:</strong> 팀 중앙</p>
+                <h3><span class="card-icon">⏱️</span>스태거: 오버워치에서 제일 중요한 개념</h3>
+                <p><strong>스태거(Stagger)</strong> = 팀원들이 <em>따로따로</em> 죽어서 리스폰 타이밍이 어긋나는 것. 이렇게 되면 항상 3:5, 4:5로 싸우게 되어 <strong>계속 집니다.</strong></p>
+                <p><strong>규칙:</strong> 팀이 전멸하면 나도 무리하지 말고 같이 죽거나 빠지기 · 혼자 살아남았으면 <strong>절대 혼자 진입하지 말고</strong> 팀이 올 때까지 뒤에서 대기 · 팀 4명이 죽었는데 나 혼자 거점 지키기는 대부분 손해.</p>
+                <p>화면 왼쪽 위 팀원 초상화가 <strong>해골(사망)</strong>이면 그 수를 세어 보세요. 2명 이상이면 후퇴 신호입니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🎯</span>누구를 쏠까? — 실제 우선순위</h3>
+                <p>"항상 힐러 먼저"는 반만 맞는 말입니다. 실제 기준은 이 순서입니다.</p>
+                <ol class="steps">
+                    <li><strong>지금 안전하게 맞출 수 있는 적</strong> — 맞추지도 못하는 힐러를 쫓다가 죽으면 손해</li>
+                    <li><strong>체력이 낮거나 고립된 적</strong> — 한 명이 빠지면 4:5. 마무리는 무조건 가치 있음</li>
+                    <li><strong>적 지원가</strong> — 접근 가능할 때. 특히 아나·젠야타처럼 체력 낮고 도주기 없는 영웅</li>
+                    <li><strong>적 딜러</strong> — 특히 우리 후방을 괴롭히는 딜러</li>
+                    <li><strong>적 돌격</strong> — 체력이 많아서 마지막. 단 힐이 끊긴 탱커는 좋은 먹잇감</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">💥</span>궁극기 기초 경제학</h3>
+                <ul class="kv">
+                    <li><span>궁은 "이기려고" 쓴다</span><strong>이미 이기고 있는 교전에 궁을 쓰면 낭비. 5:5 팽팽할 때, 혹은 지고 있을 때 뒤집으려고 쓰기</strong></li>
+                    <li><span>겹치지 않기</span><strong>같은 교전에 궁 3개를 쏟으면 1개로도 될 걸 2개 낭비. 하나 쓰고 결과 보고 판단</strong></li>
+                    <li><span>콤보는 강력</span><strong>자리야 중력자탄 + 아무 광역 궁, 아나 나노 강화 + 겐지/라인 처럼 짝을 맞추면 확정 킬</strong></li>
+                    <li><span>상대 궁 세기</span><strong>"적 겐지 궁 있다"를 알면 뭉치지 않고 싸울 수 있음. 처음엔 상대 궁 하나만 기억해도 충분</strong></li>
+                    <li><span>죽으면 궁은 유지</span><strong>죽어도 충전량은 남습니다. 죽기 직전에 급하게 쓰지 마세요</strong></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🗣️</span>말 안 해도 되는 콜 — 핑과 짧은 문장</h3>
+                <p>마이크가 없어도 <strong>핑(G)</strong>으로 대부분 전달됩니다. 마이크를 쓴다면 짧고 구체적으로:</p>
+                <ul class="kv">
+                    <li><span>좋은 콜</span><strong>"아나 체력 낮음, 왼쪽" · "적 라인 궁 있음" · "3명 죽음, 빠져" · "다 모였어, 가자"</strong></li>
+                    <li><span>나쁜 콜</span><strong>"힐 좀!" (누가? 어디?) · 죽은 뒤 팀 탓 · 상대 욕</strong></li>
+                </ul>
             </div>
 
             <div class="tip-box">
-                <div class="tip-title">⚠️ 피해야 할 실수</div>
-                <div class="tip-content">
-                    <strong>1순위:</strong> 팀 없이 혼자 돌아다니기<br>
-                    <strong>2순위:</strong> 무작정 궁극기 사용<br>
-                    <strong>3순위:</strong> 힐러를 무시하기
-                </div>
-            </div>
-
-            <div class="card">
-                <h3><span class="card-icon">🏆</span>승리하는 팁</h3>
-                <p>✓ 팀원들과 같이 이동하고 싸우기<br>
-                ✓ 음성 채팅으로 정보 공유하기<br>
-                ✓ 맵 목표에 집중하기<br>
-                ✓ 낮은 체력이면 물러나기</p>
+                <div class="tip-title">💡 오늘 한 가지만</div>
+                <div class="tip-content">다음 판에는 <strong>"죽은 뒤 스폰에서 나갈 때 팀원이 몇 명 살아 있는지 보고 나가기"</strong> 하나만 해 보세요. 이것만으로 승률이 눈에 띄게 오릅니다.</div>
             </div>
 
             <!-- Quiz 3-1 -->
@@ -708,27 +833,48 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📌</span>맵의 중요성</h3>
-                <p>각 맵마다 다른 전술이 필요합니다. 맵의 구조를 이해하면 승리 확률이 훨씬 높아집니다!</p>
+                <h3><span class="card-icon">🧭</span>맵을 읽는 4가지 키워드</h3>
+                <ul class="kv">
+                    <li><span>하이그라운드</span><strong>높은 곳. 위에서 아래는 잘 보이고, 아래에서 위는 머리만 보임. 대부분의 교전은 이곳을 가진 팀이 이김</strong></li>
+                    <li><span>초크 포인트</span><strong>좁은 입구·문. 수비는 여기에 화력을 모으고, 공격은 여기를 "정면으로" 뚫으면 안 됨 — 측면 길이나 궁으로 우회</strong></li>
+                    <li><span>엄폐물 / 코너</span><strong>벽·기둥·상자. 좋은 위치란 "쏘고 → 한 걸음 뒤로 → 안 보임"이 되는 곳. 항상 코너 옆에 서기</strong></li>
+                    <li><span>메인 vs 사이드</span><strong>큰길(메인)은 탱커가, 옆길(사이드)은 딜러가. 지원가는 메인 뒤 코너</strong></li>
+                </ul>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📂</span>주요 맵 타입</h3>
-                <p><strong>페이로드:</strong> 차량을 밀어서 목표까지 이동<br>
-                <strong>거점:</strong> 원형 구역을 점령<br>
-                <strong>하이브리드:</strong> 페이로드 + 거점</p>
+                <h3><span class="card-icon">📐</span>기본 대형 (위에서 본 모양)</h3>
+                <div class="formation">
+                    <div class="f-row"><span class="f-tag f-enemy">적</span></div>
+                    <div class="f-row"><span class="f-tag f-tank">🛡️ 돌격</span></div>
+                    <div class="f-row"><span class="f-tag f-dps">⚔️ 딜러(측면/고지)</span><span class="f-tag f-dps">⚔️ 딜러</span></div>
+                    <div class="f-row"><span class="f-tag f-sup">💚 지원</span><span class="f-tag f-sup">💚 지원</span></div>
+                </div>
+                <p><strong>돌격</strong>은 맨 앞 코너에서 적 시선을 끌고, <strong>딜러</strong>는 탱커 옆·뒤 또는 하이그라운드, <strong>지원</strong>은 모두가 보이면서 적에게는 안 보이는 코너. 지원가와 돌격의 거리가 <strong>너무 멀어지면(약 15m 이상) 힐이 끊깁니다.</strong></p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🧭</span>포지셔닝 기본</h3>
-                <p><strong>높은 곳(High Ground):</strong> 상대를 내려다보는 유리한 위치<br>
-                <strong>엄폐물:</strong> 벽이나 상자 뒤에 숨어서 싸우기<br>
-                <strong>좁은 통로:</strong> 분산해서 스플래시 데미지 피하기</p>
+                <h3><span class="card-icon">🗺️</span>모드별 포지션 팁</h3>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>모드</th><th>공격할 때</th><th>수비할 때</th></tr></thead>
+                    <tbody>
+                    <tr><td>호위 / 혼합</td><td>화물을 "엄폐물"로 쓰기. 화물 옆·뒤에 붙어서 이동. 앞으로 뛰어나가지 않기</td><td>화물이 지나갈 <strong>다음 코너</strong>를 미리 잡기. 화물 위에 서지 말기(모든 적이 그곳을 쏨)</td></tr>
+                    <tr><td>쟁탈</td><td colspan="2">거점 <strong>안</strong>이 아니라 거점 주변 하이그라운드에서 싸우기. 점령은 1명이면 됨. 상대가 거점을 잡고 있어도 우리가 100% 되기 전까지는 급하지 않음</td></tr>
+                    <tr><td>밀기</td><td colspan="2">로봇을 미는 동안 로봇이 엄폐물. 전진 스폰이 열리면 리스폰 거리가 짧아지니 <strong>오버타임 직전 무리하지 말기</strong></td></tr>
+                    <tr><td>플래시포인트 / 격돌</td><td colspan="2">다음 거점 방향으로 <strong>먼저 이동한 팀</strong>이 하이그라운드를 선점. 이동 중 교전을 피하고 5명이 도착한 뒤 싸움</td></tr>
+                    </tbody>
+                </table></div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🏥</span>힐팩과 스폰을 "지도"처럼 쓰기</h3>
+                <p>맵마다 힐팩 위치는 고정입니다. 처음 두세 판은 <strong>거점 근처 큰 힐팩(250) 위치</strong>만 외워 두세요. 체력이 낮아졌을 때 힐러 찾기보다 힐팩이 더 빠를 때가 많습니다.</p>
+                <p><strong>스폰 거리</strong>도 전략입니다. 상대 스폰 바로 앞에서 싸우면 상대는 죽자마자 5초 만에 돌아오고 우리는 20초 걸립니다. <strong>"어디서 싸우느냐"가 곧 리스폰 유불리</strong>입니다.</p>
             </div>
 
             <div class="tip-box">
-                <div class="tip-title">🎯 초보자 팁</div>
-                <div class="tip-content">처음 시작할 때는 맵을 여러 번 플레이하면서 익히세요. 유튜브 맵 가이드 영상도 도움됩니다!</div>
+                <div class="tip-title">💡 맵 외우기 가장 빠른 방법</div>
+                <div class="tip-content">사용자 지정 게임을 혼자 만들어 <strong>봇 없이 맵을 2분간 걸어 다니세요.</strong> 하이그라운드로 올라가는 길, 큰 힐팩, 사이드 통로 세 가지만 확인. 한 맵당 2분이면 실전 5판보다 낫습니다.</div>
             </div>
 
             <!-- Quiz 4-1 -->
@@ -779,42 +925,49 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📍</span>포지셔닝: 어디에 서야 할까?</h3>
-                <p><strong>탱커:</strong> 팀의 가장 앞에서 적의 공격을 받기<br>
-                <strong>딜러:</strong> 탱커 뒤에서 안전하게 적 공격<br>
-                <strong>힐러:</strong> 팀 중앙~뒤에서 모두를 지원<br>
-                <strong>⭐ 핵심:</strong> 혼자가 아니라 팀과 함께!</p>
+                <h3><span class="card-icon">❤️</span>체력 관리 3원칙</h3>
+                <ol class="steps">
+                    <li><strong>체력 50% 이하 → 엄폐</strong>. 끝까지 쏘다가 죽는 것보다 3초 숨었다가 다시 나오는 게 훨씬 이득</li>
+                    <li><strong>힐러 시야 안에 있기</strong>. 힐러가 나를 못 보면 힐이 없음. 후퇴는 "힐러 쪽으로"</li>
+                    <li><strong>자동 회복 활용</strong>. 잠깐 안 맞으면 저절로 참. 힐팩 없어도 코너 뒤 5초면 회복 시작</li>
+                </ol>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🎯</span>누구를 먼저 때려야 할까?</h3>
-                <p><strong>1순위 (가장 먼저):</strong><br>
-                • 적 힐러 (가장 중요!)<br>
-                • 고립된 적<br>
-                • 낮은 체력의 적<br>
-                <strong>2순위:</strong> 적 딜러<br>
-                <strong>3순위:</strong> 적 탱커</p>
-            </div>
-
-            <div class="tip-box">
-                <div class="tip-title">💡 팁: 우선순위</div>
-                <div class="tip-content">힐러를 먼저 처치하면 팀이 금방 무너집니다. 항상 적 힐러를 찾으세요!</div>
-            </div>
-
-            <div class="card">
-                <h3><span class="card-icon">🏥</span>힐팩 위치 및 회복</h3>
-                <p><strong>체력이 낮을 때:</strong><br>
-                1. 팀원(힐러)을 찾기<br>
-                2. 안전한 곳으로 물러나기<br>
-                3. 맵의 힐팩 찾아 회복<br>
-                4. 위험하면 스폰지점으로 물러나기</p>
+                <h3><span class="card-icon">🔀</span>카운터 픽 — 실제로 자주 나오는 것만</h3>
+                <p>상대 한 명이 계속 나를 괴롭힌다면 <strong>영웅을 바꾸는 게 정답</strong>입니다(스폰룸에서 H). 부끄러운 게 아니라 이 게임의 핵심 시스템입니다.</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>이 적이 괴롭히면</th><th>이렇게 대응</th><th>왜?</th></tr></thead>
+                    <tbody>
+                    <tr><td>파라 / 에코 (공중)</td><td>솔저 · 캐서디 · 애쉬 · 위도우</td><td>즉시 맞는 히트스캔 무기. 공중 적은 발사체로 못 맞춤</td></tr>
+                    <tr><td>겐지 / 트레이서 (뒤로 옴)</td><td>브리기테 · 메이 · 토르비욘 포탑 · 모이라</td><td>근접 방어·둔화·자동 조준으로 기동형 영웅 무력화</td></tr>
+                    <tr><td>위도우메이커 (저격)</td><td>윈스턴 · D.Va · 겐지 · 트레이서로 다이브</td><td>근접하면 저격수는 약함. 정면 대결 금지</td></tr>
+                    <tr><td>라인하르트 (방벽)</td><td>정커랫 · 파라 · 시메트라 · 자리야 궁</td><td>방벽 위로 넘기거나 녹여버림</td></tr>
+                    <tr><td>바스티온 / 토르비욘 포탑</td><td>정커랫 · 파라 · 위도우 · 시그마 방벽</td><td>사거리 밖에서 때리거나 시야 차단</td></tr>
+                    <tr><td>윈스턴 / D.Va (다이브)</td><td>리퍼 · 브리기테 · 자리야</td><td>근접에서 탱커 녹이는 영웅</td></tr>
+                    <tr><td>적 지원가가 안 죽음</td><td>아나(수면·생체 수류탄) · 소전 · 겐지</td><td>회복 차단·고화력 마무리</td></tr>
+                    </tbody>
+                </table></div>
+                <p>규칙 하나: <strong>영웅 교체는 죽은 직후 스폰에서.</strong> 교전 중에 걸어 돌아가서 바꾸면 그 사이 팀이 4명입니다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🔀</span>카운터 픽 (상성)</h3>
-                <p><strong>뉴비가 알아야 할 것:</strong><br>
-                어떤 캐릭터는 다른 캐릭터를 잘 이기기도, 지기도 합니다.<br>
-                처음에는 이 정도만 알면 충분합니다!</p>
+                <h3><span class="card-icon">⚙️</span>추천 설정 (첫날에 바꿔 두세요)</h3>
+                <ul class="kv">
+                    <li><span>시야각(FOV)</span><strong>103 (최대). 옆에서 오는 적이 보입니다</strong></li>
+                    <li><span>마우스 감도</span><strong>"마우스를 마우스패드 끝에서 끝까지 움직였을 때 180° 정도"가 기준. 너무 높으면 조준이 안 되고, 너무 낮으면 뒤를 못 봄</strong></li>
+                    <li><span>조준선</span><strong>작은 원 또는 점, 밝은 녹색/시안. 기본 십자선은 화면을 가림</strong></li>
+                    <li><span>아군 윤곽선</span><strong>"항상"으로. 벽 너머 팀원 위치가 보여서 스태거 방지에 큰 도움</strong></li>
+                    <li><span>피해 텍스트·처치 확인</span><strong>켜기. 내 공격이 들어갔는지 알 수 있음</strong></li>
+                    <li><span>사망 시 리플레이 자동 건너뛰기</span><strong>끄기. 내가 <em>왜</em> 죽었는지 3초 보는 게 최고의 공부</strong></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🧠</span>멘탈과 성장 습관</h3>
+                <p><strong>틸트(감정적 플레이)</strong>는 실력보다 승률에 더 영향을 줍니다. 2연패하면 한 판 쉬기. 채팅 무시 옵션 켜 두기.</p>
+                <p><strong>리플레이 보기</strong>: 경력 → 최근 경기 → 내 시점으로 사망 장면만 5개 보세요. "왜 죽었지?"의 답은 거의 항상 <em>혼자 있었거나, 체력 낮은데 안 빠졌거나, 힐러 시야 밖이었거나</em> 셋 중 하나입니다.</p>
+                <p><strong>영웅은 2~3개만</strong>: 역할당 하나씩 잘하는 영웅이 있으면 됩니다. 이것저것 다 하다 보면 아무것도 안 늘어요.</p>
             </div>
 
             <!-- Quiz 5-1 -->
@@ -831,7 +984,7 @@
             </div>
 
             <div class="scenario-box">
-                <div class="scenario-text">📌 상황: 당신의 체력이 30%까지 낮아졌습니다!</div>
+                <div class="scenario-text">📌 상황: 교전 중 체력이 30%가 됐고, 앞의 적 한 명도 체력이 낮습니다!</div>
             </div>
 
             <!-- Quiz 5-2 -->
@@ -870,7 +1023,107 @@
             </div>
         </section>
 
-        <!-- Section 6: Hero Guide -->
+
+        <!-- Section 6: Advanced -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">🧠</span>
+                고급 전략
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🧱</span>팀 조합 3가지 스타일</h3>
+                <p>상위 티어로 갈수록 팀은 아래 세 가지 중 하나로 싸웁니다. 내 팀이 어떤 스타일인지 알면 "지금 뭘 해야 하는지"가 보입니다.</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>스타일</th><th>대표 조합</th><th>싸우는 방식</th><th>약점</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>다이브</strong></td><td>윈스턴/D.Va · 겐지/트레이서/소전 · 키리코/루시우</td><td>한 타겟(보통 지원가)에게 <strong>동시에</strong> 뛰어들어 즉시 처치 → 이탈</td><td>타이밍이 어긋나면 각개격파. 브리기테·메이 등 근접 방어에 약함</td></tr>
+                    <tr><td><strong>러시 (브롤)</strong></td><td>라인/정커퀸/마우가 · 리퍼/메이 · 루시우/브리기테/모이라</td><td>5명이 <strong>덩어리로 붙어</strong> 루시우 스피드로 밀고 들어감</td><td>거리 벌리며 때리는 포크 조합에 녹음. 하이그라운드 못 올라감</td></tr>
+                    <tr><td><strong>포크</strong></td><td>시그마/라마트라/오리사 · 애쉬/위도우/파라 · 아나/바티스트/젠야타</td><td>멀리서 <strong>먼저 한 명 빼고</strong> 5:4로 진입</td><td>다이브에 후방이 무너짐. 초크에서 지루하게 대치하다 시간 초과</td></tr>
+                    </tbody>
+                </table></div>
+                <p>가위바위보처럼 <strong>다이브 → 포크 → 러시 → 다이브</strong> 순으로 유리합니다. 상대가 포크를 하면 다이브로, 다이브를 하면 러시로 대응하는 게 기본 발상입니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">⏳</span>쿨다운 트래킹 — 딱 이것만 세세요</h3>
+                <p>모든 기술을 다 셀 필요 없습니다. <strong>교전 결과를 바꾸는 기술</strong>만 세면 됩니다. 상대가 썼다면 <strong>그 다음 10초가 공격 타이밍</strong>입니다.</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>영웅</th><th>기술</th><th>대략 쿨</th><th>썼다면?</th></tr></thead>
+                    <tbody>
+                    <tr><td>키리코</td><td>정화의 부적 (스즈)</td><td>14초</td><td>궁·CC 콤보 넣기 최적</td></tr>
+                    <tr><td>바티스트</td><td>불사 장치</td><td>~25초</td><td>이 사이에 진입하면 킬이 확정</td></tr>
+                    <tr><td>아나</td><td>수면 다트</td><td>~14초</td><td>돌격 탱커가 안심하고 진입 가능</td></tr>
+                    <tr><td>자리야</td><td>방벽(자기/아군)</td><td>~10초</td><td>둘 다 썼으면 자리야가 가장 약한 순간</td></tr>
+                    <tr><td>라인하르트</td><td>방벽 체력 / 돌진</td><td>방벽 재생 · 돌진 ~7초</td><td>방벽 깨지면 라인 뒤 팀이 노출</td></tr>
+                    <tr><td>트레이서</td><td>역행</td><td>12초</td><td>역행 없는 트레이서는 한 번 잡히면 끝</td></tr>
+                    <tr><td>겐지</td><td>튕겨내기</td><td>~8초</td><td>튕겨내기 끝난 직후 집중 사격</td></tr>
+                    <tr><td>메르시</td><td>부활</td><td>30초</td><td>킬을 냈으면 메르시가 오는지 보고 마무리</td></tr>
+                    </tbody>
+                </table></div>
+                <p>시작은 <strong>상대 지원가의 생존기 하나</strong>(스즈 or 불사)만 세는 것. "썼다!"라고 핑/콜을 하면 팀 전체가 그 순간에 들어갑니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">📊</span>궁극기 트래킹 실전법</h3>
+                <ol class="steps">
+                    <li>교전 시작 전 <strong>Tab</strong>을 눌러 <em>우리 팀</em> 궁 상태 확인 (상대 궁은 보이지 않음)</li>
+                    <li>상대 궁은 "쓰는 걸 봤나?"로 판단. 못 봤고 3분 넘게 살아 있었다면 <strong>거의 확실히 있음</strong></li>
+                    <li>위험 궁(겐지 용검, 정커랫 타이어, 라인 대지분쇄, 자리야 중력자탄, D.Va 자폭)은 <strong>있다고 가정</strong>하고 뭉치지 않기</li>
+                    <li>우리 궁 2개 vs 상대 궁 0개면 <strong>그냥 들어가서 이김</strong>. 이걸 "궁 어드밴티지"라고 하며, 교전 시작 여부를 결정하는 가장 중요한 기준</li>
+                    <li>궁을 쓰면 <strong>다음 궁까지 보통 1~2교전</strong>이 걸림. 방금 궁을 다 쓴 팀은 다음 교전을 피하는 것도 전략</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🔗</span>확정 킬 궁 콤보</h3>
+                <ul class="kv">
+                    <li><span>자리야 중력자탄 +</span><strong>한조 용의 일격 · 정커랫 타이어 · 파라 포화 · 시그마 중력 붕괴 · 겐지 용검 — "그라비 + 아무거나"</strong></li>
+                    <li><span>아나 나노 강화 +</span><strong>겐지 용검 · 라인하르트 · 정커퀸 궁 · 라마트라 궁 — 받는 피해 50%↓, 주는 피해 50%↑</strong></li>
+                    <li><span>메이 눈보라 +</span><strong>파라 · 정커랫 · 한조 — 얼린 적은 못 피함</strong></li>
+                    <li><span>루시우 소리 방벽 / 키리코 여우 질주</span><strong>= 상대 궁 카운터. 상대 궁 타이밍에 맞춰 쓰는 "방어 궁"</strong></li>
+                    <li><span>키리코 스즈</span><strong>아나 수면·생체 수류탄, 자리야 그라비 상태 이상은 해제 못 하지만 대부분의 CC·디버프 해제. 그라비 안에서 스즈는 "피해 무효" 용도</strong></li>
+                </ul>
+                <p>콤보는 <strong>미리 말하기</strong>가 전부입니다. "다음 교전 그라비 + 타이어" 한 마디면 됩니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">📈</span>티어 올리는 우선순위 (브론즈~플래티넘)</h3>
+                <ol class="steps">
+                    <li><strong>안 죽기</strong> — 판당 사망 8회 이하가 첫 목표. 죽는 횟수만 줄여도 골드까지 감</li>
+                    <li><strong>팀과 같은 타이밍</strong> — 스태거 없이 5명이 함께 진입·후퇴</li>
+                    <li><strong>포지션</strong> — 코너·하이그라운드·힐러 시야. 에임보다 먼저</li>
+                    <li><strong>궁 관리</strong> — 낭비 없이, 콤보로</li>
+                    <li><strong>쿨다운 트래킹</strong> — 상대 생존기 하나부터</li>
+                    <li><strong>에임</strong> — 마지막입니다. 훈련장 5분 워밍업이면 충분</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">📖</span>용어 사전</h3>
+                <dl class="glossary">
+                    <dt>스태거</dt><dd>팀원이 따로따로 죽어 리스폰이 어긋나는 것. 항상 소수로 싸우게 됨</dd>
+                    <dt>포킹</dt><dd>멀리서 안전하게 툭툭 때려 상대 자원을 빼는 것</dd>
+                    <dt>다이브</dt><dd>기동력 영웅들이 한 타겟에게 동시에 뛰어드는 것</dd>
+                    <dt>플랭크</dt><dd>측면·후방으로 우회. 뉴비는 팀이 안 보이는 순간 위험</dd>
+                    <dt>피킹 / 필</dt><dd>코너에서 잠깐 나와 쏘고 다시 숨는 것 / 첫 킬로 5:4를 만드는 것</dd>
+                    <dt>궁 어드밴티지</dt><dd>우리 궁 개수가 상대보다 많은 상태. 교전을 시작할 근거</dd>
+                    <dt>CC</dt><dd>군중 제어. 수면·둔화·밀치기·기절 등 행동을 막는 기술</dd>
+                    <dt>히트스캔 / 발사체</dt><dd>쏘는 즉시 맞는 무기(솔저, 캐서디) / 날아가는 데 시간이 걸리는 무기(파라, 한조)</dd>
+                    <dt>하이그라운드</dt><dd>높은 지형. 시야·엄폐 모두 유리</dd>
+                    <dt>오버타임</dt><dd>시간이 끝났지만 공격팀이 목표에 붙어 있으면 연장. 떨어지면 즉시 종료</dd>
+                    <dt>스폰 어드밴티지</dt><dd>우리 스폰이 교전 지점에 더 가까운 상태. 죽어도 빨리 복귀</dd>
+                    <dt>틸트</dt><dd>화가 나서 판단이 무너진 상태. 한 판 쉬는 게 답</dd>
+                </dl>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 이 페이지를 다 이해했다면</div>
+                <div class="tip-content">당신은 이미 <strong>플래티넘 이상의 "게임 이해도"</strong>를 가진 겁니다. 이제 남은 건 실제 판에서 한 번에 하나씩 적용하는 것뿐. 오늘은 스태거 하나, 내일은 궁 어드밴티지 하나.</div>
+            </div>
+        </section>
+
+        <!-- Section 7: Hero Guide -->
         <section class="section">
             <div class="section-title">
                 <span class="section-title-icon">🦸</span>
@@ -916,7 +1169,7 @@
         ];
 
         const TOTAL_QUIZ = quizAnswers.length;
-        const SECTION_COUNT = 6;
+        const SECTION_COUNT = 7;
         const STORAGE_KEY = 'ow-guide-progress';
 
         const heroes = [
@@ -1094,7 +1347,7 @@
                 ${wrongHtml}
                 <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;">
                     <button class="btn btn-primary" onclick="retryQuiz()">🔄 퀴즈 다시 풀기</button>
-                    <button class="btn btn-outline" onclick="switchSection(5)">🦸 영웅 도감 보기</button>
+                    <button class="btn btn-outline" onclick="switchSection(6)">🦸 영웅 도감 보기</button>
                 </div>`;
         }
 
