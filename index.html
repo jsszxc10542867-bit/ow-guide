@@ -496,6 +496,28 @@
         body.dark-mode .glossary dt { color: #ff8a86; }
         .glossary dd { color: var(--text-2); }
         @media (max-width: 600px) { .glossary { grid-template-columns: 1fr; gap: .1rem; } .glossary dd { margin-bottom: .5rem; } }
+
+        /* ===== 코치 컴포넌트 ===== */
+        .coach-intro {
+            display: flex; gap: 1.1rem; align-items: flex-start;
+            background: var(--primary); color: #fff;
+            border-radius: var(--radius); padding: 1.4rem 1.6rem; margin-bottom: 1.25rem;
+            box-shadow: var(--shadow-md);
+        }
+        .coach-avatar { flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.6rem; background: rgba(255,255,255,0.12); }
+        .coach-kicker { font-family: var(--font-display); font-size: .8rem; letter-spacing: .2em; color: var(--ow-orange); margin-bottom: .3rem; }
+        body.dark-mode .coach-kicker { color: #ffb3b0; }
+        .coach-intro p { font-size: .95rem; line-height: 1.6; opacity: .95; }
+        .coach-intro strong { color: #fff; }
+        .tip-box.coach-note { background: var(--bg-elev); border-left-color: var(--accent); box-shadow: var(--shadow-sm); border-color: var(--line); }
+        .tip-box.coach-note .tip-title { color: var(--accent); }
+        body.dark-mode .tip-box.coach-note .tip-title { color: #ff8a86; }
+        .logo-sub { display: block; font-family: var(--font-display); font-size: .7rem; letter-spacing: .18em; opacity: .7; font-weight: 600; line-height: 1; margin-top: 2px; }
+        .f-label { align-self: center; font-size: .72rem; font-weight: 800; letter-spacing: .1em; color: var(--text-3); width: 52px; text-align: right; margin-right: .2rem; }
+        .hero-meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .5rem; }
+        .hero-meta .hero-diff { margin-bottom: 0; }
+        .hero-tag { font-size: .7rem; font-weight: 700; color: var(--text-3); background: var(--bg-soft); padding: .15rem .5rem; border-radius: 6px; }
+        .card p em { font-style: normal; font-weight: 700; color: var(--text); background: var(--accent-soft); padding: 0 .3rem; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -504,7 +526,7 @@
             <div class="logo">
                 <img id="light-logo" class="logo-img" src="assets/overwatch.svg" alt="Overwatch">
                 <img id="dark-logo" class="logo-img" src="assets/blackwatch.webp" alt="Blackwatch">
-                <span>오버워치 뉴비 가이드</span>
+                <span>오버워치 뉴비 가이드 <small class="logo-sub">COACH PLAYBOOK</small></span>
             </div>
             <button class="theme-toggle" onclick="toggleTheme()" title="다크모드 전환">
                 <span id="theme-icon">🌙</span>
@@ -542,55 +564,64 @@
                 게임 기본 알아보기
             </div>
 
-            <div class="card">
-                <h3><span class="card-icon">❓</span>오버워치 2는 어떤 게임인가요?</h3>
-                <p><strong>5 대 5 팀 슈팅</strong>입니다. 각 팀은 <strong>돌격 1 · 공격 2 · 지원 2</strong>로 구성되고(역할 고정 큐 기준), 서로 다른 능력을 가진 영웅을 골라 <strong>목표</strong>를 두고 싸웁니다.</p>
-                <p>총 잘 쏘는 사람이 이기는 게임이 아니라, <strong>5명이 같은 타이밍에 같은 곳에서 싸우는 팀</strong>이 이기는 게임입니다. 이 한 문장만 기억해도 절반은 배운 겁니다.</p>
+            <div class="coach-intro">
+                <div class="coach-avatar">🎯</div>
+                <div>
+                    <div class="coach-kicker">COACH'S PLAYBOOK</div>
+                    <p>이 가이드는 <strong>챔피언 티어 시점</strong>에서 "뉴비가 뭘 몰라서 지는지"를 역으로 정리한 문서다. 이론 설명은 최소, <strong>판 안에서 바로 쓰는 판단 기준</strong> 위주로 간다. 용어는 실제 인게임·커뮤니티에서 쓰는 말 그대로 쓴다. 모르는 말은 <strong>고급 전략 → 용어 사전</strong>을 보면 된다.</p>
+                </div>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🗂️</span>게임 모드 6가지 (실제 게임에 있는 것만)</h3>
+                <h3><span class="card-icon">❓</span>오버워치 2, 한 문장 정의</h3>
+                <p><strong>5v5 · 돌격 1 / 공격 2 / 지원 2</strong>(역할 고정 큐). 목표를 놓고 <strong>한타</strong>를 반복하는 게임이다.</p>
+                <p>에임 좋은 사람이 이기는 게임이 아니다. <strong>같은 타이밍에 5명이 같은 자리에서 한타를 여는 팀</strong>이 이긴다. 브론즈부터 그마까지, 지는 이유의 80%는 이 문장을 못 지켜서다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🗂️</span>게임 모드 6종 — 실전 용어로</h3>
                 <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>모드</th><th>어떻게 이기나</th><th>뉴비 핵심</th></tr></thead>
+                    <thead><tr><th>모드</th><th>승리 조건</th><th>코치 노트</th></tr></thead>
                     <tbody>
-                    <tr><td><strong>호위</strong><br><small>Escort</small></td><td>공격팀이 화물(페이로드)을 끝까지 밀면 승리. 공수 교대 후 더 멀리 민 팀이 이김</td><td>화물 근처에 있으면 <strong>자동 회복</strong>. 공격이면 화물 붙어 있기, 수비면 화물 앞 코너 지키기</td></tr>
-                    <tr><td><strong>혼합</strong><br><small>Hybrid</small></td><td>거점 먼저 점령 → 화물이 나타나면 호위</td><td>1거점 뚫기가 제일 어려움. 5명이 모여서 한 번에 진입</td></tr>
-                    <tr><td><strong>쟁탈</strong><br><small>Control</small></td><td>중앙 거점을 점령해 100%까지 채우면 1라운드 승. <strong>2선승</strong></td><td>거점 안에 있어야 게이지가 참. 다만 5명 다 서 있을 필요는 없음 (1명이면 충분)</td></tr>
-                    <tr><td><strong>밀기</strong><br><small>Push</small></td><td>로봇(TS-1)을 상대 진영으로 더 멀리 민 팀이 승리</td><td>로봇은 <strong>바리케이드</strong>를 밀어야 전진. 죽으면 리스폰이 멀어지니 스폰 위치(전진 스폰) 확인</td></tr>
-                    <tr><td><strong>플래시포인트</strong><br><small>Flashpoint</small></td><td>맵 안 5개 거점이 순서대로 활성화. 먼저 <strong>3개</strong> 점령하면 승리</td><td>다음 거점이 어디인지 화면 상단 표시를 보고 <strong>미리 이동</strong></td></tr>
-                    <tr><td><strong>격돌</strong><br><small>Clash</small></td><td>일직선 5개 거점. 상대 진영 쪽 거점을 점령하며 <strong>5점</strong> 먼저 획득</td><td>상대 마지막 거점은 점령 시 큰 점수. 무리하게 뚫다 전멸하면 반대로 밀림</td></tr>
+                    <tr><td><strong>호위</strong><br><small>Escort · "카트"</small></td><td>공격이 화물(카트)을 끝까지 밀면 승. 공수 교대 후 더 멀리 민 팀이 이김</td><td>카트 근처에 있으면 공격팀은 <strong>자동 회복</strong>. 공격이면 카트 옆·뒤에 붙고, 수비면 카트가 지나갈 <strong>다음 코너</strong>를 먼저 잡아라. 카트 위에 서지 마라 — 광역 궁 다 맞는다</td></tr>
+                    <tr><td><strong>혼합</strong><br><small>Hybrid</small></td><td>1거점 점령 → 카트 호위</td><td>1거점 뚫는 게 제일 빡세다. 초크 정면으로 들어가지 말고 <strong>5명 모여서 한 번에</strong>. 궁 하나 들고 들어가면 훨씬 쉽다</td></tr>
+                    <tr><td><strong>쟁탈</strong><br><small>Control · "점령전"</small></td><td>중앙 거점 100%까지 채우면 1라운드. <strong>2선승</strong></td><td>거점 안에 5명 서 있을 필요 없다. <strong>1명만 발 걸치면 게이지 찬다.</strong> 나머지는 고지에서 싸워라. 99% 대 99% 상황이면 <strong>궁 개수</strong>가 승부</td></tr>
+                    <tr><td><strong>밀기</strong><br><small>Push · "로봇"</small></td><td>로봇(TS-1)을 더 멀리 민 팀이 승</td><td>로봇은 바리케이드를 밀어야 전진. <strong>전진 스폰</strong>이 열리는 순간 리스폰 유불리가 뒤집힌다. 시간 끝나기 직전 무리 진입은 던지는 거다</td></tr>
+                    <tr><td><strong>플래시포인트</strong><br><small>Flashpoint</small></td><td>5개 거점이 순서대로 활성화, 먼저 <strong>3점</strong></td><td>다음 거점 위치는 상단 UI에 미리 뜬다. <strong>먼저 도착해서 고지 먹은 팀</strong>이 그 거점을 먹는다. 이동 중 한타 열지 마라</td></tr>
+                    <tr><td><strong>격돌</strong><br><small>Clash</small></td><td>일직선 5개 거점, 상대 쪽으로 밀며 <strong>5점</strong></td><td>상대 마지막 거점(홈)을 따면 큰 점수지만 <strong>상대 스폰이 코앞</strong>이라 리스폰 5초 vs 우리 20초. 올킬 자신 없으면 무리하지 마라</td></tr>
                     </tbody>
                 </table></div>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🔁</span>한 판은 이렇게 흘러갑니다</h3>
+                <h3><span class="card-icon">🔁</span>한 판의 루프 — 이 5개가 무한 반복된다</h3>
                 <ol class="steps">
-                    <li><strong>영웅 선택 & 준비 시간</strong> — 팀 조합 보고 고르기. 몰라도 괜찮음, 나중에 바꿀 수 있음(스폰에서 교체)</li>
-                    <li><strong>이동</strong> — 5명이 함께 목표로. 혼자 먼저 가서 죽으면 4:5로 싸움</li>
-                    <li><strong>교전(팀파이트)</strong> — 보통 20~40초. 여기서 승부가 갈림</li>
-                    <li><strong>리스폰</strong> — 죽으면 <strong>약 10초</strong> 뒤 스폰에서 부활. 먼 맵은 복귀까지 10초 더</li>
-                    <li><strong>재정비</strong> — 죽은 팀원을 기다렸다가 다시 5명으로 진입 → 2번으로</li>
+                    <li><strong>픽 & 준비</strong> — 상대 조합 보고 픽. 모르겠으면 <strong>스폰에서 언제든 교체</strong>(H) 가능하니 부담 갖지 마라. 경쟁전은 <strong>영웅 밴</strong> 단계가 먼저 있다</li>
+                    <li><strong>이동(로테이션)</strong> — 5명이 같이 목표로. 먼저 뛰어나가서 죽는 순간 <strong>4:5 한타</strong>가 확정된다</li>
+                    <li><strong>한타</strong> — 20~40초. 여기서 게임이 결정된다</li>
+                    <li><strong>리스폰</strong> — 사망 후 <strong>약 10초</strong>. 먼 맵은 복귀까지 +10초. 그래서 "잘리면" 20초를 통째로 잃는다</li>
+                    <li><strong>리그룹</strong> — 죽은 팀원 기다렸다가 5명으로 다시. → 2번</li>
                 </ol>
-                <p>결국 오버워치는 <strong>"5명이 모인 상태로 교전에 들어가느냐"</strong>의 반복입니다. 한 명씩 따로 죽어주는 것(스태거)이 뉴비 팀이 지는 가장 흔한 이유입니다.</p>
+                <p>결론: 오버워치는 <strong>"5명이 모인 채로 한타에 들어가느냐"</strong>의 게임이다. 한 명씩 <strong>잘려 나가는 것(스태거)</strong>이 저티어 팀이 지는 1번 이유다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🎮</span>꼭 알아야 할 조작 & 시스템</h3>
+                <h3><span class="card-icon">🎮</span>첫날 반드시 알아야 할 시스템</h3>
                 <ul class="kv">
-                    <li><span>핑 (기본 G)</span><strong>적을 보고 누르면 "적 발견!" 마크. 마이크 없이도 정보 공유 가능. 꾹 누르면 핑 휠(집결, 후퇴 등)</strong></li>
-                    <li><span>자동 회복</span><strong>피해를 안 받고 잠시 지나면 모든 역할이 서서히 회복. 지원가는 더 빠름</strong></li>
-                    <li><span>힐팩</span><strong>작은 팩 75 · 큰 팩 250 회복. 각각 약 10초 / 15초 후 다시 생김</strong></li>
-                    <li><span>궁극기 (Q)</span><strong>피해·치유를 주면 충전. 시간이 지나도 조금씩 참. 100%일 때 큰 기술</strong></li>
-                    <li><span>영웅 교체</span><strong>스폰룸 안에서 H. 상대 조합이 나를 너무 괴롭히면 바꾸는 게 정상</strong></li>
-                    <li><span>특전 (Perk)</span><strong>경기 중 레벨이 오르면 영웅별로 소·대 특전 하나씩 선택. 처음엔 설명 읽고 아무거나 골라도 OK</strong></li>
-                    <li><span>훈련장 & 연습 게임</span><strong>메뉴 → 훈련 → 훈련장. 영웅 기술 5분만 눌러보고 실전 들어가면 훨씬 편함</strong></li>
+                    <li><span>핑 (G)</span><strong>적 보고 누르면 "적 발견!" 마커. 마이크 없어도 이걸로 충분히 콜 된다. 길게 누르면 핑 휠(집결·후퇴·공격)</strong></li>
+                    <li><span>자동 회복 (패시브)</span><strong>피해 안 받고 잠시 지나면 모든 역할이 서서히 회복. 지원가는 더 빨리. "코너 뒤 3초"가 힐팩 하나다</strong></li>
+                    <li><span>힐팩</span><strong>작은 팩 75 · 큰 팩 250. 각각 약 10초 / 15초 리스폰. 맵당 큰 팩 위치만 외워라</strong></li>
+                    <li><span>궁극기 (Q)</span><strong>피해·치유 넣으면 충전 + 시간 경과로 조금씩. <strong>죽어도 충전량 유지</strong>. 죽기 직전에 급하게 "버리지" 마라</strong></li>
+                    <li><span>영웅 교체 (H)</span><strong>스폰룸 안에서만. 카운터 당하면 바꾸는 게 정상. 단, <strong>죽은 직후 스폰에서</strong> 바꿔라 — 걸어서 돌아가면 그 사이 팀은 4명</strong></li>
+                    <li><span>특전 (Perk)</span><strong>경기 중 레벨업하면 영웅별 소특전 → 대특전 선택. 처음엔 아무거나. 나중에 "이 특전이 이 매치업에 좋다"가 보인다</strong></li>
+                    <li><span>Tab</span><strong>우리 팀 궁 %·픽·킬뎃 확인. 한타 열기 전에 한 번씩 보는 습관</strong></li>
+                    <li><span>훈련장</span><strong>메뉴 → 훈련. 새 영웅은 5분 훈련장 돌고 실전. 기술 쿨타임 감각이 잡힌다</strong></li>
                 </ul>
             </div>
 
-            <div class="tip-box">
-                <div class="tip-title">💡 첫 10판을 위한 목표</div>
-                <div class="tip-content">킬 수는 신경 쓰지 마세요. <strong>① 팀과 같이 움직였는가 ② 죽은 뒤 혼자 뛰어들지 않았는가 ③ 목표(거점/화물) 근처에 있었는가</strong> — 이 세 가지만 지켜도 팀에 도움이 되는 플레이어입니다.</div>
+            <div class="tip-box coach-note">
+                <div class="tip-title">🎯 코치 노트 — 첫 10판 KPI</div>
+                <div class="tip-content">킬뎃 보지 마라. 볼 건 세 가지. <strong>① 팀이랑 같이 움직였나 ② 죽고 나서 혼자 안 뛰어들었나 ③ 목표(거점·카트) 근처에 있었나.</strong> 이 셋만 지키면 팀에 기여하는 플레이어다. 나머지는 나중에 붙는다.</div>
             </div>
 
             <!-- Quiz 1-1 -->
@@ -641,45 +672,45 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🧩</span>1-2-2 역할 구성</h3>
-                <p>역할 고정 큐에서는 <strong>돌격 1명, 공격 2명, 지원 2명</strong>입니다. 돌격이 한 명뿐이라 돌격의 판단이 팀 전체 위치를 결정하고, 지원 2명이 그 뒤를 받쳐줍니다. 각 역할엔 <strong>역할 패시브</strong>(기본 보너스)가 있어서 같은 총이라도 역할에 따라 결과가 다릅니다.</p>
+                <h3><span class="card-icon">🧩</span>1-2-2와 역할 패시브</h3>
+                <p>돌격이 <strong>한 명</strong>이라 탱커의 위치가 곧 팀의 위치다. 지원 둘이 그 뒤를 받치고, 딜러 둘이 각을 본다. 역할마다 <strong>패시브</strong>가 있어서 같은 총이라도 결과가 다르다.</p>
                 <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>역할</th><th>역할 패시브(요약)</th><th>한 줄 정의</th></tr></thead>
+                    <thead><tr><th>역할</th><th>패시브 (요약)</th><th>한 줄 정의</th></tr></thead>
                     <tbody>
-                    <tr><td>🛡️ 돌격</td><td>밀쳐내기 저항, 받는 치명타 피해 감소, 상대에게 궁 충전 덜 줌</td><td>싸움이 <strong>어디서, 언제</strong> 일어날지 정한다</td></tr>
-                    <tr><td>⚔️ 공격</td><td>피해를 입힌 적의 <strong>회복량 감소</strong>, 처치 시 잠깐 이동속도 증가</td><td>상대를 <strong>죽여서</strong> 숫자 우위를 만든다</td></tr>
-                    <tr><td>💚 지원</td><td>전투에서 벗어나면 <strong>더 빨리 자동 회복</strong></td><td>팀이 <strong>죽지 않게</strong> 하고 교전을 오래 끈다</td></tr>
+                    <tr><td>🛡️ 돌격</td><td>넉백 저항 · 받는 치명타 피해 감소 · 상대에게 궁 충전 덜 줌</td><td>한타가 <strong>어디서, 언제</strong> 열릴지 정한다 = "라인 잡는 사람"</td></tr>
+                    <tr><td>⚔️ 공격</td><td>피해 입힌 적에게 <strong>회복 감소</strong> 디버프 · 처치 시 이속 증가</td><td>상대를 <strong>잘라서</strong> 숫자 우위 만든다. 힐 끊는 역할이기도 하다</td></tr>
+                    <tr><td>💚 지원</td><td>전투 이탈 시 <strong>더 빠른 자동 회복</strong></td><td>팀이 <strong>안 죽게</strong> 하고 한타를 길게 끈다. 딜도 해야 한다</td></tr>
                     </tbody>
                 </table></div>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🛡️</span>돌격 (탱커) — "내가 서 있는 곳이 전선이다"</h3>
-                <p><strong>해야 할 일:</strong> 팀이 안전하게 싸울 수 있는 <strong>공간</strong>을 만듭니다. 앞에 서서 적의 시선을 끌고, 팀이 뒤에서 딜을 넣게 합니다.</p>
-                <p><strong>판단 기준:</strong> "내 뒤에 팀이 있는가?" 뒤를 한 번 돌아보고 아무도 없으면 <strong>즉시 후퇴</strong>. 탱커 혼자 앞에 있으면 5명이 나만 때립니다.</p>
-                <p><strong>흔한 실수:</strong> 방벽을 계속 들고만 있기(방벽은 팀이 지나갈 때만) · 체력 50% 이하에 계속 전진 · 힐러 시야 밖으로 돌진.</p>
-                <p><strong>첫 영웅 추천:</strong> <span class="pill">라인하르트</span> <span class="pill">오리사</span> <span class="pill">자리야</span></p>
+                <h3><span class="card-icon">🛡️</span>돌격 — "내가 선 곳이 프론트라인이다"</h3>
+                <p><strong>일:</strong> 팀이 딜 넣을 <strong>공간</strong>을 만든다. 앞에서 어그로 끌고, 상대 탱커와 <strong>라인 싸움</strong>을 하고, 팀이 들어갈 타이밍을 만든다.</p>
+                <p><strong>판단 기준 한 줄:</strong> <em>"내 뒤에 팀이 있나?"</em> 뒤 한 번 보고 아무도 없으면 <strong>즉시 빠져라.</strong> 탱커 혼자 앞에 있으면 5명이 나만 팬다 — 이걸 "탱커 혼자 녹는다"고 한다.</p>
+                <p><strong>저티어 탱커 3대 실수:</strong> 방벽 계속 들고만 있기(방벽은 팀이 지나갈 때만) · 피 50% 이하에 계속 전진 · 힐러 시야 밖으로 돌진.</p>
+                <p><strong>첫 픽 추천:</strong> <span class="pill">라인하르트</span> <span class="pill">오리사</span> <span class="pill">자리야</span> · 좀 익숙해지면 <span class="pill">D.Va</span> <span class="pill">시그마</span></p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">⚔️</span>공격 (딜러) — "안전하게 오래 쏘는 사람이 이긴다"</h3>
-                <p><strong>해야 할 일:</strong> 죽지 않으면서 <strong>계속 피해를 넣는 것</strong>. 킬은 그 결과로 따라옵니다. 딜러의 진짜 실력은 에임보다 <strong>위치 선정</strong>에서 갈립니다.</p>
-                <p><strong>판단 기준:</strong> "지금 나를 쏠 수 있는 적이 몇 명인가?" 2명 이상이면 엄폐. 1명이면 싸우고, 0명이면 최고의 자리입니다(하이그라운드, 측면).</p>
-                <p><strong>흔한 실수:</strong> 탱커보다 앞에 서기 · 체력 낮은데 마지막 한 발 욕심 · 적 뒤로 혼자 우회(플랭크)해서 아무도 못 보는 곳에서 죽기.</p>
-                <p><strong>첫 영웅 추천:</strong> <span class="pill">솔저: 76</span> <span class="pill">바스티온</span> <span class="pill">토르비욘</span> <span class="pill">리퍼</span></p>
+                <h3><span class="card-icon">⚔️</span>공격 — "죽지 않고 오래 쏘는 놈이 이긴다"</h3>
+                <p><strong>일:</strong> 죽지 않으면서 <strong>딜을 계속 넣는 것</strong>. 킬은 결과다. 딜러 실력은 에임보다 <strong>각 보는 능력</strong>(포지션)에서 갈린다.</p>
+                <p><strong>판단 기준 한 줄:</strong> <em>"지금 나를 쏠 수 있는 적이 몇 명?"</em> 2명 이상 → 엄폐. 1명 → 싸운다. 0명 → 최고의 각(고지·측면). 이걸 <strong>"딜각 본다"</strong>고 한다.</p>
+                <p><strong>저티어 딜러 3대 실수:</strong> 탱커보다 앞에 서기 · 피 없는데 "한 발만 더" · 혼자 플랭크 갔다가 아무도 못 보는 데서 잘림.</p>
+                <p><strong>첫 픽 추천:</strong> <span class="pill">솔저: 76</span> <span class="pill">바스티온</span> <span class="pill">토르비욘</span> <span class="pill">리퍼</span> · 에임 자신 있으면 <span class="pill">캐서디</span> <span class="pill">애쉬</span></p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">💚</span>지원 (힐러) — "힐은 절반, 나머지 절반은 생존과 딜"</h3>
-                <p><strong>해야 할 일:</strong> ① 탱커를 살려서 전선 유지 ② 위험한 팀원에게 우선 치유 ③ 여유 있을 때 <strong>적을 쏘기</strong>(지원가 딜은 생각보다 셉니다) ④ 무엇보다 <strong>본인이 안 죽기</strong>.</p>
-                <p><strong>판단 기준:</strong> 치유 우선순위는 <em>체력 %가 아니라 "지금 맞고 있는 사람"</em>. 체력 40%지만 엄폐 중인 딜러보다, 체력 80%지만 지금 5명에게 맞는 탱커가 먼저입니다.</p>
-                <p><strong>흔한 실수:</strong> 팀 맨 뒤 혼자 서 있다가 뒤에서 오는 겐지·트레이서에게 죽기 · 탱커만 계속 힐하고 딜러가 죽는 걸 방치 · 힐만 하고 총 한 발 안 쏘기.</p>
-                <p><strong>첫 영웅 추천:</strong> <span class="pill">메르시</span> <span class="pill">모이라</span> <span class="pill">루시우</span></p>
+                <h3><span class="card-icon">💚</span>지원 — "힐은 절반, 나머지는 생존과 딜"</h3>
+                <p><strong>일 순서:</strong> ① 탱커 살려서 라인 유지 ② <strong>지금 맞고 있는 사람</strong> 우선 힐 ③ 여유 있을 때 딜(지원가 딜 생각보다 세다) ④ 무엇보다 <strong>내가 안 죽기</strong>.</p>
+                <p><strong>판단 기준 한 줄:</strong> 힐 우선순위는 <em>체력 %가 아니라 "누가 맞고 있나"</em>. 피 40%지만 코너 뒤에 있는 딜러 &lt; 피 80%지만 지금 5명한테 맞는 탱커.</p>
+                <p><strong>저티어 힐러 3대 실수:</strong> 백라인 혼자 서 있다가 겐지·트레이서한테 잘림 · 탱커만 힐하다 딜러 죽는 거 방치 · 힐만 하고 총 한 발 안 쏨("힐봇").</p>
+                <p><strong>첫 픽 추천:</strong> <span class="pill">메르시</span> <span class="pill">모이라</span> <span class="pill">루시우</span> · 다음 단계 <span class="pill">키리코</span> <span class="pill">바티스트</span> <span class="pill">아나</span></p>
             </div>
 
-            <div class="tip-box">
-                <div class="tip-title">💡 어떤 역할부터 시작할까?</div>
-                <div class="tip-content"><strong>돌격(라인하르트/오리사)</strong>부터 추천합니다. 체력이 많아 생존이 쉽고, 맨 앞에서 보기 때문에 "왜 팀이 이겼고 졌는지"가 제일 잘 보입니다. 큐 대기 시간이 길다면 <strong>지원(모이라/메르시)</strong>도 부담 없는 선택입니다.</div>
+            <div class="tip-box coach-note">
+                <div class="tip-title">🎯 코치 노트 — 어떤 역할부터?</div>
+                <div class="tip-content"><strong>돌격(라인하르트/오리사)</strong>부터. 피가 많아 안 죽고, 맨 앞에서 보니까 "왜 이겼고 왜 졌는지"가 제일 잘 보인다. 큐가 너무 길면 <strong>지원(모이라/메르시)</strong>. 딜러는 큐도 길고 저티어에서 제일 욕먹는 자리다. 게임 이해가 생긴 다음에 가라.</div>
             </div>
 
             <!-- Quiz 2-1 -->
@@ -730,59 +761,58 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🔄</span>팀파이트는 5단계로 돌아갑니다</h3>
+                <h3><span class="card-icon">🔄</span>한타는 5단계로 돈다</h3>
                 <ol class="steps">
-                    <li><strong>집결</strong> — 5명이 목표 근처 안전한 곳(코너)에 모임. 여기서 궁극기 % 확인</li>
-                    <li><strong>포킹</strong> — 엄폐물 뒤에서 멀리서 툭툭 쏘며 상대 체력·쿨타임을 뺌. 서두르지 않기</li>
-                    <li><strong>개시</strong> — 누군가 큰 기술(라인 돌진, 궁)로 <strong>첫 킬</strong>을 만들면 전원 같이 진입</li>
-                    <li><strong>정리</strong> — 4:5가 된 상대는 무너짐. 남은 적을 쫓되 스폰 앞까지는 가지 않기</li>
-                    <li><strong>재정비</strong> — 목표 잡고, 힐 받고, 다음 교전 위치 잡기. 죽은 팀원 기다리기</li>
+                    <li><strong>리그룹</strong> — 5명이 목표 근처 코너에 모인다. 여기서 Tab 한 번, 우리 궁 몇 개인지 확인</li>
+                    <li><strong>포크(짤짤이)</strong> — 코너에서 피킹하며 상대 피·쿨 뺀다. 서두르지 마라. 상대 생존기(스즈·불사) 빠지는 걸 기다린다</li>
+                    <li><strong>이니시(개시)</strong> — 라인 돌진·윈스턴 점프·궁으로 <strong>첫 킬</strong>. 첫 킬 나면 전원 같이 들어간다. 이게 "각 나왔다"</li>
+                    <li><strong>클린업</strong> — 4:5가 된 상대는 무너진다. 남은 적 정리하되 <strong>상대 스폰 앞까지 쫓지 마라</strong>(스폰 어드밴티지 넘겨주는 짓)</li>
+                    <li><strong>재정비</strong> — 목표 잡고, 힐 받고, 다음 한타 위치 잡는다. 잘린 팀원 기다린다</li>
                 </ol>
-                <p>뉴비 팀은 2단계(포킹)를 생략하고 바로 뛰어들거나, 4단계에서 너무 깊이 쫓아가서 다음 교전을 4명으로 시작합니다.</p>
+                <p>저티어는 2번(포크)을 생략하고 바로 뛰어들거나, 4번에서 너무 깊이 쫓아가서 다음 한타를 4명으로 연다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">⏱️</span>스태거: 오버워치에서 제일 중요한 개념</h3>
-                <p><strong>스태거(Stagger)</strong> = 팀원들이 <em>따로따로</em> 죽어서 리스폰 타이밍이 어긋나는 것. 이렇게 되면 항상 3:5, 4:5로 싸우게 되어 <strong>계속 집니다.</strong></p>
-                <p><strong>규칙:</strong> 팀이 전멸하면 나도 무리하지 말고 같이 죽거나 빠지기 · 혼자 살아남았으면 <strong>절대 혼자 진입하지 말고</strong> 팀이 올 때까지 뒤에서 대기 · 팀 4명이 죽었는데 나 혼자 거점 지키기는 대부분 손해.</p>
-                <p>화면 왼쪽 위 팀원 초상화가 <strong>해골(사망)</strong>이면 그 수를 세어 보세요. 2명 이상이면 후퇴 신호입니다.</p>
+                <h3><span class="card-icon">⏱️</span>스태거 — 이 게임에서 제일 중요한 단어</h3>
+                <p><strong>스태거(잘림)</strong> = 팀원들이 <em>따로따로</em> 죽어서 리스폰 타이밍이 어긋나는 것. 이러면 계속 3:5, 4:5로 싸우고 <strong>계속 진다.</strong></p>
+                <p><strong>규칙 3개:</strong> 팀이 전멸했으면 나도 무리 안 하고 빠진다(혹은 같이 죽어서 리스폰 맞춘다 — 진짜로 이게 낫다) · 혼자 살아남았으면 <strong>절대 혼자 진입 금지</strong>, 팀 올 때까지 대기 · 팀 4명 죽었는데 혼자 거점 지키기 = 대부분 손해.</p>
+                <p>화면 왼쪽 위 팀원 초상화에 <strong>해골</strong> 뜨면 그 수를 세라. 2개 이상이면 <strong>후퇴 신호</strong>다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🎯</span>누구를 쏠까? — 실제 우선순위</h3>
-                <p>"항상 힐러 먼저"는 반만 맞는 말입니다. 실제 기준은 이 순서입니다.</p>
+                <h3><span class="card-icon">🎯</span>타겟 우선순위 — "힐러 먼저"는 반만 맞다</h3>
                 <ol class="steps">
-                    <li><strong>지금 안전하게 맞출 수 있는 적</strong> — 맞추지도 못하는 힐러를 쫓다가 죽으면 손해</li>
-                    <li><strong>체력이 낮거나 고립된 적</strong> — 한 명이 빠지면 4:5. 마무리는 무조건 가치 있음</li>
-                    <li><strong>적 지원가</strong> — 접근 가능할 때. 특히 아나·젠야타처럼 체력 낮고 도주기 없는 영웅</li>
-                    <li><strong>적 딜러</strong> — 특히 우리 후방을 괴롭히는 딜러</li>
-                    <li><strong>적 돌격</strong> — 체력이 많아서 마지막. 단 힐이 끊긴 탱커는 좋은 먹잇감</li>
+                    <li><strong>지금 안전하게 맞출 수 있는 적</strong> — 못 맞추는 힐러 쫓다 죽으면 그냥 손해</li>
+                    <li><strong>피 없는 적 / 고립된 적</strong> — 한 명 빠지면 4:5. 마무리는 무조건 가치 있다("킬각")</li>
+                    <li><strong>적 지원가</strong> — 접근 가능할 때. 특히 <strong>아나·젠야타·일리아리</strong>처럼 도주기 없는 힐러</li>
+                    <li><strong>적 딜러</strong> — 특히 우리 백라인 괴롭히는 놈</li>
+                    <li><strong>적 돌격</strong> — 피 많아서 마지막. 단 <strong>힐 끊긴 탱커</strong>는 먹잇감이다</li>
                 </ol>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">💥</span>궁극기 기초 경제학</h3>
+                <h3><span class="card-icon">💥</span>궁 경제 — 궁은 "이기려고" 쓴다</h3>
                 <ul class="kv">
-                    <li><span>궁은 "이기려고" 쓴다</span><strong>이미 이기고 있는 교전에 궁을 쓰면 낭비. 5:5 팽팽할 때, 혹은 지고 있을 때 뒤집으려고 쓰기</strong></li>
-                    <li><span>겹치지 않기</span><strong>같은 교전에 궁 3개를 쏟으면 1개로도 될 걸 2개 낭비. 하나 쓰고 결과 보고 판단</strong></li>
-                    <li><span>콤보는 강력</span><strong>자리야 중력자탄 + 아무 광역 궁, 아나 나노 강화 + 겐지/라인 처럼 짝을 맞추면 확정 킬</strong></li>
-                    <li><span>상대 궁 세기</span><strong>"적 겐지 궁 있다"를 알면 뭉치지 않고 싸울 수 있음. 처음엔 상대 궁 하나만 기억해도 충분</strong></li>
-                    <li><span>죽으면 궁은 유지</span><strong>죽어도 충전량은 남습니다. 죽기 직전에 급하게 쓰지 마세요</strong></li>
+                    <li><span>궁각</span><strong>이미 이기는 한타에 궁 = 낭비. 5:5 팽팽하거나 지는 걸 뒤집을 때 쓴다</strong></li>
+                    <li><span>궁 겹치기 금지</span><strong>같은 한타에 궁 3개 = 2개 버린 것. 하나 쓰고 결과 보고 판단</strong></li>
+                    <li><span>콤보</span><strong>그라비(자리야) + 아무 광역 궁, 나노(아나) + 용검/라인. 짝 맞추면 확정 킬</strong></li>
+                    <li><span>상대 궁 세기</span><strong>"적 용검 있다" 하나만 알아도 뭉치지 않고 싸울 수 있다</strong></li>
+                    <li><span>궁 빼기</span><strong>상대가 궁을 쓰게 유도하고 피하는 것도 이득. 궁은 쓰면 다음 한타까지 못 돌아온다</strong></li>
                 </ul>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🗣️</span>말 안 해도 되는 콜 — 핑과 짧은 문장</h3>
-                <p>마이크가 없어도 <strong>핑(G)</strong>으로 대부분 전달됩니다. 마이크를 쓴다면 짧고 구체적으로:</p>
+                <h3><span class="card-icon">🗣️</span>실제로 쓰는 콜</h3>
+                <p>마이크 없으면 <strong>핑(G)</strong>. 있으면 <strong>짧게, 대상 + 위치 + 상태</strong>:</p>
                 <ul class="kv">
-                    <li><span>좋은 콜</span><strong>"아나 체력 낮음, 왼쪽" · "적 라인 궁 있음" · "3명 죽음, 빠져" · "다 모였어, 가자"</strong></li>
-                    <li><span>나쁜 콜</span><strong>"힐 좀!" (누가? 어디?) · 죽은 뒤 팀 탓 · 상대 욕</strong></li>
+                    <li><span>좋은 콜</span><strong>"아나 피 없음 왼쪽" · "적 라인 궁 있음" · "3명 잘렸다 빠져" · "다 모였어, 가자" · "스즈 빠졌다 들어가" · "적 위도우 고지"</strong></li>
+                    <li><span>쓸모없는 콜</span><strong>"힐 좀!"(누가? 어디?) · 죽고 나서 팀 탓 · 상대 욕 · 한타 중 장문</strong></li>
                 </ul>
             </div>
 
-            <div class="tip-box">
-                <div class="tip-title">💡 오늘 한 가지만</div>
-                <div class="tip-content">다음 판에는 <strong>"죽은 뒤 스폰에서 나갈 때 팀원이 몇 명 살아 있는지 보고 나가기"</strong> 하나만 해 보세요. 이것만으로 승률이 눈에 띄게 오릅니다.</div>
+            <div class="tip-box coach-note">
+                <div class="tip-title">🎯 코치 노트 — 오늘 하나만</div>
+                <div class="tip-content">다음 판엔 <strong>"스폰에서 나갈 때 팀원 몇 명 살아 있는지 보고 나가기"</strong> 이거 하나만. 이것만으로 승률 눈에 띄게 오른다. 나머지는 그다음이다.</div>
             </div>
 
             <!-- Quiz 3-1 -->
@@ -833,48 +863,48 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🧭</span>맵을 읽는 4가지 키워드</h3>
+                <h3><span class="card-icon">🧭</span>맵 읽는 키워드 4개</h3>
                 <ul class="kv">
-                    <li><span>하이그라운드</span><strong>높은 곳. 위에서 아래는 잘 보이고, 아래에서 위는 머리만 보임. 대부분의 교전은 이곳을 가진 팀이 이김</strong></li>
-                    <li><span>초크 포인트</span><strong>좁은 입구·문. 수비는 여기에 화력을 모으고, 공격은 여기를 "정면으로" 뚫으면 안 됨 — 측면 길이나 궁으로 우회</strong></li>
-                    <li><span>엄폐물 / 코너</span><strong>벽·기둥·상자. 좋은 위치란 "쏘고 → 한 걸음 뒤로 → 안 보임"이 되는 곳. 항상 코너 옆에 서기</strong></li>
-                    <li><span>메인 vs 사이드</span><strong>큰길(메인)은 탱커가, 옆길(사이드)은 딜러가. 지원가는 메인 뒤 코너</strong></li>
+                    <li><span>고지 (하이그라운드)</span><strong>위에서 아래는 다 보이고, 아래에서 위는 머리만 보인다. <strong>고지 먹은 팀이 한타 이긴다.</strong> 고지 못 올라가는 조합이면 고지 밑을 "타고" 붙어야 한다</strong></li>
+                    <li><span>초크</span><strong>좁은 입구·문. 수비는 여기에 화력을 모으고, 공격은 여기를 <strong>정면으로 뚫으면 안 된다</strong> — 사이드로 돌거나 궁으로 연다</strong></li>
+                    <li><span>코너 / 엄폐</span><strong>좋은 자리 = "쏘고 → 한 발 뒤로 → 안 보임". 항상 코너 옆에 서라. 벽 없는 곳에 서 있는 순간 위도우 밥이다</strong></li>
+                    <li><span>메인 / 사이드</span><strong>큰길(메인)은 탱커가, 옆길(사이드·플랭크 루트)은 딜러가. 지원가는 메인 뒤 코너</strong></li>
                 </ul>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📐</span>기본 대형 (위에서 본 모양)</h3>
+                <h3><span class="card-icon">📐</span>기본 대형 — 프론트 / 미드 / 백라인</h3>
                 <div class="formation">
                     <div class="f-row"><span class="f-tag f-enemy">적</span></div>
-                    <div class="f-row"><span class="f-tag f-tank">🛡️ 돌격</span></div>
-                    <div class="f-row"><span class="f-tag f-dps">⚔️ 딜러(측면/고지)</span><span class="f-tag f-dps">⚔️ 딜러</span></div>
-                    <div class="f-row"><span class="f-tag f-sup">💚 지원</span><span class="f-tag f-sup">💚 지원</span></div>
+                    <div class="f-row"><span class="f-label">프론트</span><span class="f-tag f-tank">🛡️ 돌격</span></div>
+                    <div class="f-row"><span class="f-label">미드</span><span class="f-tag f-dps">⚔️ 딜러 (고지/측면)</span><span class="f-tag f-dps">⚔️ 딜러</span></div>
+                    <div class="f-row"><span class="f-label">백라인</span><span class="f-tag f-sup">💚 지원</span><span class="f-tag f-sup">💚 지원</span></div>
                 </div>
-                <p><strong>돌격</strong>은 맨 앞 코너에서 적 시선을 끌고, <strong>딜러</strong>는 탱커 옆·뒤 또는 하이그라운드, <strong>지원</strong>은 모두가 보이면서 적에게는 안 보이는 코너. 지원가와 돌격의 거리가 <strong>너무 멀어지면(약 15m 이상) 힐이 끊깁니다.</strong></p>
+                <p><strong>돌격</strong>은 맨 앞 코너에서 라인 잡고, <strong>딜러</strong>는 탱커 옆·뒤 또는 고지, <strong>지원</strong>은 팀 다 보이면서 적한텐 안 보이는 코너. 탱커와 힐러 거리가 <strong>15m 넘어가면 힐이 끊긴다</strong> — "탱커 너무 나갔다"는 콜이 이거다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🗺️</span>모드별 포지션 팁</h3>
+                <h3><span class="card-icon">🗺️</span>모드별 포지션</h3>
                 <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>모드</th><th>공격할 때</th><th>수비할 때</th></tr></thead>
+                    <thead><tr><th>모드</th><th>공격</th><th>수비</th></tr></thead>
                     <tbody>
-                    <tr><td>호위 / 혼합</td><td>화물을 "엄폐물"로 쓰기. 화물 옆·뒤에 붙어서 이동. 앞으로 뛰어나가지 않기</td><td>화물이 지나갈 <strong>다음 코너</strong>를 미리 잡기. 화물 위에 서지 말기(모든 적이 그곳을 쏨)</td></tr>
-                    <tr><td>쟁탈</td><td colspan="2">거점 <strong>안</strong>이 아니라 거점 주변 하이그라운드에서 싸우기. 점령은 1명이면 됨. 상대가 거점을 잡고 있어도 우리가 100% 되기 전까지는 급하지 않음</td></tr>
-                    <tr><td>밀기</td><td colspan="2">로봇을 미는 동안 로봇이 엄폐물. 전진 스폰이 열리면 리스폰 거리가 짧아지니 <strong>오버타임 직전 무리하지 말기</strong></td></tr>
-                    <tr><td>플래시포인트 / 격돌</td><td colspan="2">다음 거점 방향으로 <strong>먼저 이동한 팀</strong>이 하이그라운드를 선점. 이동 중 교전을 피하고 5명이 도착한 뒤 싸움</td></tr>
+                    <tr><td>호위 / 혼합</td><td>카트를 <strong>엄폐물로</strong> 쓴다. 카트 옆·뒤에 붙어서 이동. 앞으로 뛰쳐나가지 마라</td><td>카트가 지나갈 <strong>다음 코너·고지</strong>를 미리 잡는다. 카트 위에서 싸우지 마라</td></tr>
+                    <tr><td>쟁탈</td><td colspan="2">거점 <strong>안</strong>이 아니라 거점 주변 <strong>고지</strong>에서 싸운다. 점령은 1명이면 된다. 상대가 잡고 있어도 우리 99% 전엔 급할 거 없다 — 리그룹 먼저</td></tr>
+                    <tr><td>밀기</td><td colspan="2">로봇 미는 동안 로봇이 엄폐물. <strong>전진 스폰</strong> 열리면 리스폰 거리 바뀐다. 오버타임 직전 무리 진입 금지</td></tr>
+                    <tr><td>플래시포인트 / 격돌</td><td colspan="2">다음 거점으로 <strong>먼저 이동한 팀</strong>이 고지 선점. 이동 중 한타 피하고 5명 도착 후 연다</td></tr>
                     </tbody>
                 </table></div>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🏥</span>힐팩과 스폰을 "지도"처럼 쓰기</h3>
-                <p>맵마다 힐팩 위치는 고정입니다. 처음 두세 판은 <strong>거점 근처 큰 힐팩(250) 위치</strong>만 외워 두세요. 체력이 낮아졌을 때 힐러 찾기보다 힐팩이 더 빠를 때가 많습니다.</p>
-                <p><strong>스폰 거리</strong>도 전략입니다. 상대 스폰 바로 앞에서 싸우면 상대는 죽자마자 5초 만에 돌아오고 우리는 20초 걸립니다. <strong>"어디서 싸우느냐"가 곧 리스폰 유불리</strong>입니다.</p>
+                <h3><span class="card-icon">🏥</span>힐팩과 스폰 거리는 "전략"이다</h3>
+                <p>힐팩 위치는 맵마다 고정. 처음 두세 판은 <strong>거점 근처 큰 팩(250)</strong> 위치만 외워라. 피 없을 때 힐러 찾는 것보다 팩이 빠를 때가 많다. 딜러가 <strong>팩 먹으면서 플랭크</strong>하는 게 기본 루트다.</p>
+                <p><strong>스폰 어드밴티지</strong>: 상대 스폰 앞에서 싸우면 상대는 죽어도 5초면 돌아오고 우린 20초. <strong>어디서 싸우느냐가 곧 리스폰 유불리</strong>다. 그래서 "너무 밀지 마라"는 콜이 나온다.</p>
             </div>
 
-            <div class="tip-box">
-                <div class="tip-title">💡 맵 외우기 가장 빠른 방법</div>
-                <div class="tip-content">사용자 지정 게임을 혼자 만들어 <strong>봇 없이 맵을 2분간 걸어 다니세요.</strong> 하이그라운드로 올라가는 길, 큰 힐팩, 사이드 통로 세 가지만 확인. 한 맵당 2분이면 실전 5판보다 낫습니다.</div>
+            <div class="tip-box coach-note">
+                <div class="tip-title">🎯 코치 노트 — 맵 외우기 최단 루트</div>
+                <div class="tip-content">사용자 지정 게임 혼자 만들어서 <strong>봇 없이 맵 2분 걷기.</strong> 고지 올라가는 길, 큰 팩, 사이드 통로 세 개만 확인. 한 맵당 2분이면 실전 5판보다 낫다.</div>
             </div>
 
             <!-- Quiz 4-1 -->
@@ -925,49 +955,49 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">❤️</span>체력 관리 3원칙</h3>
+                <h3><span class="card-icon">❤️</span>피 관리 3원칙</h3>
                 <ol class="steps">
-                    <li><strong>체력 50% 이하 → 엄폐</strong>. 끝까지 쏘다가 죽는 것보다 3초 숨었다가 다시 나오는 게 훨씬 이득</li>
-                    <li><strong>힐러 시야 안에 있기</strong>. 힐러가 나를 못 보면 힐이 없음. 후퇴는 "힐러 쪽으로"</li>
-                    <li><strong>자동 회복 활용</strong>. 잠깐 안 맞으면 저절로 참. 힐팩 없어도 코너 뒤 5초면 회복 시작</li>
+                    <li><strong>피 50% 이하 → 코너.</strong> 끝까지 쏘다 죽는 것보다 3초 숨었다 나오는 게 무조건 이득</li>
+                    <li><strong>힐러 시야 안에 있어라.</strong> 힐러가 못 보면 힐 없다. 후퇴는 "힐러 쪽으로"</li>
+                    <li><strong>패시브 회복 써라.</strong> 잠깐 안 맞으면 저절로 찬다. 팩 없어도 코너 뒤 몇 초면 회복 시작</li>
                 </ol>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🔀</span>카운터 픽 — 실제로 자주 나오는 것만</h3>
-                <p>상대 한 명이 계속 나를 괴롭힌다면 <strong>영웅을 바꾸는 게 정답</strong>입니다(스폰룸에서 H). 부끄러운 게 아니라 이 게임의 핵심 시스템입니다.</p>
+                <h3><span class="card-icon">🔀</span>카운터 픽 — 실제 자주 나오는 매치업</h3>
+                <p>한 명이 계속 나를 괴롭히면 <strong>픽을 바꾸는 게 정답</strong>이다. 이 게임의 핵심 시스템이지 부끄러운 게 아니다. 교체는 <strong>죽은 직후 스폰에서.</strong></p>
                 <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>이 적이 괴롭히면</th><th>이렇게 대응</th><th>왜?</th></tr></thead>
+                    <thead><tr><th>이 픽이 괴롭히면</th><th>대응 픽</th><th>이유</th></tr></thead>
                     <tbody>
-                    <tr><td>파라 / 에코 (공중)</td><td>솔저 · 캐서디 · 애쉬 · 위도우</td><td>즉시 맞는 히트스캔 무기. 공중 적은 발사체로 못 맞춤</td></tr>
-                    <tr><td>겐지 / 트레이서 (뒤로 옴)</td><td>브리기테 · 메이 · 토르비욘 포탑 · 모이라</td><td>근접 방어·둔화·자동 조준으로 기동형 영웅 무력화</td></tr>
-                    <tr><td>위도우메이커 (저격)</td><td>윈스턴 · D.Va · 겐지 · 트레이서로 다이브</td><td>근접하면 저격수는 약함. 정면 대결 금지</td></tr>
-                    <tr><td>라인하르트 (방벽)</td><td>정커랫 · 파라 · 시메트라 · 자리야 궁</td><td>방벽 위로 넘기거나 녹여버림</td></tr>
-                    <tr><td>바스티온 / 토르비욘 포탑</td><td>정커랫 · 파라 · 위도우 · 시그마 방벽</td><td>사거리 밖에서 때리거나 시야 차단</td></tr>
-                    <tr><td>윈스턴 / D.Va (다이브)</td><td>리퍼 · 브리기테 · 자리야</td><td>근접에서 탱커 녹이는 영웅</td></tr>
-                    <tr><td>적 지원가가 안 죽음</td><td>아나(수면·생체 수류탄) · 소전 · 겐지</td><td>회복 차단·고화력 마무리</td></tr>
+                    <tr><td><strong>파라 / 에코</strong> (공중)</td><td>솔저: 76 · 캐서디 · 애쉬 · 위도우메이커 · 소전</td><td><strong>히트스캔</strong>. 투사체론 공중 못 맞춘다</td></tr>
+                    <tr><td><strong>겐지 / 트레이서 / 솜브라</strong> (백라인 다이브)</td><td>브리기테 · 메이 · 토르비욘 · 모이라 · 캐서디</td><td>근접 방어·둔화·자동 조준·CC로 기동형 무력화</td></tr>
+                    <tr><td><strong>위도우메이커 / 애쉬 / 한조</strong> (원거리)</td><td>윈스턴 · D.Va · 겐지 · 트레이서 · 레킹볼</td><td>다이브. 저격수는 붙으면 약하다. 정면 에임 싸움 금지</td></tr>
+                    <tr><td><strong>라인하르트 / 시그마</strong> (방벽)</td><td>정커랫 · 파라 · 시메트라 · 자리야 · 바스티온</td><td>방벽 넘기거나 녹인다</td></tr>
+                    <tr><td><strong>바스티온 / 토르비욘 포탑</strong></td><td>정커랫 · 파라 · 위도우메이커 · 시그마(방벽)</td><td>사거리 밖에서 때리거나 시야 차단</td></tr>
+                    <tr><td><strong>윈스턴 / D.Va / 레킹볼</strong> (다이브 탱)</td><td>리퍼 · 브리기테 · 자리야 · 메이 · 로드호그</td><td>근접에서 탱커 녹이거나 갈고리로 잡는다</td></tr>
+                    <tr><td><strong>마우가 / 로드호그 / 정커퀸</strong> (브롤 탱)</td><td>아나 · 소전 · 자리야 · 오리사</td><td>수류탄(힐 차단)·고화력·창으로 라인 밀어낸다</td></tr>
+                    <tr><td><strong>적 힐러가 안 죽는다</strong></td><td>아나(생체 수류탄·슬립) · 소전 · 겐지 · 트레이서</td><td>회복 차단 + 마무리 화력</td></tr>
                     </tbody>
                 </table></div>
-                <p>규칙 하나: <strong>영웅 교체는 죽은 직후 스폰에서.</strong> 교전 중에 걸어 돌아가서 바꾸면 그 사이 팀이 4명입니다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">⚙️</span>추천 설정 (첫날에 바꿔 두세요)</h3>
+                <h3><span class="card-icon">⚙️</span>세팅 — 첫날에 바꿔라</h3>
                 <ul class="kv">
-                    <li><span>시야각(FOV)</span><strong>103 (최대). 옆에서 오는 적이 보입니다</strong></li>
-                    <li><span>마우스 감도</span><strong>"마우스를 마우스패드 끝에서 끝까지 움직였을 때 180° 정도"가 기준. 너무 높으면 조준이 안 되고, 너무 낮으면 뒤를 못 봄</strong></li>
-                    <li><span>조준선</span><strong>작은 원 또는 점, 밝은 녹색/시안. 기본 십자선은 화면을 가림</strong></li>
-                    <li><span>아군 윤곽선</span><strong>"항상"으로. 벽 너머 팀원 위치가 보여서 스태거 방지에 큰 도움</strong></li>
-                    <li><span>피해 텍스트·처치 확인</span><strong>켜기. 내 공격이 들어갔는지 알 수 있음</strong></li>
-                    <li><span>사망 시 리플레이 자동 건너뛰기</span><strong>끄기. 내가 <em>왜</em> 죽었는지 3초 보는 게 최고의 공부</strong></li>
+                    <li><span>시야각 (FOV)</span><strong>103 (최대). 옆에서 오는 놈이 보인다</strong></li>
+                    <li><span>감도</span><strong>기준: 마우스패드 끝에서 끝까지 = 약 180°. eDPI(DPI × 인게임 감도) 3,000~6,000 사이가 대부분의 프로 구간</strong></li>
+                    <li><span>조준선</span><strong>작은 원 또는 점, 밝은 녹색/시안. 기본 십자선은 화면 가린다</strong></li>
+                    <li><span>아군 윤곽선</span><strong>"항상". 벽 너머 팀원 위치 보임 → 스태거 방지에 결정적</strong></li>
+                    <li><span>피해 텍스트 · 처치 확인 효과</span><strong>켜라. 딜 들어갔는지, 킬 났는지 즉시 안다</strong></li>
+                    <li><span>사망 시 리플레이 건너뛰기</span><strong>끄기. <strong>왜 죽었는지 3초 보는 게</strong> 최고의 코칭이다</strong></li>
                 </ul>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🧠</span>멘탈과 성장 습관</h3>
-                <p><strong>틸트(감정적 플레이)</strong>는 실력보다 승률에 더 영향을 줍니다. 2연패하면 한 판 쉬기. 채팅 무시 옵션 켜 두기.</p>
-                <p><strong>리플레이 보기</strong>: 경력 → 최근 경기 → 내 시점으로 사망 장면만 5개 보세요. "왜 죽었지?"의 답은 거의 항상 <em>혼자 있었거나, 체력 낮은데 안 빠졌거나, 힐러 시야 밖이었거나</em> 셋 중 하나입니다.</p>
-                <p><strong>영웅은 2~3개만</strong>: 역할당 하나씩 잘하는 영웅이 있으면 됩니다. 이것저것 다 하다 보면 아무것도 안 늘어요.</p>
+                <h3><span class="card-icon">🧠</span>멘탈 & 성장 루틴</h3>
+                <p><strong>틸트</strong>는 실력보다 승률에 더 영향 준다. 2연패면 한 판 쉬어라. 채팅 끄는 옵션 켜 둬라. 팀 탓하는 순간 그 판은 끝난 거다.</p>
+                <p><strong>리플레이 복기</strong>: 경력 → 최근 경기 → 내 시점으로 <strong>사망 장면만 5개</strong>. "왜 죽었지?"의 답은 거의 항상 <em>혼자 있었거나 · 피 없는데 안 뺐거나 · 힐러 시야 밖이었거나</em> 셋 중 하나다.</p>
+                <p><strong>영웅 풀은 역할당 2~3개.</strong> 이것저것 다 하면 아무것도 안 는다. 메인 하나, 카운터용 하나, 밴 대비 하나.</p>
             </div>
 
             <!-- Quiz 5-1 -->
@@ -984,7 +1014,7 @@
             </div>
 
             <div class="scenario-box">
-                <div class="scenario-text">📌 상황: 교전 중 체력이 30%가 됐고, 앞의 적 한 명도 체력이 낮습니다!</div>
+                <div class="scenario-text">📌 상황: 한타 중 내 피 30%, 앞에 있는 적 하나도 피 없다!</div>
             </div>
 
             <!-- Quiz 5-2 -->
@@ -1001,7 +1031,7 @@
             </div>
 
             <div class="scenario-box">
-                <div class="scenario-text">📌 상황: 적 힐러가 적 팀의 맨 뒤에 숨어있습니다!</div>
+                <div class="scenario-text">📌 상황: 적 아나가 백라인 코너 뒤에서 혼자 힐 넣고 있다!</div>
             </div>
 
             <!-- Quiz 5-3 -->
@@ -1032,94 +1062,114 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🧱</span>팀 조합 3가지 스타일</h3>
-                <p>상위 티어로 갈수록 팀은 아래 세 가지 중 하나로 싸웁니다. 내 팀이 어떤 스타일인지 알면 "지금 뭘 해야 하는지"가 보입니다.</p>
+                <h3><span class="card-icon">🧱</span>팀 조합 3스타일 — 다이브 / 브롤 / 포크</h3>
+                <p>상위 티어는 아래 셋 중 하나로 싸운다. 우리 조합이 뭔지 알면 <strong>"지금 뭘 해야 하는지"</strong>가 보인다.</p>
                 <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>스타일</th><th>대표 조합</th><th>싸우는 방식</th><th>약점</th></tr></thead>
+                    <thead><tr><th>스타일</th><th>대표 조합</th><th>싸우는 법</th><th>약점</th></tr></thead>
                     <tbody>
-                    <tr><td><strong>다이브</strong></td><td>윈스턴/D.Va · 겐지/트레이서/소전 · 키리코/루시우</td><td>한 타겟(보통 지원가)에게 <strong>동시에</strong> 뛰어들어 즉시 처치 → 이탈</td><td>타이밍이 어긋나면 각개격파. 브리기테·메이 등 근접 방어에 약함</td></tr>
-                    <tr><td><strong>러시 (브롤)</strong></td><td>라인/정커퀸/마우가 · 리퍼/메이 · 루시우/브리기테/모이라</td><td>5명이 <strong>덩어리로 붙어</strong> 루시우 스피드로 밀고 들어감</td><td>거리 벌리며 때리는 포크 조합에 녹음. 하이그라운드 못 올라감</td></tr>
-                    <tr><td><strong>포크</strong></td><td>시그마/라마트라/오리사 · 애쉬/위도우/파라 · 아나/바티스트/젠야타</td><td>멀리서 <strong>먼저 한 명 빼고</strong> 5:4로 진입</td><td>다이브에 후방이 무너짐. 초크에서 지루하게 대치하다 시간 초과</td></tr>
+                    <tr><td><strong>다이브</strong></td><td>윈스턴 / D.Va / 레킹볼 · 겐지 / 트레이서 / 소전 / 에코 · 키리코 / 루시우 / 주노</td><td>한 타겟(보통 힐러)에게 <strong>동시에</strong> 뛰어들어 즉시 처치 → 이탈</td><td>타이밍 어긋나면 각개격파. 브리기테·메이 등 근접 방어에 약함</td></tr>
+                    <tr><td><strong>브롤 (러시)</strong></td><td>라인하르트 / 정커퀸 / 마우가 · 리퍼 / 메이 / 캐서디 · 루시우 / 브리기테 / 모이라</td><td>5명이 <strong>덩어리로</strong> 루시우 비트·스피드 타고 밀고 들어간다</td><td>거리 벌리는 포크에 녹는다. 고지 못 올라감</td></tr>
+                    <tr><td><strong>포크</strong></td><td>시그마 / 라마트라 / 오리사 · 애쉬 / 위도우메이커 / 파라 / 한조 · 아나 / 바티스트 / 젠야타 / 일리아리</td><td>멀리서 <strong>먼저 한 명 빼고</strong> 5:4로 들어간다</td><td>다이브에 백라인이 터진다. 초크에서 대치하다 시간 초과</td></tr>
                     </tbody>
                 </table></div>
-                <p>가위바위보처럼 <strong>다이브 → 포크 → 러시 → 다이브</strong> 순으로 유리합니다. 상대가 포크를 하면 다이브로, 다이브를 하면 러시로 대응하는 게 기본 발상입니다.</p>
+                <p><strong>다이브 &gt; 포크 &gt; 브롤 &gt; 다이브.</strong> 상대가 포크면 다이브로, 다이브면 브롤로 대응하는 게 기본 발상이다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">⏳</span>쿨다운 트래킹 — 딱 이것만 세세요</h3>
-                <p>모든 기술을 다 셀 필요 없습니다. <strong>교전 결과를 바꾸는 기술</strong>만 세면 됩니다. 상대가 썼다면 <strong>그 다음 10초가 공격 타이밍</strong>입니다.</p>
+                <h3><span class="card-icon">⏳</span>쿨 트래킹 — 이것만 세라</h3>
+                <p>모든 기술 다 셀 필요 없다. <strong>한타 결과를 바꾸는 기술</strong>만. 상대가 썼으면 <strong>그다음 10초가 들어갈 타이밍</strong>이다.</p>
                 <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>영웅</th><th>기술</th><th>대략 쿨</th><th>썼다면?</th></tr></thead>
+                    <thead><tr><th>영웅</th><th>기술 (인게임 명칭)</th><th>대략 쿨</th><th>빠지면?</th></tr></thead>
                     <tbody>
-                    <tr><td>키리코</td><td>정화의 부적 (스즈)</td><td>14초</td><td>궁·CC 콤보 넣기 최적</td></tr>
-                    <tr><td>바티스트</td><td>불사 장치</td><td>~25초</td><td>이 사이에 진입하면 킬이 확정</td></tr>
-                    <tr><td>아나</td><td>수면 다트</td><td>~14초</td><td>돌격 탱커가 안심하고 진입 가능</td></tr>
-                    <tr><td>자리야</td><td>방벽(자기/아군)</td><td>~10초</td><td>둘 다 썼으면 자리야가 가장 약한 순간</td></tr>
-                    <tr><td>라인하르트</td><td>방벽 체력 / 돌진</td><td>방벽 재생 · 돌진 ~7초</td><td>방벽 깨지면 라인 뒤 팀이 노출</td></tr>
-                    <tr><td>트레이서</td><td>역행</td><td>12초</td><td>역행 없는 트레이서는 한 번 잡히면 끝</td></tr>
-                    <tr><td>겐지</td><td>튕겨내기</td><td>~8초</td><td>튕겨내기 끝난 직후 집중 사격</td></tr>
-                    <tr><td>메르시</td><td>부활</td><td>30초</td><td>킬을 냈으면 메르시가 오는지 보고 마무리</td></tr>
+                    <tr><td>키리코</td><td>정화의 부적 ("스즈")</td><td>~14초</td><td>궁·CC 콤보 넣기 최적. "스즈 빠졌다" 콜</td></tr>
+                    <tr><td>바티스트</td><td>불사 장치 ("불사")</td><td>~25초</td><td>이 사이 진입하면 킬 확정</td></tr>
+                    <tr><td>아나</td><td>수면 다트 ("슬립")</td><td>~14초</td><td>탱커가 안심하고 진입</td></tr>
+                    <tr><td>자리야</td><td>입자 방벽 / 방벽 씌우기 ("자방·아방")</td><td>~10초</td><td>둘 다 빠진 자리야가 제일 약한 순간</td></tr>
+                    <tr><td>라인하르트</td><td>방벽 / 돌진</td><td>방벽 재생 · 돌진 ~7초</td><td>방벽 깨지면 라인 뒤가 노출</td></tr>
+                    <tr><td>트레이서</td><td>역행 ("리콜")</td><td>12초</td><td>리콜 없는 트레이서는 한 번 잡히면 끝</td></tr>
+                    <tr><td>겐지</td><td>튕겨내기 ("디플")</td><td>~8초</td><td>디플 끝난 직후 집중 사격</td></tr>
+                    <tr><td>메르시</td><td>부활 ("레즈")</td><td>30초</td><td>킬 냈으면 메르시 오는지 보고 마무리</td></tr>
+                    <tr><td>D.Va</td><td>방어 매트릭스 ("매트릭스")</td><td>재생형</td><td>매트릭스 빠졌을 때 투사체·궁</td></tr>
+                    <tr><td>라이프위버</td><td>생명의 손길 ("당기기")</td><td>~19초</td><td>당기기 빠진 뒤 타겟 잡으면 확정</td></tr>
                     </tbody>
                 </table></div>
-                <p>시작은 <strong>상대 지원가의 생존기 하나</strong>(스즈 or 불사)만 세는 것. "썼다!"라고 핑/콜을 하면 팀 전체가 그 순간에 들어갑니다.</p>
+                <p>시작은 <strong>상대 힐러 생존기 하나</strong>(스즈 or 불사)만. "빠졌다!" 콜 한 마디에 팀 전체가 그 순간에 들어간다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📊</span>궁극기 트래킹 실전법</h3>
+                <h3><span class="card-icon">📊</span>궁 트래킹 실전</h3>
                 <ol class="steps">
-                    <li>교전 시작 전 <strong>Tab</strong>을 눌러 <em>우리 팀</em> 궁 상태 확인 (상대 궁은 보이지 않음)</li>
-                    <li>상대 궁은 "쓰는 걸 봤나?"로 판단. 못 봤고 3분 넘게 살아 있었다면 <strong>거의 확실히 있음</strong></li>
-                    <li>위험 궁(겐지 용검, 정커랫 타이어, 라인 대지분쇄, 자리야 중력자탄, D.Va 자폭)은 <strong>있다고 가정</strong>하고 뭉치지 않기</li>
-                    <li>우리 궁 2개 vs 상대 궁 0개면 <strong>그냥 들어가서 이김</strong>. 이걸 "궁 어드밴티지"라고 하며, 교전 시작 여부를 결정하는 가장 중요한 기준</li>
-                    <li>궁을 쓰면 <strong>다음 궁까지 보통 1~2교전</strong>이 걸림. 방금 궁을 다 쓴 팀은 다음 교전을 피하는 것도 전략</li>
+                    <li>한타 전 <strong>Tab</strong>으로 <em>우리</em> 궁 확인. 상대 궁은 안 보인다</li>
+                    <li>상대 궁은 "쓰는 거 봤나?"로 판단. 못 봤고 3분 넘게 살아 있었으면 <strong>거의 확실히 있다</strong></li>
+                    <li>위험 궁 — <strong>용검(겐지)·타이어(정커랫)·대지분쇄(라인)·그라비(자리야)·자폭(D.Va)·EMP(솜브라)</strong> — 는 "있다"고 가정하고 뭉치지 마라</li>
+                    <li>우리 궁 2 vs 상대 0이면 <strong>그냥 들어가서 이긴다.</strong> 이게 "궁 어드밴티지". 한타 열지 말지 결정하는 1순위 기준</li>
+                    <li>궁 쓰면 다음 궁까지 보통 1~2한타. 방금 궁 다 쓴 팀은 <strong>다음 한타를 피하는 것</strong>도 전략이다</li>
                 </ol>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">🔗</span>확정 킬 궁 콤보</h3>
+                <h3><span class="card-icon">🔗</span>확정 킬 궁 콤보 (실제 명칭)</h3>
                 <ul class="kv">
-                    <li><span>자리야 중력자탄 +</span><strong>한조 용의 일격 · 정커랫 타이어 · 파라 포화 · 시그마 중력 붕괴 · 겐지 용검 — "그라비 + 아무거나"</strong></li>
-                    <li><span>아나 나노 강화 +</span><strong>겐지 용검 · 라인하르트 · 정커퀸 궁 · 라마트라 궁 — 받는 피해 50%↓, 주는 피해 50%↑</strong></li>
-                    <li><span>메이 눈보라 +</span><strong>파라 · 정커랫 · 한조 — 얼린 적은 못 피함</strong></li>
-                    <li><span>루시우 소리 방벽 / 키리코 여우 질주</span><strong>= 상대 궁 카운터. 상대 궁 타이밍에 맞춰 쓰는 "방어 궁"</strong></li>
-                    <li><span>키리코 스즈</span><strong>아나 수면·생체 수류탄, 자리야 그라비 상태 이상은 해제 못 하지만 대부분의 CC·디버프 해제. 그라비 안에서 스즈는 "피해 무효" 용도</strong></li>
+                    <li><span>그라비 (중력자탄) +</span><strong>용의 일격(한조) · 죽이는 타이어(정커랫) · 포화(파라) · 중력 붕괴(시그마) · 용검(겐지) — "그라비 + 아무거나"</strong></li>
+                    <li><span>나노 (나노 강화) +</span><strong>용검 · 라인하르트 · 파괴의 함성(정커퀸) · 절멸(라마트라) · 케이지 파이트(마우가) — 받피 50%↓ 주피 50%↑</strong></li>
+                    <li><span>눈보라 (메이) +</span><strong>포화 · 타이어 · 용의 일격 — 얼린 적은 못 피한다</strong></li>
+                    <li><span>EMP (솜브라) +</span><strong>아무 딜 궁 — 방벽·보호막 다 벗기고 침묵</strong></li>
+                    <li><span>방어 궁</span><strong>소리 방벽(루시우 "비트") · 여우 질주(키리코) · 초월(젠야타 "트랜스") · 원기 회복(바티스트 "증폭") — 상대 궁 <strong>타이밍에 맞춰</strong> 쓰는 것</strong></li>
+                    <li><span>스즈 (정화의 부적)</span><strong>슬립·생체 수류탄·동상 등 대부분의 CC·디버프 해제 + 짧은 무적. 그라비 안에서 스즈는 "피해 무효" 용도</strong></li>
                 </ul>
-                <p>콤보는 <strong>미리 말하기</strong>가 전부입니다. "다음 교전 그라비 + 타이어" 한 마디면 됩니다.</p>
+                <p>콤보는 <strong>미리 말하기</strong>가 전부다. "다음 한타 그라비 + 타이어" 한 마디면 된다.</p>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📈</span>티어 올리는 우선순위 (브론즈~플래티넘)</h3>
+                <h3><span class="card-icon">📈</span>티어 올리는 순서 (브론즈 → 다이아)</h3>
                 <ol class="steps">
-                    <li><strong>안 죽기</strong> — 판당 사망 8회 이하가 첫 목표. 죽는 횟수만 줄여도 골드까지 감</li>
-                    <li><strong>팀과 같은 타이밍</strong> — 스태거 없이 5명이 함께 진입·후퇴</li>
-                    <li><strong>포지션</strong> — 코너·하이그라운드·힐러 시야. 에임보다 먼저</li>
-                    <li><strong>궁 관리</strong> — 낭비 없이, 콤보로</li>
-                    <li><strong>쿨다운 트래킹</strong> — 상대 생존기 하나부터</li>
-                    <li><strong>에임</strong> — 마지막입니다. 훈련장 5분 워밍업이면 충분</li>
+                    <li><strong>안 죽기</strong> — 판당 데스 8 이하. 이것만으로 골드 간다</li>
+                    <li><strong>타이밍</strong> — 스태거 없이 5명이 같이 들어가고 같이 뺀다</li>
+                    <li><strong>포지션</strong> — 코너·고지·힐러 시야. 에임보다 먼저</li>
+                    <li><strong>궁 관리</strong> — 낭비 없이, 콤보로, 어드밴티지 계산하고</li>
+                    <li><strong>쿨 트래킹</strong> — 상대 생존기 하나부터</li>
+                    <li><strong>에임</strong> — 마지막이다. 훈련장 5분 워밍업이면 충분. 에임 연습에 시간 쏟는 브론즈는 브론즈로 남는다</li>
                 </ol>
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📖</span>용어 사전</h3>
+                <h3><span class="card-icon">📖</span>용어 사전 — 인게임에서 실제로 쓰는 말</h3>
                 <dl class="glossary">
-                    <dt>스태거</dt><dd>팀원이 따로따로 죽어 리스폰이 어긋나는 것. 항상 소수로 싸우게 됨</dd>
-                    <dt>포킹</dt><dd>멀리서 안전하게 툭툭 때려 상대 자원을 빼는 것</dd>
-                    <dt>다이브</dt><dd>기동력 영웅들이 한 타겟에게 동시에 뛰어드는 것</dd>
-                    <dt>플랭크</dt><dd>측면·후방으로 우회. 뉴비는 팀이 안 보이는 순간 위험</dd>
-                    <dt>피킹 / 필</dt><dd>코너에서 잠깐 나와 쏘고 다시 숨는 것 / 첫 킬로 5:4를 만드는 것</dd>
-                    <dt>궁 어드밴티지</dt><dd>우리 궁 개수가 상대보다 많은 상태. 교전을 시작할 근거</dd>
-                    <dt>CC</dt><dd>군중 제어. 수면·둔화·밀치기·기절 등 행동을 막는 기술</dd>
-                    <dt>히트스캔 / 발사체</dt><dd>쏘는 즉시 맞는 무기(솔저, 캐서디) / 날아가는 데 시간이 걸리는 무기(파라, 한조)</dd>
-                    <dt>하이그라운드</dt><dd>높은 지형. 시야·엄폐 모두 유리</dd>
-                    <dt>오버타임</dt><dd>시간이 끝났지만 공격팀이 목표에 붙어 있으면 연장. 떨어지면 즉시 종료</dd>
-                    <dt>스폰 어드밴티지</dt><dd>우리 스폰이 교전 지점에 더 가까운 상태. 죽어도 빨리 복귀</dd>
-                    <dt>틸트</dt><dd>화가 나서 판단이 무너진 상태. 한 판 쉬는 게 답</dd>
+                    <dt>한타</dt><dd>팀 대 팀 교전. "한타 열자", "한타 졌다"</dd>
+                    <dt>스태거 / 잘림</dt><dd>팀원이 따로따로 죽어 리스폰이 어긋나는 것. "잘리지 마" = 혼자 죽지 마</dd>
+                    <dt>포크 / 짤짤이</dt><dd>멀리서 안전하게 툭툭 때려 상대 자원을 빼는 것</dd>
+                    <dt>다이브 / 브롤</dt><dd>기동력으로 한 타겟에 동시에 뛰어드는 것 / 5명이 덩어리로 붙어 싸우는 것</dd>
+                    <dt>플랭크</dt><dd>측면·후방 우회. "플랭커" = 겐지·트레이서·솜브라·리퍼</dd>
+                    <dt>프론트 / 백라인</dt><dd>탱커가 있는 앞줄 / 힐러가 있는 뒷줄. "백라인 터졌다" = 힐러 죽었다</dd>
+                    <dt>각 / 딜각 / 킬각 / 궁각</dt><dd>기회. "각 나왔다" = 지금 들어가면 된다</dd>
+                    <dt>피킹 / 필</dt><dd>코너에서 잠깐 나와 쏘고 다시 숨기 / 첫 킬로 5:4 만드는 것</dd>
+                    <dt>이니시</dt><dd>한타 개시. 라인 돌진, 윈스턴 점프, 궁 등으로 첫 각을 만드는 것</dd>
+                    <dt>리그룹</dt><dd>5명 다시 모이기. "리그룹 하자" = 빠져서 모이자</dd>
+                    <dt>궁 어드밴티지</dt><dd>우리 궁 개수가 상대보다 많은 상태. 한타 열 근거</dd>
+                    <dt>궁 빼기 / 궁 던지기</dt><dd>상대 궁을 유도해 낭비시키기 / 내 궁을 의미 없이 쓰기</dd>
+                    <dt>CC</dt><dd>군중 제어. 슬립(수면)·둔화·넉백·기절·침묵(EMP) 등</dd>
+                    <dt>히트스캔 / 투사체</dt><dd>쏘는 즉시 맞는 무기(솔저·캐서디·애쉬·위도우) / 날아가는 데 시간 걸리는 무기(파라·한조·정커랫)</dd>
+                    <dt>고지</dt><dd>하이그라운드. 시야·엄폐 모두 유리</dd>
+                    <dt>초크</dt><dd>좁은 통로. 수비가 화력 모으는 곳</dd>
+                    <dt>카트 / 로봇</dt><dd>호위·혼합의 화물 / 밀기의 TS-1</dd>
+                    <dt>오버타임 ("오타")</dt><dd>시간 끝났지만 공격이 목표에 붙어 있으면 연장. 떨어지면 즉시 종료</dd>
+                    <dt>스폰 어드밴티지</dt><dd>우리 스폰이 한타 지점에 더 가까운 상태</dd>
+                    <dt>스즈 / 불사 / 슬립 / 나노 / 레즈 / 비트 / 트랜스</dt><dd>정화의 부적 / 불사 장치 / 수면 다트 / 나노 강화 / 부활 / 소리 방벽 / 초월 — 기술 줄임말</dd>
+                    <dt>그라비 / 용검 / 타이어 / 자폭 / EMP</dt><dd>중력자탄 / 용검 / 죽이는 타이어 / 자폭 / EMP — 위험 궁 줄임말</dd>
+                    <dt>자방 / 아방</dt><dd>자리야 자기 방벽 / 아군 방벽(방벽 씌우기)</dd>
+                    <dt>매트릭스 먹기</dt><dd>D.Va 방어 매트릭스로 투사체·궁을 지우는 것. "디바 먹어!"</dd>
+                    <dt>힐봇</dt><dd>힐만 하고 딜·생존 판단이 없는 힐러. 욕이다</dd>
+                    <dt>던진다 / 트롤</dt><dd>고의로 지는 플레이. 무리 진입도 결과적으로 던지는 것</dd>
+                    <dt>틸트</dt><dd>화나서 판단 무너진 상태. 한 판 쉬어라</dd>
+                    <dt>티어</dt><dd>브론즈 → 실버 → 골드 → 플래티넘 → 다이아몬드 → 마스터 → 그랜드마스터 → 챔피언</dd>
+                    <dt>밴</dt><dd>경쟁전 시작 전 영웅 금지 투표. 메타 픽·카운터 픽이 주로 밴된다</dd>
+                    <dt>특전 (퍽)</dt><dd>경기 중 선택하는 영웅 강화. 소특전 → 대특전</dd>
                 </dl>
             </div>
 
-            <div class="tip-box">
-                <div class="tip-title">💡 이 페이지를 다 이해했다면</div>
-                <div class="tip-content">당신은 이미 <strong>플래티넘 이상의 "게임 이해도"</strong>를 가진 겁니다. 이제 남은 건 실제 판에서 한 번에 하나씩 적용하는 것뿐. 오늘은 스태거 하나, 내일은 궁 어드밴티지 하나.</div>
+            <div class="tip-box coach-note">
+                <div class="tip-title">🎯 코치 노트 — 마지막</div>
+                <div class="tip-content">여기까지 이해했으면 <strong>게임 이해도는 이미 플래티넘 이상</strong>이다. 남은 건 한 판에 하나씩 적용하는 것. 오늘은 스태거, 내일은 궁 어드밴티지. 한 번에 다 하려고 하면 하나도 안 된다.</div>
             </div>
         </section>
 
@@ -1130,7 +1180,7 @@
                 영웅 도감
             </div>
             <div class="card">
-                <p>역할별로 영웅을 살펴보세요. <strong>★</strong>이 적을수록 입문하기 쉽고, <span class="hero-badge">뉴비 추천</span> 뱃지가 붙은 영웅부터 시작하면 좋습니다.</p>
+                <p>한국 서버 <strong>공식 표기</strong> 기준 전체 로스터. <strong>★</strong>이 적을수록 입문이 쉽고, <span class="hero-badge">뉴비 추천</span>이 붙은 영웅부터 잡아라. 각 카드의 코치 한마디는 실제 인게임에서 쓰는 말 그대로다.</p>
             </div>
             <div class="hero-filters" id="hero-filters">
                 <button class="filter-btn active" onclick="filterHeroes('all',this)">전체</button>
@@ -1173,36 +1223,53 @@
         const STORAGE_KEY = 'ow-guide-progress';
 
         const heroes = [
-            // 돌격
-            { name:'라인하르트', role:'tank', diff:1, newbie:true, desc:'커다란 방벽으로 팀을 보호합니다. 방벽을 들고 팀과 함께 전진하는 법을 배우기에 최고.' },
-            { name:'오리사', role:'tank', diff:1, newbie:true, desc:'튼튼하고 단순합니다. 앞에서 버티며 팀의 진형을 잡아주는 역할.' },
-            { name:'D.Va', role:'tank', diff:2, newbie:false, desc:'기동력이 좋고 방어 매트릭스로 아군을 지킵니다. 진입 타이밍 판단이 필요.' },
-            { name:'자리야', role:'tank', diff:2, newbie:false, desc:'보호막을 아군에게 걸어 에너지를 모읍니다. 보호막 타이밍이 핵심.' },
-            { name:'윈스턴', role:'tank', diff:3, newbie:false, desc:'점프로 적 후방에 뛰어드는 다이브 탱커. 상황 판단이 중요합니다.' },
-            { name:'시그마', role:'tank', diff:3, newbie:false, desc:'방벽 배치와 흡수 능력이 강력하지만 조작이 복잡합니다.' },
-            { name:'정커퀸', role:'tank', diff:3, newbie:false, desc:'공격적인 근접 탱커. 출혈로 자가 회복하며 싸웁니다.' },
-            { name:'라마트라', role:'tank', diff:3, newbie:false, desc:'두 가지 형태를 오가며 싸웁니다. 형태 전환 타이밍이 중요.' },
-            // 공격
-            { name:'솔저: 76', role:'dps', diff:1, newbie:true, desc:'가장 기본적인 총기 영웅. 자가 회복 장판이 있어 실수에 관대합니다.' },
-            { name:'바스티온', role:'dps', diff:1, newbie:true, desc:'강력한 화력과 단순한 조작. 위치 선정만 배우면 됩니다.' },
-            { name:'리퍼', role:'dps', diff:2, newbie:true, desc:'근거리에서 강력하며 생명력 흡수로 버팁니다. 우회 경로를 익히세요.' },
-            { name:'토르비욘', role:'dps', diff:2, newbie:true, desc:'포탑을 설치해 자동으로 딜을 넣습니다. 수비 맵에서 특히 좋습니다.' },
-            { name:'메이', role:'dps', diff:2, newbie:false, desc:'얼음 벽으로 길을 막고 적을 얼립니다. 활용법이 다양합니다.' },
-            { name:'캐서디', role:'dps', diff:3, newbie:false, desc:'정확한 조준이 필요한 중거리 딜러. 에임 연습에 좋습니다.' },
-            { name:'애쉬', role:'dps', diff:3, newbie:false, desc:'조준 사격과 다이너마이트로 중장거리에서 압박합니다.' },
-            { name:'파라', role:'dps', diff:3, newbie:false, desc:'하늘에서 로켓을 쏩니다. 히트스캔 딜러에게 약하니 주의.' },
-            { name:'트레이서', role:'dps', diff:4, newbie:false, desc:'점멸로 적 후방을 교란합니다. 조작 난도가 매우 높습니다.' },
-            { name:'겐지', role:'dps', diff:4, newbie:false, desc:'빠른 기동과 튕겨내기. 진입·이탈 판단이 매우 중요합니다.' },
-            { name:'위도우메이커', role:'dps', diff:4, newbie:false, desc:'헤드샷 한 방 저격수. 에임에 자신 있을 때 도전하세요.' },
-            // 지원
-            { name:'메르시', role:'support', diff:1, newbie:true, desc:'아군을 따라다니며 치유·증폭. 조준이 거의 필요 없어 입문에 최적.' },
-            { name:'모이라', role:'support', diff:1, newbie:true, desc:'대략적인 조준으로도 치유와 공격이 가능. 힐러의 기본을 배우기 좋음.' },
-            { name:'루시우', role:'support', diff:2, newbie:true, desc:'주변 아군을 자동 치유하고 속도를 올려줍니다. 벽타기가 재미있어요.' },
-            { name:'브리기테', role:'support', diff:2, newbie:false, desc:'근접 전투 힐러. 방패로 아군을 보호하며 싸웁니다.' },
-            { name:'바티스트', role:'support', diff:3, newbie:false, desc:'불사 장치로 팀 전멸을 막습니다. 타이밍이 중요.' },
-            { name:'키리코', role:'support', diff:3, newbie:false, desc:'순간이동과 정화 부적. 기동성이 뛰어나지만 조준이 필요합니다.' },
-            { name:'젠야타', role:'support', diff:3, newbie:false, desc:'부조화의 구슬로 적을 약화. 체력이 낮아 위치 선정이 중요.' },
-            { name:'아나', role:'support', diff:4, newbie:false, desc:'저격총으로 치유와 공격. 수면 다트 적중이 승패를 가릅니다.' },
+            // ===== 돌격 =====
+            { name:'라인하르트', role:'tank', diff:1, newbie:true, tag:'브롤', desc:'방벽 들고 라인 잡는 탱커의 기본형. 돌진은 "이니시" 아니면 아끼고, 방벽은 팀이 지나갈 때만 든다. 대지분쇄는 나노·그라비와 콤보.' },
+            { name:'오리사', role:'tank', diff:1, newbie:true, tag:'포크/브롤', desc:'튼튼하고 단순. 창으로 밀어내며 라인 유지. 강화 쓰는 타이밍(CC 무시)만 익히면 된다. 브롤 탱 상대로 강하다.' },
+            { name:'D.Va', role:'tank', diff:2, newbie:false, tag:'다이브', desc:'매트릭스로 궁·투사체 "먹는" 게 핵심. 부스터로 백라인 다이브 후 이탈. 메카 터져도 파일럿으로 살아남으면 궁 다시 찬다.' },
+            { name:'자리야', role:'tank', diff:2, newbie:false, tag:'브롤', desc:'자방·아방으로 에너지 모아 화력 올린다. 아방을 다이브 들어가는 아군에게 씌우는 게 기본. 그라비는 팀 궁 콤보 시작점.' },
+            { name:'윈스턴', role:'tank', diff:3, newbie:false, tag:'다이브', desc:'점프로 힐러에게 뛰어드는 다이브 탱 원조. 방벽 깔고 테슬라로 힐러 압박. 뛰어들 때 팀이 따라오는지 확인이 전부.' },
+            { name:'시그마', role:'tank', diff:3, newbie:false, tag:'포크', desc:'방벽 배치·흡수·바위(CC). 포크 조합의 핵심. 중력 붕괴는 그라비급 콤보 궁. 방벽을 팀 각도에 맞춰 놓는 감각이 필요.' },
+            { name:'정커퀸', role:'tank', diff:3, newbie:false, tag:'브롤', desc:'출혈로 자힐하며 붙는 브롤 탱. 외침으로 팀 이속·과다 체력. 파괴의 함성은 나노와 콤보. 힐러 없이 혼자 못 산다.' },
+            { name:'라마트라', role:'tank', diff:3, newbie:false, tag:'포크/브롤', desc:'옴닉(방벽·포크) ↔ 네메시스(브롤) 형태 전환. 절멸은 붙어 있는 적 있는 한 안 끝난다. 나노 받으면 한타 혼자 끝낸다.' },
+            { name:'로드호그', role:'tank', diff:2, newbie:false, tag:'브롤', desc:'갈고리로 한 명 끌어와 원콤. 자힐(숨 돌리기) 있어 힐 의존 낮다. 궁 충전 많이 준다는 게 단점. 갈고리 각만 보면 된다.' },
+            { name:'레킹볼', role:'tank', diff:4, newbie:false, tag:'다이브', desc:'구르기·갈고리로 백라인 흔드는 교란형. 팀과 따로 노는 것 같지만 "어그로 끌기"가 일이다. 저티어에선 팀이 못 따라와 어렵다.' },
+            { name:'둠피스트', role:'tank', diff:4, newbie:false, tag:'다이브', desc:'로켓 펀치로 벽꿍, 슬램으로 진입. 쿨 돌리며 들락날락. 기술 다 빠지면 그냥 큰 표적. 조작 난도 최상.' },
+            { name:'마우가', role:'tank', diff:2, newbie:false, tag:'브롤', desc:'쌍기관총 과열로 치명타, 심장 박동으로 자힐·팀힐. 돌진으로 라인 밀기. 케이지 파이트로 힐러 가둔다. 아나 수류탄에 약함.' },
+            { name:'헤이즈', role:'tank', diff:3, newbie:false, tag:'다이브/브롤', desc:'벽 타기·도약으로 고지 접근, 가시 방어로 근접 반격. 다이브와 브롤 중간. 기동성 있는 탱 원하면 이쪽.' },
+            // ===== 공격 =====
+            { name:'솔저: 76', role:'dps', diff:1, newbie:true, tag:'히트스캔', desc:'가장 기본 히트스캔. 질주로 이동, 생체장으로 자힐·팀힐. 헬릭스 로켓은 근접 마무리용. 딜러 입문은 무조건 이 영웅.' },
+            { name:'바스티온', role:'dps', diff:1, newbie:true, tag:'포크', desc:'포격 형태 화력 최상. 위치만 잘 잡으면 된다. 방벽 녹이는 데 최고. 다이브 오면 약하니 팀 근처에.' },
+            { name:'리퍼', role:'dps', diff:2, newbie:true, tag:'브롤', desc:'근접 샷건 + 생명력 흡수. 탱커 녹이는 카운터. 그림자 밟기로 플랭크 → 뒤에서 죽음의 꽃. 윈스턴·D.Va 잡는다.' },
+            { name:'토르비욘', role:'dps', diff:2, newbie:true, tag:'포크', desc:'포탑 깔고 자동 딜. 과부하로 근접 강함. 겐지·트레이서 카운터. 수비 맵에서 포탑 위치가 실력이다.' },
+            { name:'메이', role:'dps', diff:2, newbie:false, tag:'브롤', desc:'빙벽으로 길 막고 팀 가르기, 냉각수로 둔화. 다이브 카운터. 눈보라는 포화·타이어와 콤보. 빙벽 잘못 세우면 팀 갈라 죽인다.' },
+            { name:'캐서디', role:'dps', diff:3, newbie:false, tag:'히트스캔', desc:'중거리 히트스캔 교과서. 자기장 수류탄으로 플랭커 잡는다. 황야의 무법자는 위험하니 상대 CC 빠진 뒤에.' },
+            { name:'애쉬', role:'dps', diff:3, newbie:false, tag:'히트스캔/포크', desc:'정조준 히트스캔 + 다이너마이트 광역 화상. 밥으로 힐러 압박·궁 빼기. 포크 조합의 주력 딜러.' },
+            { name:'파라', role:'dps', diff:3, newbie:false, tag:'투사체', desc:'공중에서 로켓 스플래시. 히트스캔 있으면 픽 바꿔야 한다. 포화는 그라비·눈보라 뒤에. 혼자 떠 있으면 위도우 밥.' },
+            { name:'트레이서', role:'dps', diff:4, newbie:false, tag:'다이브', desc:'점멸·리콜로 백라인 교란. 리콜 빠진 트레이서는 죽은 목숨. 펄스 폭탄은 탱커보단 힐러에게. 조작 난도 최상.' },
+            { name:'겐지', role:'dps', diff:4, newbie:false, tag:'다이브', desc:'질풍참 초기화로 킬 이어가기, 디플로 궁 반사. 용검 + 나노 = 최강 콤보. 진입·이탈 판단이 전부. 브리기테·메이 오면 픽 바꿔라.' },
+            { name:'위도우메이커', role:'dps', diff:4, newbie:false, tag:'히트스캔/포크', desc:'헤드샷 원킬 저격. 고지에서 한타 시작 전 첫 킬 내는 게 일. 다이브 오면 갈고리로 이탈. 에임 없으면 팀에 짐이다.' },
+            { name:'한조', role:'dps', diff:4, newbie:false, tag:'투사체/포크', desc:'투사체 저격. 음파 화살로 벽 뒤 시야. 용의 일격은 그라비와 콤보. 폭풍 화살로 근접 대응. 에임 편차 크다.' },
+            { name:'정커랫', role:'dps', diff:2, newbie:false, tag:'투사체', desc:'유탄 스팸으로 초크·방벽 압박. 덫+지뢰로 플랭커 잡기. 타이어는 그라비·눈보라와 콤보. 지뢰 점프로 고지 오른다.' },
+            { name:'시메트라', role:'dps', diff:2, newbie:false, tag:'포크', desc:'광선이 방벽에 충전. 순간이동기로 팀 이동·고지 진입. 감시 포탑으로 플랭크 루트 봉쇄. 라인 상대로 강함.' },
+            { name:'솜브라', role:'dps', diff:3, newbie:false, tag:'다이브', desc:'은신·해킹으로 백라인 교란, 위치 이동기로 탈출. EMP는 방벽·보호막 다 벗기고 침묵. 킬보단 정보와 압박이 일.' },
+            { name:'소전', role:'dps', diff:3, newbie:false, tag:'히트스캔/다이브', desc:'레일건 충전 원샷. 파워 슬라이드로 고지·이탈. 파열탄으로 힐러 압박. 다이브·포크 다 되는 만능.' },
+            { name:'에코', role:'dps', diff:3, newbie:false, tag:'투사체/다이브', desc:'비행 + 집중 광선으로 피 없는 적 녹이기. 복제로 상대 영웅 궁 빌려 쓴다. 파라처럼 히트스캔에 약함.' },
+            { name:'벤처', role:'dps', diff:3, newbie:false, tag:'다이브/브롤', desc:'굴착으로 땅속 이동·무적, 분쇄 돌진으로 진입. 근접 딜 강하고 이탈 확실. 다이브에 브롤 섞인 느낌.' },
+            { name:'프레야', role:'dps', diff:3, newbie:false, tag:'투사체/포크', desc:'석궁 연사 + 급속 사격. 대시로 공중 이동. 중거리 포크에 강하고 궁으로 광역 폭발. 투사체 에임 필요.' },
+            // ===== 지원 =====
+            { name:'메르시', role:'support', diff:1, newbie:true, tag:'포크/다이브', desc:'가디언 엔젤로 아군 사이 이동, 힐·증폭 빔. 레즈는 안전할 때만(레즈하다 죽으면 2명 손해). 딜러 증폭이 실력이다.' },
+            { name:'모이라', role:'support', diff:1, newbie:true, tag:'브롤', desc:'에임 거의 필요 없다. 소멸로 이탈. 힐 구슬·딜 구슬 선택. 힐봇 되기 쉬우니 딜 구슬도 써라. 플랭커 잡는다.' },
+            { name:'루시우', role:'support', diff:2, newbie:true, tag:'브롤/다이브', desc:'스피드·힐 오라 전환. 브롤 조합 진입 = 루시우 스피드. 비트(소리 방벽)는 상대 궁 타이밍에. 벽타기 익히면 안 죽는다.' },
+            { name:'브리기테', role:'support', diff:2, newbie:false, tag:'브롤', desc:'방패 밀쳐내기(CC)·회복 팩. 겐지·트레이서 카운터. 프론트 근처에서 도리깨 휘두르면 광역 힐. 백라인 지키는 힐러.' },
+            { name:'바티스트', role:'support', diff:3, newbie:false, tag:'포크', desc:'불사 장치로 팀 전멸 막는다 — 타이밍이 실력. 증폭 매트릭스로 힐·딜 두 배. 히트스캔 딜도 세다. 포크 조합 핵심.' },
+            { name:'키리코', role:'support', diff:3, newbie:false, tag:'다이브', desc:'순보로 아군에게 벽 너머 이동. 스즈로 CC 해제·무적. 여우 질주는 진입 궁. 쿠나이 헤드샷 강하다. 다이브 조합 필수.' },
+            { name:'아나', role:'support', diff:4, newbie:false, tag:'포크', desc:'스코프 힐·딜. 슬립으로 궁 끊기, 생체 수류탄으로 힐 차단. 나노는 탱커·겐지에게. 도주기 없어 위치가 생명.' },
+            { name:'젠야타', role:'support', diff:3, newbie:false, tag:'포크', desc:'부조화로 타겟 받는 피해 증가 — 팀 화력 올리는 힐러. 조화로 원거리 힐. 트랜스(초월)는 방어 궁. 발차기 넉백 유용.' },
+            { name:'일리아리', role:'support', diff:3, newbie:false, tag:'포크', desc:'태양석 힐 탑 설치 + 충전 히트스캔. 딜 센 힐러. 탑 위치가 실력. 도주기 약해서 위치 선정 필수.' },
+            { name:'라이프위버', role:'support', diff:2, newbie:false, tag:'포크/브롤', desc:'생명의 손길로 위험한 아군 당겨오기. 꽃잎 발판으로 고지 올리기. 당기기 타이밍 잘못 잡으면 팀 욕먹는다.' },
+            { name:'주노', role:'support', diff:2, newbie:false, tag:'다이브', desc:'글라이드로 기동, 궤도 광선으로 이속·힐. 유도 로켓 힐. 다이브 조합 힐러. 이동 중 힐이 편해 입문도 괜찮다.' },
+            { name:'우양', role:'support', diff:3, newbie:false, tag:'포크/브롤', desc:'물 다루는 지원가. 파도로 이동·밀치기, 물 방울로 아군 보호. 새 영웅이라 패치마다 성능 변동 큼.' },
         ];
         const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 
@@ -1214,7 +1281,7 @@
                         <span class="hero-name">${h.name}${h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : ''}</span>
                         <span class="hero-role role-${h.role}">${roleLabel[h.role]}</span>
                     </div>
-                    <div class="hero-diff" title="난이도 ${h.diff}/4">${'★'.repeat(h.diff)}${'☆'.repeat(4 - h.diff)}</div>
+                    <div class="hero-meta"><span class="hero-diff" title="난이도 ${h.diff}/4">${'★'.repeat(h.diff)}${'☆'.repeat(4 - h.diff)}</span><span class="hero-tag">${h.tag}</span></div>
                     <div class="hero-desc">${h.desc}</div>
                 </div>`).join('');
         }
