@@ -1,6 +1,6 @@
 /* =====================================================================
    전술 지도 모듈 (tmap.js)
-   데이터: data/maps/_schema.js, data/maps/*.js, data/map-situations.js
+   데이터: data/maps/schema.js, data/maps/*.js, data/map-situations.js
    SVG 전용 (게임 이미지 사용 안 함). AI·서버 호출 없음.
    ===================================================================== */
 const TM = {
