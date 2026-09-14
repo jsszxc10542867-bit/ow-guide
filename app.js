@@ -6,9 +6,9 @@
 
 // ---------- 상수 ----------
 const TOTAL_QUIZ = quizAnswers.length;
-const SECTION_COUNT = 10;
+const SECTION_COUNT = 11;
 const STORAGE_KEY = 'ow-guide-progress';
-const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary'];
+const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary','tactical'];
 const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
 const HERO_TAG_META = {
@@ -41,7 +41,7 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) state = Object.assign(state, JSON.parse(raw));
   } catch (e) { /* 저장된 데이터가 없거나 손상됨 */ }
-  ['answers', 'sit', 'deaths', 'daily', 'checklist'].forEach(k => { if (!state[k] || typeof state[k] !== 'object') state[k] = {}; });
+  ['answers', 'sit', 'deaths', 'daily', 'checklist', 'tmap'].forEach(k => { if (!state[k] || typeof state[k] !== 'object') state[k] = {}; });
   if (typeof state.xp !== 'number') state.xp = 0;
 }
 function saveState() {
@@ -52,7 +52,7 @@ function touchStudy() { state.lastStudy = todayKey(); }
 function resetProgress() {
   if (!confirm('퀴즈 답안, 상황판단 기록, XP 등 학습 진행도를 모두 초기화하시겠습니까?')) return;
   const mode = state.mode;
-  state = { answers: {}, section: 0, sit: {}, xp: 0, deaths: {}, daily: {}, checklist: {}, lastStudy: null, mode, reco: null };
+  state = { answers: {}, section: 0, sit: {}, xp: 0, deaths: {}, daily: {}, checklist: {}, lastStudy: null, mode, reco: null, tmap: {} };
   saveState();
   location.reload();
 }
@@ -106,6 +106,7 @@ function switchSection(index, opts) {
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   if (!(opts && opts.noHash)) history.replaceState(null, '', '#' + SECTION_HASH[index]);
   if (index === 8) renderStats();
+  if (index === 10 && typeof tmInit === 'function') tmInit();
 }
 function sectionFromHash() {
   const h = location.hash.replace('#', '');
@@ -138,6 +139,7 @@ function setMode(mode, silent) {
     b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
   saveState();
+  if (typeof tmRenderDetail === 'function' && TM && TM.inited) tmRenderDetail();
   if (!silent) toast(mode === 'newbie' ? '🟢 뉴비 모드: 핵심만 간단히 보여 드립니다' : mode === 'advanced' ? '🔴 심화 모드: 자원 교환·타이밍 노트가 열립니다' : '🔵 일반 모드');
 }
 
@@ -259,6 +261,19 @@ function retryQuiz() {
   });
   document.getElementById('result-body').innerHTML = `<p style="color:var(--text-3);">${TOTAL_QUIZ}문제를 모두 풀면 결과가 여기에 표시됩니다.</p>`;
   switchSection(0);
+}
+
+// 포지셔닝 관련 퀴즈에 "지도에서 확인하기" 버튼
+function addQuizMapLinks() {
+  quizAnswers.forEach((q, i) => {
+    if (q.cat !== 'positioning' && q.topic !== 'sideCond' && q.topic !== 'highground') return;
+    const fb = document.getElementById(`feedback-${i}`); if (!fb) return;
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-outline quiz-map-link'; btn.type = 'button';
+    btn.textContent = '🗺️ 지도에서 확인하기';
+    btn.onclick = () => tmOpen({ map: 'kings-row', sit: q.topic === 'sideCond' ? 'attack' : 'fightStart', role: q.topic === 'sideCond' || q.topic === 'highground' ? 'dps' : undefined });
+    fb.insertAdjacentElement('afterend', btn);
+  });
 }
 
 // ---------- 표: 모바일 카드형 라벨 ----------
@@ -396,7 +411,8 @@ function openHero(i) {
         <div class="hm-card"><h4>🔀 카운터 (이 영웅이 힘든 상대)</h4><div class="hm-tags">${d.counters.map(n => heroLink(n)).join('')}</div></div>
         <div class="hm-card"><h4>🤝 추천 영웅 조합</h4><div class="hm-tags">${d.synergy.map(n => heroLink(n)).join('')}</div></div>
       </div>
-      <div class="tip-box coach-note" style="margin-bottom:0"><div class="tip-title">💡 이것만 기억하세요</div><div class="tip-content">${d.coach}</div></div>`;
+      <div class="tip-box coach-note" style="margin-bottom:0"><div class="tip-title">💡 이것만 기억하세요</div><div class="tip-content">${d.coach}</div></div>
+      <div style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn btn-primary" onclick="closeModal('hero-modal'); tmOpen({hero:'${h.name.replace(/'/g, "\'")}'})">🗺️ 이 영웅의 맵 포지션 보기</button></div>`;
   }
   modal.hidden = false; document.body.classList.add('modal-open');
   modal.querySelector('.modal-close').focus();
@@ -907,7 +923,7 @@ function toggleTheme() {
 // ---------- 초기화 ----------
 window.addEventListener('DOMContentLoaded', () => {
   sections = document.querySelectorAll('.section');
-  progressDots = document.querySelectorAll('.nav-tab');
+  progressDots = Array.from(document.querySelectorAll('.nav-tab')).sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     document.getElementById('theme-icon').textContent = '☀️';
@@ -917,6 +933,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderHeroes();
   applyHeroFilter();
   initQuizCounters();
+  addQuizMapLinks();
   labelTableCells();
   renderLevel();
   renderDaily();
