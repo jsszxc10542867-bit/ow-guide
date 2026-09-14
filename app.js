@@ -6,9 +6,10 @@
 
 // ---------- 상수 ----------
 const TOTAL_QUIZ = quizAnswers.length;
-const SECTION_COUNT = 11;
+const SECTION_COUNT = 10;
 const STORAGE_KEY = 'ow-guide-progress';
-const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary','tactical'];
+const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary'];
+const HASH_ALIAS = { tactical: 3 };
 const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
 const HERO_TAG_META = {
@@ -106,10 +107,11 @@ function switchSection(index, opts) {
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   if (!(opts && opts.noHash)) history.replaceState(null, '', '#' + SECTION_HASH[index]);
   if (index === 8) renderStats();
-  if (index === 10 && typeof tmInit === 'function') tmInit();
+  if (index === 3 && typeof tmInit === 'function') tmInit();
 }
 function sectionFromHash() {
   const h = location.hash.replace('#', '');
+  if (HASH_ALIAS[h] !== undefined) return HASH_ALIAS[h];
   const i = SECTION_HASH.indexOf(h);
   return i >= 0 ? i : null;
 }
@@ -271,7 +273,7 @@ function addQuizMapLinks() {
     const btn = document.createElement('button');
     btn.className = 'btn btn-outline quiz-map-link'; btn.type = 'button';
     btn.textContent = '🗺️ 지도에서 확인하기';
-    btn.onclick = () => tmOpen({ map: 'kings-row', sit: q.topic === 'sideCond' ? 'attack' : 'fightStart', role: q.topic === 'sideCond' || q.topic === 'highground' ? 'dps' : undefined });
+    btn.onclick = () => tmOpen({ map: 'kings-row', sit: q.topic === 'sideCond' ? 'sidePush' : 'fightStart', role: q.topic === 'sideCond' || q.topic === 'highground' ? 'dps' : undefined });
     fb.insertAdjacentElement('afterend', btn);
   });
 }

@@ -31,7 +31,8 @@ assets/             로고, OG 이미지
 - **영웅**: `data/heroes.js`에 카드 추가 후 `data/heroes-detail.js`에 같은 이름으로 상세 추가.
 - **맵**: `data/maps.js`의 `MAPS`에 추가. 모드 키는 `MAP_MODES` 참고.
 - **용어**: `data/glossary.js`의 `GLOSSARY`에 추가. 전체 검색·용어 탭에 자동 반영.
-- **전술 지도 맵**: `data/maps/schema.js`의 구조대로 `data/maps/<id>.js`를 만들고 `index.html`에 `<script src="data/maps/<id>.js">`를 추가하면 맵 선택 버튼에 자동 표시됩니다. 좌표는 0~100 × 0~62. 공유 링크: `?map=<id>&hero=<이름>&sit=<상황>&pos=<포지션id>&detail=1#tactical`
+- **전술 지도 맵 추가**: ① StatBanana(https://overwatch.statbanana.com/images)에서 오버헤드 PNG를 받아 `assets/maps/<id>/<id>-overhead.png`에 저장하고 `attribution.txt` 작성 ② `data/maps/registry.js`에 `image/width/height` 지정 ③ `data/maps/kings-row.js`를 복사해 `data/maps/<id>.js` 작성 (좌표는 `P(px, py)`로 0~1 정규화) ④ `index.html`에 `<script src="data/maps/<id>.js">` 추가. 이미지가 없는 맵은 자동으로 "준비 중"으로 표시되며 가짜 지도는 만들지 않습니다. 공유 링크: `?map=<id>&hero=<이름>&sit=<상황>&pos=<포지션id>&detail=1#maps`
+- **맵 이미지 사용 조건**: StatBanana 무료 저작물 조건(원본 무변경 재배포 금지, 로고 유지 또는 출처 표기). 본 사이트는 무료이며 로고 유지 + 출처 표기 둘 다 적용. 상업적 전환 시 재확인 필요.
 - **퀴즈**: `index.html`에 문항 블록 추가 + `data/quizzes.js`의 `quizAnswers`·`QUIZ_EXPLAIN`에 같은 순서로 추가. 번호·총계는 자동 계산.
 
 ## AI 연결 지점 (현재는 로컬 데이터)
@@ -43,6 +44,7 @@ assets/             로고, OG 이미지
 - `getLearningAnalysis()` — 학습 통계 집계
 - `getCoachResponse(question)` — 검색 인덱스 기반 응답
 - `getMapPositionAdvice(input, map)` (tmap.js) — 전술 지도 포지션 추천 규칙
+- `judgeSideOrMain(input)` (data/map-situations.js) — 본대 vs 사이드 판단 규칙
 
 ## 저장 데이터
 

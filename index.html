@@ -780,81 +780,95 @@
         .quiz-option { min-height:48px; }
         .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
         @media (max-width:768px) { .search-btn .search-label, .search-btn kbd { display:none; } .search-btn { width:44px; height:44px; padding:0; justify-content:center; border-radius:50%; } .logo { font-size:1rem; } .nav-tabs { position:static; } .toolbar-row { margin-top:0; } .modal { padding:8px; } .modal-panel { padding:1.1rem 1rem 1.3rem; } .hm-head { flex-direction:column; } .kv.small li { grid-template-columns:1fr; } .gl-row { grid-template-columns:1fr; gap:.1rem; } }
-        /* ===== 전술 지도 ===== */
+        /* ===== MapViewer (실제 맵 이미지 + SVG 오버레이) ===== */
         .tm-controls .tm-row { display:flex; gap:.6rem; align-items:flex-start; margin-bottom:.55rem; }
         .tm-row-label { flex:none; width:58px; font-size:.75rem; font-weight:800; color:var(--text-3); letter-spacing:.06em; padding-top:.55rem; }
         .tm-row .filter-row { margin-bottom:0; }
+        .tm-select-wrap select { padding:.55rem .8rem; border-radius:10px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text); font:inherit; font-size:.92rem; min-height:44px; min-width:220px; }
         .tm-sit-desc { font-size:.82rem; color:var(--text-3); margin:.2rem 0 .6rem 64px; }
         .tm-actions { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; margin-top:.4rem; }
-        .tm-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr); gap:1rem; align-items:start; }
+        .tm-mode-group { display:inline-flex; border:1.5px solid var(--line); border-radius:999px; overflow:hidden; }
+        .tm-mode-btn { padding:.5rem .9rem; border:none; background:var(--bg-elev); color:var(--text-2); font:inherit; font-size:.85rem; font-weight:700; cursor:pointer; min-height:40px; }
+        .tm-mode-btn.active { background:var(--primary); color:#fff; }
+        .tm-layout { display:grid; grid-template-columns:minmax(0,7fr) minmax(300px,3fr); gap:1rem; align-items:start; }
         .tm-map-head { display:flex; justify-content:space-between; flex-wrap:wrap; gap:.3rem .8rem; align-items:baseline; margin-bottom:.2rem; }
         .tm-map-head strong { font-family:var(--font-display); font-size:1.25rem; }
         .tm-intro { font-size:.88rem; color:var(--text-2); margin-bottom:.6rem; }
-        .tm-map-wrap { position:relative; background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm); touch-action:none; }
-        #tm-svg { display:block; width:100%; height:auto; aspect-ratio:100/62; cursor:grab; user-select:none; font-family:var(--font); }
-        #tm-svg:active { cursor:grabbing; }
-        .tm-zoom { position:absolute; right:.6rem; top:.6rem; display:flex; flex-direction:column; gap:.3rem; }
-        .tm-zoom button { width:38px; height:38px; border-radius:10px; border:1px solid var(--line); background:var(--bg-elev); color:var(--text); font-size:1.1rem; font-weight:800; cursor:pointer; box-shadow:var(--shadow-sm); }
+        .map-viewer { position:relative; background:#1b1b1d; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm); }
+        .map-viewport { position:relative; width:100%; overflow:hidden; touch-action:none; cursor:grab; }
+        .map-viewport:active { cursor:grabbing; }
+        .map-stage { position:relative; width:100%; transform-origin:0 0; will-change:transform; }
+        .map-background { display:block; width:100%; height:100%; user-select:none; -webkit-user-drag:none; }
+        .tactical-overlay { position:absolute; inset:0; width:100%; height:100%; overflow:visible; font-family:var(--font); }
+        .tm-zoom { position:absolute; right:.6rem; bottom:.6rem; display:flex; flex-direction:column; gap:.3rem; z-index:2; }
+        .tm-zoom button { width:38px; height:38px; border-radius:10px; border:1px solid rgba(255,255,255,.2); background:rgba(20,20,24,.85); color:#fff; font-size:1.1rem; font-weight:800; cursor:pointer; backdrop-filter:blur(4px); }
+        .tm-placeholder { background:var(--bg-elev); border:1px dashed var(--line-strong); border-radius:var(--radius); padding:1rem; }
+        .tm-placeholder code { font-size:.8rem; background:var(--bg-soft); padding:.05rem .35rem; border-radius:4px; }
+        .tm-attribution { font-size:.78rem; color:var(--text-3); margin:.5rem 0 0; }
+        .tm-attribution a { color:var(--text-2); }
         .tm-layers-row { display:flex; gap:.6rem; align-items:flex-start; margin-top:.6rem; }
         .tm-layers { display:flex; flex-wrap:wrap; gap:.3rem .7rem; }
         .tm-layer { font-size:.82rem; color:var(--text-2); display:inline-flex; align-items:center; gap:.3rem; min-height:32px; cursor:pointer; }
         .tm-layer input { accent-color:var(--accent); width:16px; height:16px; }
         .tm-legend { display:flex; flex-wrap:wrap; gap:.3rem .8rem; font-size:.78rem; color:var(--text-2); margin-top:.5rem; padding:.5rem .7rem; background:var(--bg-soft); border-radius:10px; }
         .tm-legend .lg { display:inline-block; width:18px; height:3px; border-radius:2px; vertical-align:middle; margin-right:.2rem; }
-        .lg-newbie { background:#22a06b; } .lg-side { background:#e0a300; } .lg-flank { background:#e0363f; }
-        /* SVG 요소 */
-        .tm-ground { fill:var(--bg-soft); }
-        .tm-road { fill:none; stroke:var(--bg-elev); stroke-linecap:round; stroke-linejoin:round; }
-        .tm-road-edge { fill:none; stroke:var(--line-strong); stroke-linecap:round; stroke-linejoin:round; }
-        .tm-bld { fill:var(--line-strong); opacity:.55; }
-        body.dark-mode .tm-bld { fill:#2c2c34; opacity:1; }
-        .tm-bld-label { font-size:2.1px; fill:var(--text-3); text-anchor:middle; font-weight:600; pointer-events:none; }
-        .tm-stairs rect { fill:var(--bg-elev); stroke:var(--line-strong); stroke-width:.25; }
-        .tm-stairs line { stroke:var(--line-strong); stroke-width:.25; }
-        .tm-cart { fill:none; stroke:#f99e1a; stroke-width:.7; stroke-dasharray:1.4 1; }
-        .tm-point circle:first-child { fill:rgba(249,158,26,.18); stroke:#f99e1a; stroke-width:.5; }
-        .tm-point circle:last-of-type { fill:#f99e1a; }
-        .tm-label { font-size:2.2px; font-weight:800; fill:var(--text); text-anchor:middle; pointer-events:none; }
-        .tm-label.muted { fill:var(--text-3); font-weight:600; font-size:2px; }
-        .tm-spawn rect { fill:#3d7bd9; opacity:.9; } .tm-spawn.def rect { fill:#e04a4a; }
-        .tm-spawn text { font-size:1.7px; fill:#fff; font-weight:800; text-anchor:middle; }
-        .tm-high { fill:rgba(140,82,255,.22); stroke:#8c52ff; stroke-width:.4; stroke-dasharray:1 .6; cursor:pointer; transition:opacity .2s; }
-        .tm-high:hover, .tm-high.tm-selected { fill:rgba(140,82,255,.4); stroke-width:.7; stroke-dasharray:none; }
-        .tm-danger { fill:url(#tm-hatch); stroke:#e0363f; stroke-width:.35; cursor:pointer; opacity:.85; }
-        .tm-danger:hover, .tm-danger.tm-selected { opacity:1; stroke-width:.7; }
-        .tm-cover { fill:#fff; stroke:var(--text-3); stroke-width:.3; cursor:pointer; }
-        .tm-pack circle { fill:#2fae6c; stroke:#fff; stroke-width:.3; } .tm-pack text { font-size:2.4px; fill:#fff; font-weight:900; text-anchor:middle; pointer-events:none; } .tm-pack { cursor:pointer; }
-        .tm-fight circle { fill:rgba(249,158,26,.08); stroke:#f99e1a; stroke-width:.4; stroke-dasharray:.9 .7; } .tm-fight text { font-size:2px; fill:var(--text-2); font-weight:700; text-anchor:middle; pointer-events:none; } .tm-fight { cursor:pointer; }
+        .tm-legend .lg-dot { display:inline-block; width:10px; height:10px; border-radius:50%; vertical-align:middle; margin-right:.2rem; border:1.5px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.2); }
+        .lg-newbie { background:#22a06b; } .lg-side { background:#2f80ed; } .lg-flank { background:#e0363f; }
+        /* SVG 오버레이 요소 (좌표계 = 이미지 픽셀) */
+        .tm-base text, .tm-label { font-weight:800; fill:#fff; text-anchor:middle; paint-order:stroke; stroke:rgba(0,0,0,.75); stroke-width:3px; pointer-events:none; }
+        .tm-spawn rect { fill:#2f80ed; opacity:.92; } .tm-spawn.def rect { fill:#e04a4a; }
+        .tm-spawn text { fill:#fff; font-weight:800; text-anchor:middle; stroke:none; }
+        .tm-cart { fill:none; stroke:#f99e1a; stroke-dasharray:14 9; stroke-linecap:round; stroke-linejoin:round; opacity:.9; }
+        .tm-point circle:first-child { fill:rgba(249,158,26,.15); stroke:#f99e1a; }
+        .tm-point circle:nth-child(2) { fill:#f99e1a; }
+        .tm-high polygon { fill:rgba(140,82,255,.22); stroke:#a97cff; stroke-dasharray:8 5; transition:fill .2s; }
+        .tm-high text { fill:#d8c6ff; font-weight:900; letter-spacing:.08em; paint-order:stroke; stroke:rgba(0,0,0,.6); stroke-width:2px; pointer-events:none; }
+        .tm-high { cursor:pointer; transition:opacity .2s; }
+        .tm-high:hover polygon, .tm-high.tm-selected polygon { fill:rgba(140,82,255,.42); stroke-dasharray:none; stroke-width:4; }
+        .tm-danger { fill:url(#tm-hatch); stroke:#ff5a5f; cursor:pointer; opacity:.7; animation:tm-danger 3s ease-in-out infinite; }
+        .tm-danger:hover, .tm-danger.tm-selected { opacity:1; animation:none; stroke-width:4; }
+        @keyframes tm-danger { 0%,100% { opacity:.55; } 50% { opacity:.8; } }
+        .tm-sight line { stroke:#ffd166; stroke-dasharray:6 6; opacity:.85; }
+        .tm-sight { cursor:pointer; transition:opacity .2s; }
+        .tm-sight:hover line, .tm-sight.tm-selected line { stroke-width:4; opacity:1; }
+        .tm-cover rect { fill:rgba(255,255,255,.85); stroke:#333; } .tm-cover { cursor:pointer; }
+        .tm-pack circle { fill:#2fae6c; stroke:#fff; } .tm-pack text { fill:#fff; font-weight:900; text-anchor:middle; pointer-events:none; } .tm-pack { cursor:pointer; }
+        .tm-fight circle { fill:rgba(249,158,26,.08); stroke:#f99e1a; stroke-dasharray:6 5; } .tm-fight text { fill:#ffd9a0; font-weight:700; text-anchor:middle; paint-order:stroke; stroke:rgba(0,0,0,.7); stroke-width:2px; pointer-events:none; } .tm-fight { cursor:pointer; }
         .tm-route { cursor:pointer; transition:opacity .2s; }
-        .tm-route-hit { fill:none; stroke:transparent; stroke-width:4; }
-        .tm-route-line { fill:none !important; stroke-width:1.1; stroke-linecap:round; stroke-linejoin:round; }
-        .tm-route.lv-newbie .tm-route-line, .tm-route.lv-newbie .tm-route-start { stroke:#22a06b; fill:#22a06b; }
-        .tm-route.lv-side .tm-route-line, .tm-route.lv-side .tm-route-start { stroke:#e0a300; fill:#e0a300; }
-        .tm-route.lv-flank .tm-route-line, .tm-route.lv-flank .tm-route-start { stroke:#e0363f; fill:#e0363f; stroke-dasharray:1.6 .9; }
-        .tm-route-start { stroke-width:.3; stroke:#fff !important; }
-        .tm-route:hover .tm-route-line, .tm-route.tm-selected .tm-route-line { stroke-width:1.8; filter:drop-shadow(0 0 .6px rgba(0,0,0,.4)); }
+        .tm-route-hit { fill:none; stroke:transparent; }
+        .tm-route-glow { fill:none; stroke:rgba(0,0,0,.55); stroke-linecap:round; stroke-linejoin:round; }
+        .tm-route-line { fill:none !important; stroke-linecap:round; stroke-linejoin:round; }
+        .tm-route.lv-newbie .tm-route-line { stroke:#22a06b; } .tm-route.lv-newbie .tm-route-start { fill:#22a06b; }
+        .tm-route.lv-side .tm-route-line { stroke:#2f80ed; } .tm-route.lv-side .tm-route-start { fill:#2f80ed; }
+        .tm-route.lv-flank .tm-route-line { stroke:#e0363f; stroke-dasharray:12 8; } .tm-route.lv-flank .tm-route-start { fill:#e0363f; }
+        .tm-route-start { stroke:#fff; }
+        .tm-route:hover .tm-route-line, .tm-route.tm-selected .tm-route-line { stroke-width:7; }
+        .tm-route.tm-selected .tm-route-line { stroke-dasharray:14 10; animation:tm-dash 1.2s linear infinite; }
+        @keyframes tm-dash { to { stroke-dashoffset:-24; } }
         .tm-pos { cursor:pointer; transition:opacity .2s; }
-        .tm-pos-ring { fill:none; stroke:#fff; stroke-width:.5; opacity:0; }
-        .tm-pos-dot { stroke:#fff; stroke-width:.45; }
-        .tm-pos.recommended .tm-pos-dot { fill:#22a06b; } .tm-pos.basic .tm-pos-dot { fill:#3d7bd9; }
-        .tm-pos-txt { font-size:2px; fill:#fff; font-weight:900; text-anchor:middle; pointer-events:none; }
-        .tm-pos:hover .tm-pos-ring, .tm-pos.tm-selected .tm-pos-ring { opacity:1; stroke:var(--accent); }
-        .tm-pos.tm-selected .tm-pos-dot { r:2.8; }
-        .tm-dim { opacity:.15; }
+        .tm-pos-ring { fill:none; stroke:#fff; opacity:0; }
+        .tm-pos-dot { stroke:#fff; filter:drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+        .tm-pos-txt { fill:#fff; font-weight:900; text-anchor:middle; pointer-events:none; }
+        .tm-pos-label { fill:#fff; font-weight:700; text-anchor:middle; paint-order:stroke; stroke:rgba(0,0,0,.8); stroke-width:3px; pointer-events:none; opacity:0; transition:opacity .15s; }
+        .map-viewer.zoomed .tm-pos-label, .tm-pos:hover .tm-pos-label, .tm-pos.tm-selected .tm-pos-label { opacity:1; }
+        .tm-pos:hover .tm-pos-ring, .tm-pos.tm-selected .tm-pos-ring { opacity:1; stroke:var(--ow-orange); }
+        .tm-dim { opacity:.18; }
         .tm-hide { display:none; }
         .tm-memory [data-layer] { display:none; }
-        .tm-now circle { fill:rgba(34,160,107,.2); stroke:#22a06b; stroke-width:.6; animation:tm-pulse 1.4s ease-in-out infinite; }
-        .tm-now:not(.first) circle { stroke:#3d7bd9; fill:rgba(61,123,217,.15); animation:none; }
-        .tm-now text { font-size:2.3px; font-weight:900; fill:var(--text); text-anchor:middle; paint-order:stroke; stroke:var(--bg-elev); stroke-width:.8; }
-        @keyframes tm-pulse { 0%,100% { r:5.5; } 50% { r:7; } }
-        .tm-click-ok { fill:#22a06b; } .tm-click-bad { fill:#e0363f; }
-        #tm-svg:focus-visible, .tm-pos:focus-visible, .tm-route:focus-visible, .tm-high:focus-visible, .tm-danger:focus-visible { outline:2px solid var(--accent); }
+        .tm-now circle { fill:rgba(34,160,107,.18); stroke:#22a06b; animation:tm-pulse 1.4s ease-in-out infinite; }
+        .tm-now:not(.first) circle { stroke:#2f80ed; fill:rgba(47,128,237,.15); animation:none; }
+        .tm-now text { fill:#fff; font-weight:900; text-anchor:middle; paint-order:stroke; stroke:rgba(0,0,0,.8); stroke-width:3px; }
+        @keyframes tm-pulse { 0%,100% { stroke-opacity:1; } 50% { stroke-opacity:.35; } }
+        .tm-click-ok { fill:#22a06b; stroke:#fff; stroke-width:2; } .tm-click-bad { fill:#e0363f; stroke:#fff; stroke-width:2; }
+        .tm-choice { cursor:pointer; } .tm-choice circle { fill:rgba(20,20,24,.85); stroke:#fff; } .tm-choice text { fill:#fff; font-weight:900; text-anchor:middle; pointer-events:none; }
+        .tm-choice:hover circle { fill:var(--ow-orange); }
+        .tm-choice.ok circle { fill:#22a06b; } .tm-choice.bad circle { fill:#e0363f; } .tm-choice.off { opacity:.35; }
+        .tm-pos:focus-visible, .tm-route:focus-visible, .tm-high:focus-visible, .tm-danger:focus-visible, .tm-choice:focus-visible { outline:2px solid var(--ow-orange); }
         /* 상세 패널 */
         .tm-detail { position:sticky; top:96px; margin-bottom:1rem; }
         .tm-empty { text-align:center; padding:1.2rem .5rem; color:var(--text-2); }
         .tm-empty-icon { font-size:2.2rem; margin-bottom:.4rem; }
         .tm-d-head { border-left:5px solid var(--accent); padding:.2rem 0 .2rem .8rem; margin-bottom:.8rem; }
-        .tm-d-head.recommended { border-color:#22a06b; } .tm-d-head.basic { border-color:#3d7bd9; } .tm-d-head.high { border-color:#8c52ff; } .tm-d-head.danger { border-color:#e0363f; } .tm-d-head.route.lv-newbie { border-color:#22a06b; } .tm-d-head.route.lv-side { border-color:#e0a300; } .tm-d-head.route.lv-flank { border-color:#e0363f; } .tm-d-head.fight { border-color:#f99e1a; } .tm-d-head.pack { border-color:#2fae6c; } .tm-d-head.cover { border-color:var(--text-3); }
         .tm-d-kicker { font-size:.75rem; font-weight:800; letter-spacing:.06em; color:var(--text-3); }
         .tm-d-head h3 { font-size:1.2rem; margin:.1rem 0 .3rem; }
         .tm-d-tags { display:flex; flex-wrap:wrap; gap:.3rem; }
@@ -863,16 +877,18 @@
         .tm-d-heroes, .tm-d-sits { margin:.6rem 0; } .tm-d-heroes h5, .tm-d-sits h5, .tm-score h5 { font-size:.8rem; color:var(--text-3); margin-bottom:.35rem; letter-spacing:.04em; }
         .tm-score { margin:.6rem 0 .8rem; } .tm-stars { color:var(--warning); font-weight:800; margin-left:.4rem; letter-spacing:1px; }
         .tm-d-p { color:var(--text-2); }
+        .tm-verify { font-size:.76rem; color:var(--text-3); margin-top:.6rem; } .tm-verify code { background:var(--bg-soft); padding:0 .3rem; border-radius:4px; }
         .tm-route-steps { display:grid; gap:.2rem; margin:.4rem 0 .8rem; }
         .tm-step { display:grid; grid-template-columns:44px 1fr; gap:.5rem; background:var(--bg-soft); padding:.55rem .8rem; border-radius:10px; font-size:.9rem; }
         .tm-step span { font-size:.72rem; font-weight:800; color:var(--text-3); padding-top:.15rem; }
         .tm-arrow { text-align:center; color:var(--text-3); line-height:1; }
+        .tm-reason ul, .tm-reason-list { padding-left:1.1rem; margin:.3rem 0 .5rem; color:var(--text-2); font-size:.9rem; display:grid; gap:.2rem; }
+        .tm-next { display:grid; grid-template-columns:70px 1fr; gap:.5rem; font-size:.9rem; margin-top:.35rem; } .tm-next span { font-weight:800; color:var(--text-3); font-size:.78rem; padding-top:.15rem; } .tm-next strong { font-weight:600; color:var(--text); }
         .tm-q { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); padding:1rem 1.1rem; margin-bottom:1rem; box-shadow:var(--shadow-sm); }
         .tm-q-text { font-weight:700; margin:.4rem 0 .5rem; }
         .quiz-map-link { margin-top:.6rem; padding:.45rem .9rem; font-size:.82rem; }
         @media (max-width:900px) { .tm-layout { grid-template-columns:1fr; } .tm-detail { position:static; } .tm-d-cols { grid-template-columns:1fr; } .tm-formula li { grid-template-columns:1fr; } }
-        @media (max-width:600px) { .tm-controls .tm-row { flex-direction:column; gap:.2rem; } .tm-row-label { padding-top:0; width:auto; } .tm-sit-desc { margin-left:0; } .tm-layers-row { flex-direction:column; gap:.2rem; } .tm-zoom button { width:42px; height:42px; } }
-
+        @media (max-width:600px) { .tm-controls .tm-row { flex-direction:column; gap:.2rem; } .tm-row-label { padding-top:0; width:auto; } .tm-sit-desc { margin-left:0; } .tm-layers-row { flex-direction:column; gap:.2rem; } .tm-zoom button { width:42px; height:42px; } .tm-select-wrap select { width:100%; } }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -924,7 +940,6 @@
             <button data-index="1" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)">👥 캐릭터 역할</button>
             <button data-index="2" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)">🎯 기초 전술</button>
             <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵과 포지셔닝</button>
-                <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">🧭 맵 & 포지션</button>
             <button data-index="4" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)">🔥 실전 팁</button>
             <button data-index="5" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)">🧠 고급 전략</button>
             <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
@@ -1296,40 +1311,94 @@
                 <span class="section-title-icon">🗺️</span>
                 맵과 포지셔닝
             </div>
-            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>고지를 먹은 팀이 한타를 이깁니다. 항상 코너 옆에 서고, 힐러와 15m 이상 떨어지지 마세요.</p></div></div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>"좋은 위치"가 아니라 "왜 그 위치에 있는가"가 중요합니다. 실제 맵 위의 마커를 누르면 어디 · 왜 · 언제 · 무엇을 노림 · 언제 빠짐을 알려 드립니다.</p></div></div>
+            <div class="mode-note advanced">🔴 심화 모드: 포지션 설명이 오프앵글·자원 교환 관점의 문장으로 바뀝니다.</div>
+            <!-- ===== MapViewer: 실제 오버헤드 맵 + SVG 전술 오버레이 ===== -->
+            <div class="card tm-controls" id="tm-map-viewer">
+                <div class="tm-row"><span class="tm-row-label">맵 선택</span>
+                    <div class="tm-select-wrap"><label for="tm-map-select" class="sr-only">맵 선택</label><select id="tm-map-select" onchange="tmSelectMap(this.value)"></select></div>
+                </div>
+                <div class="tm-row"><span class="tm-row-label">역할</span><div class="filter-row" id="tm-roles" role="group" aria-label="역할">
+                    <button class="filter-btn active" data-role="all" aria-pressed="true" onclick="tmSetRole('all',this)">전체</button>
+                    <button class="filter-btn" data-role="tank" aria-pressed="false" onclick="tmSetRole('tank',this)">🛡️ 탱커</button>
+                    <button class="filter-btn" data-role="dps" aria-pressed="false" onclick="tmSetRole('dps',this)">⚔️ DPS</button>
+                    <button class="filter-btn" data-role="support" aria-pressed="false" onclick="tmSetRole('support',this)">💚 서포터</button>
+                </div></div>
+                <div class="tm-row"><span class="tm-row-label">영웅</span>
+                    <div class="tm-select-wrap"><label for="tm-hero-select" class="sr-only">영웅 선택</label><select id="tm-hero-select" onchange="tmSetHero(this.value)"></select></div>
+                </div>
+                <div class="tm-row"><span class="tm-row-label">상황</span><div class="filter-row" id="tm-sits"></div></div>
+                <p class="fig-muted tm-sit-desc" id="tm-sit-desc"></p>
+                <div class="tm-actions">
+                    <button class="btn btn-primary" onclick="tmToggleAdvisor()">🤔 지금 어디에 있어야 하지?</button>
+                    <button class="btn btn-outline" onclick="tmToggleSideJudge()">🧭 본대 vs 사이드</button>
+                    <button class="btn btn-outline" id="tm-detail-btn" aria-pressed="false" onclick="tmToggleDetail()">🔎 상세 정보</button>
+                    <span class="tm-mode-group" role="group" aria-label="학습 모드">
+                        <button class="tm-mode-btn active" data-mode="view" aria-pressed="true" onclick="tmSetMode('view')">전술 보기</button>
+                        <button class="tm-mode-btn" data-mode="quiz" aria-pressed="false" onclick="tmSetMode('quiz')">퀴즈</button>
+                        <button class="tm-mode-btn" data-mode="memory" aria-pressed="false" onclick="tmSetMode('memory')">연습 모드</button>
+                    </span>
+                    <span class="hero-count" id="tm-quiz-status"></span>
+                </div>
+            </div>
+
+            <div class="card" id="tm-advisor" hidden>
+                <h3><span class="card-icon">🤔</span>지금 나는 어디에 있어야 하지?</h3>
+                <p>역할·영웅·상황을 고르면 이 맵에서 <strong>⭐ 지금 추천 위치</strong>를 실제 지도에 표시하고 이유 · 다음 행동 · 도망 경로를 설명합니다. 규칙 기반이라 즉시 작동합니다.</p>
+                <div class="adv-form" id="tm-adv-form" style="margin-top:.8rem"></div>
+                <button class="btn btn-primary" onclick="tmRunAdvisor()">지도에 표시하기</button>
+                <div id="tm-adv-result" role="status" aria-live="polite" style="margin-top:.8rem"></div>
+            </div>
+
+            <div class="card" id="tm-side-judge" hidden>
+                <h3><span class="card-icon">🧭</span>본대에 있을까? 사이드에 갈까?</h3>
+                <p>조건을 고르면 규칙으로 판단합니다. <strong>사이드는 목적이 아니라 수단입니다.</strong> 조건 하나가 빠지면 답이 바뀝니다.</p>
+                <div class="adv-form" id="tm-side-form" style="margin-top:.8rem"></div>
+                <button class="btn btn-primary" onclick="tmRunSideJudge()">판단하기</button>
+                <div id="tm-side-result" role="status" aria-live="polite" style="margin-top:.8rem"></div>
+            </div>
+
+            <div class="tm-layout">
+                <div class="tm-map-col">
+                    <div class="tm-map-head"><strong id="tm-title"></strong><span class="fig-muted" id="tm-count" style="font-size:.8rem"></span></div>
+                    <p class="tm-intro" id="tm-intro"></p>
+                    <div class="map-viewer" id="tm-viewer">
+                        <div class="map-viewport" id="tm-viewport">
+                            <div class="map-stage" id="tm-stage">
+                                <img class="map-background" id="tm-img" alt="" decoding="async" draggable="false">
+                                <svg class="tactical-overlay" id="tm-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none" role="img" aria-label="전술 오버레이" xmlns="http://www.w3.org/2000/svg"></svg>
+                            </div>
+                        </div>
+                        <div class="tm-zoom" role="group" aria-label="지도 확대·이동">
+                            <button onclick="tmZoom(1.3)" aria-label="확대" title="확대">＋</button>
+                            <button onclick="tmZoom(1/1.3)" aria-label="축소" title="축소">－</button>
+                            <button onclick="tmResetView()" aria-label="원래 위치" title="원래 위치 / 화면 맞춤">↺</button>
+                        </div>
+                    </div>
+                    <div class="tm-placeholder" id="tm-placeholder" hidden></div>
+                    <p class="tm-attribution" id="tm-attribution"></p>
+                    <div class="tm-layers-row"><span class="tm-row-label">레이어</span><div class="tm-layers" id="tm-layers"></div></div>
+                    <div class="tm-legend">
+                        <span><i class="lg-dot" style="background:#22a06b"></i> 메인·안전 포지션</span><span><i class="lg-dot" style="background:#2f80ed"></i> 사이드 포지션</span><span><i class="lg-dot" style="background:#8c52ff"></i> 수비 포지션</span><span><i class="lg-dot" style="background:#e0a300"></i> 후퇴·리그룹</span>
+                        <span><i class="lg lg-newbie"></i> 기본 루트</span><span><i class="lg lg-side"></i> 초보자 사이드</span><span><i class="lg lg-flank"></i> 고급 플랭크</span>
+                        <span>🟣 고지대</span><span>🔴 위험 지역</span><span>👁️ 시야각</span><span>⚪ 엄폐물</span><span>💚 힐팩</span><span>🎯 주요 교전</span>
+                    </div>
+                    <p class="fig-muted" style="font-size:.78rem;margin-top:.4rem">마우스 휠·핀치로 확대, 드래그로 이동. 마커 좌표는 오버헤드 이미지를 기준으로 배치했으며 인게임과 미세하게 다를 수 있습니다.</p>
+                </div>
+                <div class="tm-side-col">
+                    <div class="card tm-detail" id="tm-detail"></div>
+                    <div id="tm-quiz-body"></div>
+                    <div id="tm-keypoints"></div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:1.25rem">
+                <h3><span class="card-icon">📚</span>포지셔닝 기본 개념</h3>
+                <p>아래는 어떤 맵에서든 통하는 기본 원칙입니다. 위의 실제 지도와 함께 읽으세요.</p>
+            </div>
 
             <div class="card">
                 <h3><span class="card-icon">🧭</span>맵을 읽는 키워드 4가지입니다</h3>
-                <div class="figure">
-                    <svg viewBox="0 0 640 300" role="img" aria-label="맵 구조 도식: 스폰에서 메인 길을 따라 초크를 지나 거점으로, 양 옆에 고지와 사이드 통로">
-                        <rect x="0" y="0" width="640" height="300" rx="14" class="fig-ground" stroke-width="0"/>
-                        <!-- 메인 -->
-                        <path d="M60 150h520" class="fig-line" stroke-width="54" stroke-linecap="round" fill="none" opacity=".55"/>
-                        <!-- 사이드 통로 -->
-                        <path d="M120 150c0-60 60-80 120-80h140c60 0 120 20 120 80" fill="none" class="fig-line" stroke-width="16" stroke-linecap="round" stroke-dasharray="1 24" opacity=".9"/>
-                        <text x="320" y="62" class="fig-sub" font-size="12" text-anchor="middle">사이드 · 플랭크 루트</text>
-                        <!-- 고지 -->
-                        <rect x="250" y="190" width="90" height="46" rx="8" class="fig-high" stroke-width="2"/>
-                        <text x="295" y="209" class="fig-text" font-size="12" text-anchor="middle">고지</text>
-                        <text x="295" y="225" class="fig-sub" font-size="10" text-anchor="middle">하이그라운드</text>
-                        <rect x="380" y="190" width="90" height="46" rx="8" class="fig-high" stroke-width="2"/>
-                        <text x="425" y="209" class="fig-text" font-size="12" text-anchor="middle">고지</text>
-                        <text x="425" y="225" class="fig-sub" font-size="10" text-anchor="middle">먼저 먹는 팀이 이김</text>
-                        <!-- 초크 -->
-                        <rect x="330" y="96" width="14" height="36" rx="3" class="fig-accent"/>
-                        <rect x="330" y="168" width="14" height="36" rx="3" class="fig-accent"/>
-                        <text x="337" y="258" class="fig-text" font-size="12" text-anchor="middle">초크 (좁은 입구)</text>
-                        <text x="337" y="273" class="fig-sub" font-size="10" text-anchor="middle">정면 돌파 금지 · 사이드로 돌거나 궁으로</text>
-                        <!-- 코너 / 엄폐 -->
-                        <rect x="170" y="96" width="36" height="30" rx="4" class="fig-ground" stroke-width="2"/>
-                        <text x="188" y="88" class="fig-sub" font-size="10" text-anchor="middle">코너 · 엄폐</text>
-                        <!-- 스폰 / 거점 -->
-                        <circle cx="60" cy="150" r="30" class="fig-blue"/><text x="60" y="155" font-size="12" fill="#fff" font-weight="800" text-anchor="middle">스폰</text>
-                        <circle cx="580" cy="150" r="30" class="fig-red"/><text x="580" y="155" font-size="12" fill="#fff" font-weight="800" text-anchor="middle">거점</text>
-                        <text x="320" y="156" class="fig-text" font-size="13" text-anchor="middle">메인 (큰길) — 탱커가 라인을 잡는 곳</text>
-                    </svg>
-                    <div class="figure-cap">대부분의 맵은 이 구조의 변형입니다. 메인은 탱커, 사이드는 딜러, 고지는 먼저 먹는 팀의 것입니다.</div>
-                </div>
                 <ul class="kv">
                     <li><span>고지 (하이그라운드)</span><strong>위에서 아래는 다 보이고, 아래에서 위는 머리만 보입니다. <strong>고지를 차지한 팀이 한타를 이깁니다.</strong> 고지에 못 올라가는 조합이면 고지 밑을 "타고" 붙어야 합니다</strong></li>
                     <li><span>초크</span><strong>좁은 입구·문입니다. 수비는 여기에 화력을 모으고, 공격은 여기를 <strong>정면으로 뚫으면 안 됩니다</strong> — 사이드로 돌거나 궁으로 엽니다</strong></li>
@@ -1881,68 +1950,6 @@
         </section>
     </div>
 
-        <!-- Section 11: Tactical Map -->
-        <section class="section">
-            <div class="section-title">
-                <span class="section-title-icon">🧭</span>
-                맵 &amp; 포지션 — 전술 지도
-            </div>
-            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>"좋은 위치"가 아니라 "왜 그 위치에 있는가"가 중요합니다. 마커를 누르면 어디 · 왜 · 언제 · 무엇을 노림 · 언제 빠짐을 알려 드립니다.</p></div></div>
-            <div class="mode-note advanced">🔴 심화 모드: 포지션 설명이 오프앵글·자원 교환 관점의 문장으로 바뀝니다.</div>
-
-            <div class="card tm-controls">
-                <div class="tm-row"><span class="tm-row-label">맵 선택</span><div class="filter-row" id="tm-maps"></div></div>
-                <div class="tm-row"><span class="tm-row-label">역할</span><div class="filter-row" id="tm-roles" role="group" aria-label="역할">
-                    <button class="filter-btn active" data-role="all" aria-pressed="true" onclick="tmSetRole('all',this)">전체</button>
-                    <button class="filter-btn" data-role="tank" aria-pressed="false" onclick="tmSetRole('tank',this)">🛡️ 탱커</button>
-                    <button class="filter-btn" data-role="dps" aria-pressed="false" onclick="tmSetRole('dps',this)">⚔️ DPS</button>
-                    <button class="filter-btn" data-role="support" aria-pressed="false" onclick="tmSetRole('support',this)">💚 서포트</button>
-                </div></div>
-                <div class="tm-row"><span class="tm-row-label">영웅</span><div class="filter-row" id="tm-heroes"></div></div>
-                <div class="tm-row"><span class="tm-row-label">상황</span><div class="filter-row" id="tm-sits"></div></div>
-                <p class="fig-muted tm-sit-desc" id="tm-sit-desc"></p>
-                <div class="tm-actions">
-                    <button class="btn btn-primary" onclick="tmToggleAdvisor()">🤔 지금 어디 있어야 하지?</button>
-                    <button class="btn btn-outline" id="tm-detail-btn" aria-pressed="false" onclick="tmToggleDetail()">🔎 상세 정보 보기</button>
-                    <button class="btn btn-outline" onclick="tmStartMemory()">👀 암기 모드</button>
-                    <button class="btn btn-outline" onclick="tmStartQuiz()">📝 맵 퀴즈</button>
-                    <span class="hero-count" id="tm-quiz-status"></span>
-                </div>
-            </div>
-
-            <div class="card" id="tm-advisor" hidden>
-                <h3><span class="card-icon">🤔</span>지금 어디 있어야 하지?</h3>
-                <p>상황을 고르면 이 맵에서 <strong>지금 추천 위치</strong>를 지도에 표시하고 이유를 설명합니다. 규칙 기반이라 즉시 작동합니다.</p>
-                <div class="adv-form" id="tm-adv-form" style="margin-top:.8rem"></div>
-                <button class="btn btn-primary" onclick="tmRunAdvisor()">지도에 표시하기</button>
-                <div id="tm-adv-result" role="status" aria-live="polite" style="margin-top:.8rem"></div>
-            </div>
-
-            <div class="tm-layout">
-                <div class="tm-map-col">
-                    <div class="tm-map-head"><strong id="tm-title"></strong><span class="fig-muted" id="tm-count" style="font-size:.8rem"></span></div>
-                    <p class="tm-intro" id="tm-intro"></p>
-                    <div class="tm-map-wrap" id="tm-map-wrap">
-                        <svg id="tm-svg" viewBox="0 0 100 62" role="img" aria-label="전술 지도" xmlns="http://www.w3.org/2000/svg"></svg>
-                        <div class="tm-zoom" role="group" aria-label="지도 확대·이동">
-                            <button onclick="tmZoom(1.3)" aria-label="확대">＋</button>
-                            <button onclick="tmZoom(1/1.3)" aria-label="축소">－</button>
-                            <button onclick="tmResetView()" aria-label="원래 위치">↺</button>
-                        </div>
-                    </div>
-                    <div class="tm-layers-row"><span class="tm-row-label">레이어</span><div class="tm-layers" id="tm-layers"></div></div>
-                    <div class="tm-legend">
-                        <span>🟢 추천 포지션</span><span>🔵 기본 포지션</span><span><i class="lg lg-newbie"></i> 기본 루트</span><span><i class="lg lg-side"></i> 초보자 사이드</span><span><i class="lg lg-flank"></i> 고급 플랭크</span><span>🟣 고지대</span><span>🔴 위험지역</span><span>⚪ 엄폐물</span><span>💚 힐팩</span><span>🎯 주요 교전</span>
-                    </div>
-                    <p class="fig-muted" style="font-size:.78rem;margin-top:.4rem">마우스 휠·핀치로 확대, 드래그로 이동. 실제 게임 지도가 아니라 전술 판단용으로 단순화한 도식입니다.</p>
-                </div>
-                <div class="tm-side-col">
-                    <div class="card tm-detail" id="tm-detail"></div>
-                    <div id="tm-quiz-body"></div>
-                    <div id="tm-keypoints"></div>
-                </div>
-            </div>
-        </section>
 
     <div class="modal" id="hero-modal" hidden role="dialog" aria-modal="true" aria-labelledby="hero-modal-title" onclick="if(event.target===this)closeModal('hero-modal')">
         <div class="modal-panel">
@@ -1972,12 +1979,10 @@
     <script src="data/glossary.js"></script>
     <script src="data/quizzes.js"></script>
     <script src="data/counters.js"></script>
-    <script src="data/maps/schema.js"></script>
+    <script src="data/maps/registry.js"></script>
     <script src="data/maps/kings-row.js"></script>
-    <script src="data/maps/lijiang-tower.js"></script>
-    <script src="data/maps/circuit-royal.js"></script>
     <script src="data/map-situations.js"></script>
-    <script src="tmap.js?v=1"></script>
-    <script src="app.js?v=3"></script>
+    <script src="tmap.js?v=2"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>
