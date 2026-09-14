@@ -11,7 +11,7 @@ index.html          마크업 + CSS (탭 10개)
 app.js              모든 동작 (탭, 퀴즈, 상황판단, 규칙 엔진, 통계, 검색, 모달)
 tmap.js             🧭 전술 지도 모듈 (SVG 렌더, 마커/루트/레이어, 줌·이동, 필터, 추천, 암기 모드, 맵 퀴즈)
 data/
-  maps/_schema.js   전술 지도 데이터 구조 설명 + TACTICAL_MAPS 선언
+  maps/schema.js   전술 지도 데이터 구조 설명 + TACTICAL_MAPS 선언
   maps/kings-row.js, lijiang-tower.js, circuit-royal.js   전술 지도 3개 (지형·포지션·루트·고지·위험·엄폐·힐팩·교전·퀴즈)
   map-situations.js 전술 지도 상황 목록, 레이어, "지금 어디 있어야 하지?" 규칙
   heroes.js         영웅 44명 기본 카드 (name, role, diff, newbie, tag, desc)
