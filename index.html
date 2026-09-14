@@ -575,6 +575,211 @@
         .role-card.tank { --rc: #3d7bd9; } .role-card.dps { --rc: #e04a4a; } .role-card.support { --rc: #2fae6c; }
         .hero-role svg { width: 11px; height: 11px; fill: currentColor; vertical-align: -1px; margin-right: 3px; }
         .hero-emblem { position: absolute; right: -6px; bottom: -10px; width: 74px; height: 74px; opacity: .07; fill: var(--role-c); pointer-events: none; }
+        /* ===== 확장: 공통 ===== */
+        .toolbar-row { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; justify-content:space-between; margin:-.6rem 0 1.25rem; }
+        .mode-switch { display:flex; gap:.35rem; align-items:center; flex-wrap:wrap; font-size:.82rem; color:var(--text-3); }
+        .mode-btn { padding:.45rem .8rem; border-radius:999px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text-2); font:inherit; font-size:.82rem; font-weight:700; cursor:pointer; min-height:36px; }
+        .mode-btn.active { border-color:var(--accent); background:var(--accent-soft); color:var(--text); }
+        .search-btn { display:inline-flex; align-items:center; gap:.4rem; padding:.5rem 1rem; border-radius:999px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text-2); font:inherit; font-size:.85rem; font-weight:600; cursor:pointer; min-height:40px; }
+        .search-btn:hover { border-color:var(--accent); color:var(--text); }
+        .search-btn kbd { font:inherit; font-size:.7rem; padding:.1rem .4rem; border:1px solid var(--line-strong); border-radius:5px; color:var(--text-3); }
+        .remember { display:flex; gap:.8rem; align-items:flex-start; background:var(--accent-soft); border:1px solid transparent; border-left:4px solid var(--accent); border-radius:var(--radius-sm); padding:.9rem 1.1rem; margin:0 0 1.25rem; }
+        .remember .r-icon { font-size:1.2rem; flex:none; }
+        .remember strong { display:block; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:.15rem; }
+        body.dark-mode .remember strong { color:#ff8a86; }
+        .remember p { color:var(--text); font-weight:600; font-size:.98rem; }
+        body.mode-newbie .adv-only { display:none !important; }
+        .deep-only { display:none; }
+        body.mode-advanced .deep-only { display:block; }
+        .mode-note { display:none; font-size:.85rem; color:var(--text-2); background:var(--bg-soft); border:1px dashed var(--line-strong); border-radius:var(--radius-sm); padding:.7rem 1rem; margin-bottom:1rem; }
+        body.mode-newbie .mode-note.newbie, body.mode-advanced .mode-note.advanced { display:block; }
+        .diff-badge { display:inline-block; font-size:.72rem; font-weight:800; padding:.18rem .55rem; border-radius:999px; background:var(--bg-soft); color:var(--text-2); }
+        .diff-badge.d-beginner { background:rgba(34,160,107,.14); color:var(--success); }
+        .diff-badge.d-intermediate { background:rgba(242,178,51,.18); color:#b07a00; }
+        body.dark-mode .diff-badge.d-intermediate { color:#f5c451; }
+        .diff-badge.d-advanced { background:rgba(224,54,63,.12); color:var(--danger); }
+        .verdict { display:flex; align-items:center; gap:.6rem; padding:.7rem 1rem; border-radius:10px; font-size:1rem; margin:.9rem 0 .7rem; border:1.5px solid transparent; }
+        .verdict-icon { font-size:1.2rem; }
+        .v-good { background:rgba(34,160,107,.12); border-color:rgba(34,160,107,.35); color:var(--text); }
+        .v-mixed { background:rgba(242,178,51,.16); border-color:rgba(242,178,51,.45); color:var(--text); }
+        .v-bad { background:rgba(224,54,63,.10); border-color:rgba(224,54,63,.35); color:var(--text); }
+        .quiz-option.selected-mixed, .quiz-container.answered .quiz-option.selected-mixed:hover { border-color:var(--warning); background:rgba(242,178,51,.14); }
+        .quiz-option.selected-mixed::before { background:var(--warning); color:#1a1400; content:"~"; }
+        .quiz-option.best-mark { border-style:dashed; border-color:var(--success); }
+        .quiz-option.best-mark::after { content:"가장 좋은 판단"; margin-left:auto; font-size:.7rem; font-weight:800; color:var(--success); white-space:nowrap; }
+        .quiz-option[aria-disabled="true"] { cursor:default; }
+        .quiz-explain { margin-top:.5rem; font-weight:500; color:var(--text-2); }
+        #toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px); background:var(--primary); color:#fff; padding:.6rem 1.1rem; border-radius:999px; font-size:.88rem; font-weight:700; box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transition:opacity .25s, transform .25s; z-index:300; max-width:calc(100% - 32px); }
+        #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        .flash { animation:flash 1.2s ease; }
+        @keyframes flash { 0%,100% { box-shadow:var(--shadow-sm);} 30% { box-shadow:0 0 0 4px var(--accent-soft), var(--shadow-md);} }
+        /* 레벨 */
+        .level-box { margin-top:.9rem; padding-top:.9rem; border-top:1px dashed var(--line); }
+        .level-head { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.9rem; margin-bottom:.45rem; }
+        .level-badge { background:var(--accent); color:var(--accent-ink); font-family:var(--font-display); font-weight:700; padding:.15rem .6rem; border-radius:999px; font-size:.85rem; }
+        .level-xp { margin-left:auto; color:var(--text-3); font-size:.82rem; }
+        .level-bar { height:8px; }
+        .level-road { display:grid; grid-template-columns:repeat(auto-fit, minmax(96px,1fr)); gap:.4rem; }
+        .level-step { padding:.55rem .5rem; border-radius:10px; background:var(--bg-soft); text-align:center; font-size:.75rem; color:var(--text-3); border:1.5px solid transparent; }
+        .level-step b { display:block; color:var(--text-2); }
+        .level-step span { display:block; color:var(--text-2); }
+        .level-step.done { background:var(--accent-soft); color:var(--text-2); }
+        .level-step.done b, .level-step.done span { color:var(--text); }
+        .level-step.now { border-color:var(--accent); }
+        /* 오늘의 훈련 */
+        .daily-box { background:var(--primary); color:#fff; border-radius:var(--radius); padding:1.3rem 1.5rem; margin-bottom:1.25rem; box-shadow:var(--shadow-md); }
+        .daily-head { display:flex; flex-wrap:wrap; gap:.5rem 1rem; align-items:baseline; margin-bottom:.4rem; }
+        .daily-kicker { font-family:var(--font-display); letter-spacing:.15em; font-size:.8rem; color:var(--ow-orange); }
+        body.dark-mode .daily-kicker { color:#ffb3b0; }
+        .daily-sub { font-size:.82rem; opacity:.8; }
+        .daily-box h3 { font-size:1.2rem; margin-bottom:.35rem; }
+        .daily-box p { opacity:.95; font-size:.95rem; }
+        .daily-actions { display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0; }
+        .daily-box .tip-box { background:rgba(255,255,255,.1); border-left-color:var(--ow-orange); }
+        .daily-box .tip-box .tip-title { color:#fff; } .daily-box .tip-box .tip-content { color:#fff; opacity:.95; }
+        .daily-box .fig-muted { fill:none; color:rgba(255,255,255,.7); }
+        /* 서브탭 */
+        .subtabs { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1.1rem; }
+        .subtab { padding:.55rem .95rem; border-radius:10px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text-2); font:inherit; font-size:.88rem; font-weight:700; cursor:pointer; min-height:40px; }
+        .subtab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+        .filter-row { display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; margin-bottom:.6rem; }
+        .filter-row .f-label { width:auto; text-align:left; margin-right:.3rem; }
+        .filter-btn { min-height:36px; }
+        /* 상황판단 */
+        .sit-card { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); padding:1.3rem 1.4rem; margin-bottom:1.1rem; box-shadow:var(--shadow-sm); }
+        .sit-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:.4rem; margin-bottom:.35rem; }
+        .sit-cat { font-size:.78rem; font-weight:800; color:var(--accent); letter-spacing:.04em; }
+        body.dark-mode .sit-cat { color:#ff8a86; }
+        .sit-badges { display:flex; gap:.35rem; }
+        .sit-title { font-size:1.15rem; margin-bottom:.7rem; }
+        .sit-setup { background:var(--bg-soft); border-radius:var(--radius-sm); padding:.9rem 1rem; margin-bottom:.8rem; display:grid; gap:.6rem; }
+        .sit-teams { display:grid; gap:.35rem; font-size:.9rem; }
+        .sit-teams .f-label { display:inline-block; width:56px; text-align:left; }
+        .pill.tiny { padding:.1rem .5rem; font-size:.78rem; background:rgba(61,123,217,.14); }
+        .pill.tiny.enemy { background:rgba(224,74,74,.14); }
+        .sit-facts { margin:0; padding-left:1.1rem; color:var(--text-2); font-size:.92rem; display:grid; gap:.15rem; }
+        .sit-q { font-weight:700; font-size:1.02rem; margin-bottom:.7rem; }
+        .sit-result:empty { display:none; }
+        .why-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:.7rem; margin:.5rem 0 .9rem; }
+        .why-box { background:var(--bg-soft); border-radius:var(--radius-sm); padding:.85rem 1rem; font-size:.9rem; color:var(--text-2); }
+        .why-box h5 { font-size:.82rem; margin-bottom:.35rem; color:var(--text); }
+        .why-box ul { padding-left:1.1rem; display:grid; gap:.3rem; }
+        .why-box li.mine { color:var(--text); }
+        .why-box.pro { background:var(--accent-soft); }
+        .sit-best { margin-top:.5rem; color:var(--text); }
+        /* 조언 */
+        .adv-form { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px,1fr)); gap:.6rem; margin-bottom:1rem; }
+        .adv-field label { display:block; font-size:.78rem; font-weight:800; color:var(--text-3); margin-bottom:.25rem; letter-spacing:.04em; }
+        .adv-field select { width:100%; padding:.6rem .7rem; border-radius:10px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text); font:inherit; font-size:.92rem; min-height:44px; }
+        .adv-card { border-radius:var(--radius-sm); padding:1rem 1.1rem; margin-bottom:.7rem; border:1.5px solid var(--line); background:var(--bg-elev); }
+        .adv-card.primary { border-width:2px; }
+        .adv-card.v-good.primary { border-color:var(--success); } .adv-card.v-mixed.primary { border-color:var(--warning); } .adv-card.v-bad.primary { border-color:var(--danger); }
+        .adv-rank { font-size:.75rem; font-weight:800; color:var(--text-3); letter-spacing:.08em; }
+        .adv-card h4 { font-size:1.05rem; margin:.2rem 0 .4rem; }
+        .adv-action { font-weight:600; color:var(--text); }
+        .adv-why, .adv-call { color:var(--text-2); font-size:.9rem; margin-top:.35rem; }
+        .fight-btns { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:.9rem; }
+        .fight-card { background:var(--bg-soft); border-radius:var(--radius-sm); padding:1rem 1.1rem; }
+        /* 체크 */
+        .check-item { display:flex; gap:.7rem; align-items:flex-start; padding:.7rem .8rem; border-radius:10px; background:var(--bg-soft); margin-bottom:.45rem; cursor:pointer; font-size:.95rem; min-height:44px; }
+        .check-item input { width:20px; height:20px; margin-top:.15rem; accent-color:var(--accent); flex:none; }
+        .check-item small { display:block; color:var(--text-3); font-size:.8rem; margin-top:.1rem; }
+        .check-item.big { font-size:1rem; }
+        .check-item:has(input:checked) { background:var(--accent-soft); }
+        /* 통계 */
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:.7rem; margin-bottom:1.1rem; }
+        .stat-tile { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius); padding:1rem; text-align:center; box-shadow:var(--shadow-sm); }
+        .stat-num { font-family:var(--font-display); font-size:2rem; font-weight:700; line-height:1.1; color:var(--accent); }
+        body.dark-mode .stat-num { color:#ff8a86; }
+        .stat-label { font-weight:700; margin-top:.2rem; } .stat-tile small { color:var(--text-3); }
+        .stats-cols { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1rem; margin-bottom:0; }
+        .stats-cols .card { margin-bottom:1.1rem; }
+        .result-cats { display:grid; gap:.4rem; margin:.8rem 0; }
+        .result-cat { display:grid; grid-template-columns:130px 1fr 44px auto; align-items:center; gap:.6rem; font-size:.88rem; text-align:left; }
+        .result-cat span { color:var(--text-2); } .result-cat b { text-align:right; font-variant-numeric:tabular-nums; } .result-cat small { color:var(--text-3); font-size:.75rem; }
+        .mini-bar { height:8px; background:var(--bg-soft); border-radius:999px; overflow:hidden; }
+        .mini-fill { height:100%; border-radius:999px; background:var(--accent); }
+        .mini-fill.good { background:var(--success); } .mini-fill.mixed { background:var(--warning); } .mini-fill.bad { background:var(--danger); }
+        .result-reco { text-align:left; margin-top:1.2rem; background:var(--bg-soft); border-radius:var(--radius-sm); padding:.9rem 1rem; }
+        .result-reco ol { padding-left:1.2rem; margin-top:.4rem; display:grid; gap:.3rem; font-size:.92rem; color:var(--text-2); }
+        .result-reco a, .focus-card a { color:var(--accent); font-weight:700; cursor:pointer; }
+        .focus-card.bad { border-left:4px solid var(--danger); } .focus-card.good { border-left:4px solid var(--success); }
+        .focus-big { font-size:1.35rem; font-weight:800; margin:.3rem 0 .6rem; } .focus-big small { font-size:.85rem; color:var(--text-3); font-weight:600; }
+        @media (max-width:600px) { .result-cat { grid-template-columns:100px 1fr 40px auto; } }
+        /* 영웅 모달 */
+        .modal { position:fixed; inset:0; z-index:200; display:flex; align-items:flex-start; justify-content:center; padding:4vh 12px; overflow-y:auto; background:rgba(8,12,24,.62); backdrop-filter:blur(4px); }
+        .modal[hidden] { display:none; }
+        .modal-panel { position:relative; width:100%; max-width:860px; background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-lg); padding:1.5rem 1.5rem 1.6rem; animation:rise .3s ease; }
+        .modal-close { position:absolute; right:.8rem; top:.8rem; width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--bg-elev); color:var(--text); font-size:1.1rem; cursor:pointer; }
+        body.modal-open { overflow:hidden; }
+        .hm-head { display:flex; gap:1rem; align-items:flex-start; padding:1rem 1.1rem; border-radius:var(--radius-sm); background:var(--bg-soft); border-left:5px solid var(--role-c, var(--accent)); margin-bottom:1rem; }
+        .hm-head.role-tank { --role-c:#3d7bd9; --rc:#3d7bd9; } .hm-head.role-dps { --role-c:#e04a4a; --rc:#e04a4a; } .hm-head.role-support { --role-c:#2fae6c; --rc:#2fae6c; }
+        .hm-kicker { font-size:.8rem; font-weight:700; color:var(--text-3); }
+        .hm-head h2 { font-family:var(--font-display); font-size:1.8rem; line-height:1.1; margin:.1rem 0 .3rem; }
+        .hm-coach { color:var(--text); font-weight:600; }
+        .hm-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:.8rem; margin-bottom:1rem; }
+        .hm-card { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1.05rem; }
+        .hm-card h4 { font-size:.92rem; margin-bottom:.5rem; }
+        .hm-first { background:var(--accent-soft); }
+        .hm-card .steps li, .hm-card p { font-size:.9rem; }
+        .kv.small li { font-size:.88rem; grid-template-columns:110px 1fr; }
+        .dont { padding-left:1.1rem; display:grid; gap:.3rem; color:var(--text-2); font-size:.9rem; }
+        .dont li::marker { color:var(--danger); }
+        .stats { display:grid; gap:.35rem; margin:.6rem 0; }
+        .stat { display:flex; justify-content:space-between; font-size:.85rem; color:var(--text-2); }
+        .stat-dots { letter-spacing:2px; color:var(--warning); }
+        .hm-tags { display:flex; flex-wrap:wrap; gap:.35rem; }
+        .pill-btn { border:none; cursor:pointer; font:inherit; font-size:.85rem; font-weight:700; }
+        .pill-btn:hover { background:var(--accent); color:var(--accent-ink); }
+        .hero-more { margin-top:.6rem; font-size:.78rem; font-weight:700; color:var(--accent); }
+        body.dark-mode .hero-more { color:#ff8a86; }
+        .hero-card { cursor:pointer; }
+        .hero-card:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+        /* 추천 */
+        .reco-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:.8rem; margin-top:1rem; }
+        .reco-card { background:var(--bg-soft); border-radius:var(--radius-sm); padding:1rem 1.05rem; border-top:4px solid var(--rc, var(--accent)); display:grid; gap:.4rem; }
+        .reco-card.role-tank { --rc:#3d7bd9; } .reco-card.role-dps { --rc:#e04a4a; } .reco-card.role-support { --rc:#2fae6c; }
+        .reco-rank { font-size:.78rem; font-weight:800; color:var(--text-3); }
+        .reco-name { font-family:var(--font-display); font-size:1.35rem; font-weight:700; display:flex; align-items:center; gap:.5rem; }
+        .reco-why, .reco-coach { font-size:.88rem; color:var(--text-2); }
+        .style-row { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-top:.8rem; }
+        .style-row select { padding:.6rem .7rem; border-radius:10px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text); font:inherit; min-height:44px; }
+        /* 맵 */
+        .map-card { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius-sm); margin-bottom:.6rem; }
+        .map-card summary { list-style:none; cursor:pointer; padding:.85rem 1rem; display:flex; align-items:center; gap:.6rem; font-size:1rem; min-height:48px; }
+        .map-card summary::-webkit-details-marker { display:none; }
+        .map-card summary::after { content:"＋"; margin-left:auto; color:var(--text-3); font-weight:700; }
+        .map-card[open] summary::after { content:"－"; }
+        .map-card summary small { color:var(--text-3); }
+        .map-mode { font-size:.7rem; font-weight:800; padding:.15rem .5rem; border-radius:6px; background:var(--accent-soft); color:var(--text); }
+        .map-body { padding:0 1rem 1rem; }
+        .map-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:.6rem; margin-bottom:.6rem; }
+        .map-grid > div { background:var(--bg-soft); border-radius:10px; padding:.7rem .85rem; font-size:.88rem; color:var(--text-2); }
+        .map-grid h5 { font-size:.82rem; color:var(--text); margin-bottom:.3rem; }
+        .map-grid ul { padding-left:1rem; display:grid; gap:.15rem; }
+        /* 용어 사전 */
+        .gl-card { background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--radius-sm); padding:.95rem 1.1rem; margin-bottom:.6rem; }
+        .gl-term { font-weight:800; font-size:1.05rem; color:var(--accent); margin-bottom:.3rem; }
+        body.dark-mode .gl-term { color:#ff8a86; }
+        .gl-term small { color:var(--text-3); font-weight:600; font-size:.8rem; }
+        .gl-def { color:var(--text-2); font-size:.93rem; }
+        .gl-row { display:grid; grid-template-columns:90px 1fr; gap:.5rem; font-size:.88rem; margin-top:.45rem; }
+        .gl-row > span:first-child { font-weight:700; color:var(--text-3); font-size:.8rem; padding-top:.1rem; }
+        .gl-row strong { color:var(--text); font-weight:600; }
+        /* 검색 */
+        .search-panel { max-width:720px; }
+        .search-results { margin-top:1rem; }
+        .search-summary { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.8rem; }
+        .search-group h4 { font-size:.85rem; margin:.8rem 0 .4rem; color:var(--text-3); letter-spacing:.06em; text-transform:uppercase; }
+        .search-item { display:block; width:100%; text-align:left; background:var(--bg-elev); border:1px solid var(--line); border-radius:10px; padding:.65rem .9rem; margin-bottom:.35rem; font:inherit; color:var(--text); cursor:pointer; min-height:44px; }
+        .search-item:hover, .search-item:focus-visible { border-color:var(--accent); background:var(--accent-soft); }
+        .search-item small { display:block; color:var(--text-3); font-size:.8rem; margin-top:.1rem; }
+        /* 접근성 / 터치 */
+        .nav-tab { min-height:42px; }
+        .nav-tab:focus-visible, .filter-btn:focus-visible, .btn:focus-visible, .quiz-option:focus-visible, .subtab:focus-visible, .mode-btn:focus-visible, .theme-toggle:focus-visible, .search-btn:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+        .quiz-option { min-height:48px; }
+        .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+        @media (max-width:768px) { .search-btn .search-label, .search-btn kbd { display:none; } .search-btn { width:44px; height:44px; padding:0; justify-content:center; border-radius:50%; } .logo { font-size:1rem; } .nav-tabs { position:static; } .toolbar-row { margin-top:0; } .modal { padding:8px; } .modal-panel { padding:1.1rem 1rem 1.3rem; } .hm-head { flex-direction:column; } .kv.small li { grid-template-columns:1fr; } .gl-row { grid-template-columns:1fr; gap:.1rem; } }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -601,7 +806,7 @@
 <body>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
         <symbol id="i-tank" viewBox="0 0 24 24"><path d="M12 2 4 5.2v5.6c0 5.1 3.4 9.8 8 11.2 4.6-1.4 8-6.1 8-11.2V5.2L12 2zm0 2.2 6 2.4v4.2c0 4-2.5 7.7-6 9-3.5-1.3-6-5-6-9V6.6l6-2.4z"/><path d="M12 7.5 8.5 9v3.2c0 2.2 1.4 4.3 3.5 5.1 2.1-.8 3.5-2.9 3.5-5.1V9L12 7.5z"/></symbol>
-        <symbol id="i-dps" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5h4l12 12-2 2-12-12v-2z"/><path d="M20.5 3.5h-4l-12 12 2 2 12-12v-2z"/><path d="M6 15l-2.5 2.5 3 3L9 18M18 15l2.5 2.5-3 3L15 18"/></g></symbol>
+        <symbol id="i-dps" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></g><circle cx="12" cy="12" r="2.4"/></symbol>
         <symbol id="i-support" viewBox="0 0 24 24"><path d="M9 2h6v7h7v6h-7v7H9v-7H2V9h7V2zm2 2v7H4v2h7v7h2v-7h7v-2h-7V4h-2z"/><path d="M11 6h2v5h5v2h-5v5h-2v-5H6v-2h5V6z"/></symbol>
     </svg>
     <header>
@@ -611,21 +816,36 @@
                 <img id="dark-logo" class="logo-img" src="assets/blackwatch.webp" alt="Blackwatch">
                 <span>오버워치 뉴비 가이드 <small class="logo-sub">COACH PLAYBOOK</small></span>
             </div>
-            <button class="theme-toggle" onclick="toggleTheme()" title="다크모드 전환">
+            <div style="display:flex;gap:.5rem;align-items:center;">
+            <button class="search-btn" onclick="openSearch()" aria-label="전체 검색 열기">🔍 <span class="search-label">검색</span> <kbd>/</kbd></button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="다크모드 전환" aria-label="다크모드 전환">
                 <span id="theme-icon">🌙</span>
             </button>
+            </div>
         </div>
     </header>
 
     <div class="container">
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="switchSection(0)">게임 기본</button>
-            <button class="nav-tab" onclick="switchSection(1)">캐릭터 역할</button>
-            <button class="nav-tab" onclick="switchSection(2)">기초 전술</button>
-            <button class="nav-tab" onclick="switchSection(3)">맵과 포지셔닝</button>
-            <button class="nav-tab" onclick="switchSection(4)">🔥 실전 팁</button>
-            <button class="nav-tab" onclick="switchSection(5)">🧠 고급 전략</button>
-            <button class="nav-tab" onclick="switchSection(6)">🦸 영웅 도감</button>
+        <div class="nav-tabs" role="tablist" aria-label="가이드 메뉴">
+            <button class="nav-tab active" role="tab" aria-selected="true" onclick="switchSection(0)">🏠 게임 기본</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)">👥 캐릭터 역할</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)">🎯 기초 전술</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵과 포지셔닝</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)">🔥 실전 팁</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)">🧠 고급 전략</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 나의 학습 분석</button>
+            <button class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
+        </div>
+        <div class="toolbar-row">
+            <div class="mode-switch" role="group" aria-label="학습 수준">
+                <span>학습 수준</span>
+                <button class="mode-btn" data-mode="newbie" aria-pressed="false" onclick="setMode('newbie')">🟢 뉴비</button>
+                <button class="mode-btn active" data-mode="normal" aria-pressed="true" onclick="setMode('normal')">🔵 일반</button>
+                <button class="mode-btn" data-mode="advanced" aria-pressed="false" onclick="setMode('advanced')">🔴 심화</button>
+            </div>
+            <span class="fig-muted" style="font-size:.78rem;color:var(--text-3)">← 탭을 좌우로 밀어 더 많은 메뉴를 볼 수 있습니다</span>
         </div>
 
         <div class="progress-container">
@@ -636,8 +856,10 @@
             <div class="quiz-score-bar">
                 <span>📝 퀴즈: <strong id="score-solved">0</strong>/<span id="score-total">15</span> 풀이</span>
                 <span>✅ 정답: <strong id="score-correct">0</strong></span>
+                <span>🧪 상황판단: <strong id="score-sit">0</strong> 풀이</span>
                 <button class="btn btn-outline" onclick="resetProgress()">진행도 초기화</button>
             </div>
+            <div class="level-box" id="level-box"></div>
         </div>
 
         <!-- Section 1: Game Basics -->
@@ -646,6 +868,10 @@
                 <span class="section-title-icon">🎮</span>
                 게임 기본 알아보기
             </div>
+            <div class="daily-box" id="daily-box"></div>
+            <div class="mode-note newbie">🟢 뉴비 모드입니다. 어려운 카드(쿨 트래킹·궁 콤보 등)는 숨기고 핵심만 보여 드립니다.</div>
+            <div class="mode-note advanced">🔴 심화 모드입니다. 자원 교환·타이밍·승리 조건 같은 심화 노트가 각 파트 끝에 열립니다.</div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>오버워치는 "5명이 모인 채로 한타에 들어가느냐"의 게임입니다. 먼저 뛰어나가 죽는 순간 4:5가 확정됩니다.</p></div></div>
 
             <div class="coach-intro">
                 <div class="coach-avatar">🎯</div>
@@ -771,6 +997,7 @@
                 <span class="section-title-icon">👥</span>
                 캐릭터 역할 이해하기
             </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>탱커가 선 곳이 팀의 위치, 딜러는 각을 보는 사람, 힐러는 "지금 맞는 사람"을 살리는 사람입니다.</p></div></div>
 
             <div class="card">
                 <h3><span class="card-icon">🧩</span>1-2-2와 역할 패시브</h3>
@@ -865,6 +1092,7 @@
                 <span class="section-title-icon">♟️</span>
                 기초 전술 배우기
             </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>스태거(한 명씩 잘림)가 저티어 패배 원인 1위입니다. 2명 이상 죽으면 후퇴 신호입니다.</p></div></div>
 
             <div class="card">
                 <h3><span class="card-icon">🔄</span>한타는 5단계로 진행됩니다</h3>
@@ -921,6 +1149,13 @@
                 <div class="tip-content">다음 판에는 <strong>"스폰에서 나갈 때 팀원이 몇 명 살아 있는지 보고 나가기"</strong> 이것 하나만 해 보세요. 이것만으로도 승률이 눈에 띄게 오릅니다. 나머지는 그다음입니다.</div>
             </div>
 
+            <div class="card deep-only">
+                <h3><span class="card-icon">🔬</span>심화 노트 — 한타를 숫자로 보기</h3>
+                <p><strong>인원 계산은 "체력 합"으로.</strong> 5:5라도 우리 3명이 체력 40% 이하면 실질 3.5:5입니다. 진입 전 Tab이 아니라 왼쪽 위 초상화 체력바를 보세요.</p>
+                <p><strong>리스폰 시계.</strong> 사망 10초 + 복귀 10~20초. 첫 킬이 나면 "20초 안에 끝낸다"는 시계가 켜집니다. 20초 안에 못 끝내면 5:5로 돌아갑니다.</p>
+                <p><strong>궁 충전을 주지 않기.</strong> 탱커에게 넣는 무의미한 딜, 방벽에 쏘는 딜은 상대 궁을 채웁니다. 포크는 "맞출 수 있는 적"에게만.</p>
+            </div>
+
             <!-- Quiz 3-1 -->
             <div class="quiz-container">
                 <div class="quiz-title">퀴즈 7</div>
@@ -967,6 +1202,7 @@
                 <span class="section-title-icon">🗺️</span>
                 맵과 포지셔닝
             </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>고지를 먹은 팀이 한타를 이깁니다. 항상 코너 옆에 서고, 힐러와 15m 이상 떨어지지 마세요.</p></div></div>
 
             <div class="card">
                 <h3><span class="card-icon">🧭</span>맵을 읽는 키워드 4가지입니다</h3>
@@ -1033,6 +1269,21 @@
             </div>
 
             <div class="card">
+                <h3><span class="card-icon">🗺️</span>맵별 가이드 — 고지 · 초크 · 루트 · 추천 위치</h3>
+                <p>대표 맵 12개의 구조를 정리했습니다. 맵을 누르면 펼쳐집니다. 처음에는 <strong>"뉴비가 가장 많이 하는 실수"</strong>만 읽어도 충분합니다.</p>
+                <div class="filter-row" id="map-filters" style="margin-top:.7rem">
+                    <button class="filter-btn active" aria-pressed="true" onclick="filterMaps('all',this)">전체</button>
+                    <button class="filter-btn" aria-pressed="false" onclick="filterMaps('escort',this)">호위</button>
+                    <button class="filter-btn" aria-pressed="false" onclick="filterMaps('hybrid',this)">혼합</button>
+                    <button class="filter-btn" aria-pressed="false" onclick="filterMaps('control',this)">쟁탈</button>
+                    <button class="filter-btn" aria-pressed="false" onclick="filterMaps('push',this)">밀기</button>
+                    <button class="filter-btn" aria-pressed="false" onclick="filterMaps('flashpoint',this)">플래시포인트</button>
+                    <button class="filter-btn" aria-pressed="false" onclick="filterMaps('clash',this)">격돌</button>
+                </div>
+                <div id="map-list"></div>
+            </div>
+
+            <div class="card">
                 <h3><span class="card-icon">🏥</span>힐팩과 스폰 거리는 "전략"입니다</h3>
                 <p>힐팩 위치는 맵마다 고정되어 있습니다. 처음 두세 판은 <strong>거점 근처 큰 팩(250)</strong> 위치만 외워 두세요. 체력이 없을 때 힐러를 찾는 것보다 팩이 빠를 때가 많습니다. 딜러가 <strong>팩을 먹으면서 플랭크</strong>하는 것이 기본 루트입니다.</p>
                 <p><strong>스폰 어드밴티지</strong>: 상대 스폰 앞에서 싸우면 상대는 죽어도 5초면 돌아오고 우리는 20초가 걸립니다. <strong>어디서 싸우느냐가 곧 리스폰 유불리</strong>입니다. 그래서 "너무 밀지 마세요"라는 콜이 나옵니다.</p>
@@ -1089,6 +1340,7 @@
                 <span class="section-title-icon">🔥</span>
                 실전 팁: 게임에서 이기는 법
             </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>체력 50% 이하면 코너. 같은 방식으로 두 번 죽었으면 픽을 바꾸세요. 교체는 죽은 직후 스폰에서.</p></div></div>
 
             <div class="card">
                 <h3><span class="card-icon">❤️</span>체력 관리 3원칙입니다</h3>
@@ -1191,6 +1443,7 @@
                 <span class="section-title-icon">🧠</span>
                 고급 전략
             </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>궁 어드밴티지가 한타를 열지 말지 정합니다. 상대 힐러 생존기 하나(스즈·불사)만 세세요.</p></div></div>
 
             <div class="card">
                 <h3><span class="card-icon">🧱</span>팀 조합 3스타일 — 다이브 / 브롤 / 포크</h3>
@@ -1206,7 +1459,7 @@
                 <p><strong>다이브 &gt; 포크 &gt; 브롤 &gt; 다이브.</strong> 상대가 포크면 다이브로, 다이브면 브롤로 대응하는 것이 기본 발상입니다.</p>
             </div>
 
-            <div class="card">
+            <div class="card adv-only">
                 <h3><span class="card-icon">⏳</span>쿨 트래킹 — 이것만 세시면 됩니다</h3>
                 <p>모든 기술을 다 셀 필요는 없습니다. <strong>한타 결과를 바꾸는 기술</strong>만 세면 됩니다. 상대가 썼으면 <strong>그다음 10초가 들어갈 타이밍</strong>입니다.</p>
                 <div class="table-wrap"><table class="tbl">
@@ -1227,7 +1480,7 @@
                 <p>시작은 <strong>상대 힐러 생존기 하나</strong>(스즈 or 불사)만으로 충분합니다. "빠졌어요!" 콜 한 마디에 팀 전체가 그 순간에 들어갑니다.</p>
             </div>
 
-            <div class="card">
+            <div class="card adv-only">
                 <h3><span class="card-icon">📊</span>궁 트래킹 실전</h3>
                 <ol class="steps">
                     <li>한타 전 <strong>Tab</strong>으로 <em>우리</em> 궁을 확인합니다. 상대 궁은 보이지 않습니다</li>
@@ -1238,7 +1491,7 @@
                 </ol>
             </div>
 
-            <div class="card">
+            <div class="card adv-only">
                 <h3><span class="card-icon">🔗</span>확정 킬 궁 콤보 (실제 명칭)</h3>
                 <ul class="kv">
                     <li><span>그라비 (중력자탄) +</span><strong>용의 일격(한조) · 죽이는 타이어(정커랫) · 포화(파라) · 중력 붕괴(시그마) · 용검(겐지) — "그라비 + 아무거나"면 됩니다</strong></li>
@@ -1264,38 +1517,21 @@
             </div>
 
             <div class="card">
-                <h3><span class="card-icon">📖</span>용어 사전 — 인게임에서 실제로 쓰는 말입니다</h3>
-                <dl class="glossary">
-                    <dt>한타</dt><dd>팀 대 팀 교전을 말합니다. "한타 열어요", "한타 졌어요"처럼 씁니다</dd>
-                    <dt>스태거 / 잘림</dt><dd>팀원이 따로따로 죽어 리스폰이 어긋나는 것입니다. "잘리지 마세요" = 혼자 죽지 마세요</dd>
-                    <dt>포크 / 짤짤이</dt><dd>멀리서 안전하게 툭툭 때려 상대 자원을 빼는 것입니다</dd>
-                    <dt>다이브 / 브롤</dt><dd>기동력으로 한 타겟에 동시에 뛰어드는 것 / 5명이 덩어리로 붙어 싸우는 것입니다</dd>
-                    <dt>플랭크</dt><dd>측면·후방으로 우회하는 것입니다. "플랭커" = 겐지·트레이서·솜브라·리퍼</dd>
-                    <dt>프론트 / 백라인</dt><dd>탱커가 있는 앞줄 / 힐러가 있는 뒷줄입니다. "백라인 터졌다" = 힐러가 죽었다는 뜻입니다</dd>
-                    <dt>각 / 딜각 / 킬각 / 궁각</dt><dd>기회를 뜻합니다. "각 나왔다" = 지금 들어가면 됩니다</dd>
-                    <dt>피킹 / 필</dt><dd>코너에서 잠깐 나와 쏘고 다시 숨는 것 / 첫 킬로 5:4를 만드는 것입니다</dd>
-                    <dt>이니시</dt><dd>한타 개시입니다. 라인 돌진, 윈스턴 점프, 궁 등으로 첫 각을 만드는 것입니다</dd>
-                    <dt>리그룹</dt><dd>5명이 다시 모이는 것입니다. "리그룹 해요" = 빠져서 모이자는 뜻입니다</dd>
-                    <dt>궁 어드밴티지</dt><dd>우리 궁 개수가 상대보다 많은 상태입니다. 한타를 열 근거가 됩니다</dd>
-                    <dt>궁 빼기 / 궁 던지기</dt><dd>상대 궁을 유도해 낭비시키는 것 / 내 궁을 의미 없이 쓰는 것입니다</dd>
-                    <dt>CC</dt><dd>군중 제어입니다. 슬립(수면)·둔화·넉백·기절·침묵(EMP) 등이 있습니다</dd>
-                    <dt>히트스캔 / 투사체</dt><dd>쏘는 즉시 맞는 무기(솔저·캐서디·애쉬·위도우) / 날아가는 데 시간이 걸리는 무기(파라·한조·정커랫)입니다</dd>
-                    <dt>고지</dt><dd>하이그라운드입니다. 시야·엄폐 모두 유리합니다</dd>
-                    <dt>초크</dt><dd>좁은 통로입니다. 수비가 화력을 모으는 곳입니다</dd>
-                    <dt>카트 / 로봇</dt><dd>호위·혼합의 화물 / 밀기의 TS-1 로봇입니다</dd>
-                    <dt>오버타임 ("오타")</dt><dd>시간이 끝났지만 공격이 목표에 붙어 있으면 연장됩니다. 떨어지면 즉시 종료됩니다</dd>
-                    <dt>스폰 어드밴티지</dt><dd>우리 스폰이 한타 지점에 더 가까운 상태입니다</dd>
-                    <dt>스즈 / 불사 / 슬립 / 나노 / 레즈 / 비트 / 트랜스</dt><dd>정화의 부적 / 불사 장치 / 수면 다트 / 나노 강화 / 부활 / 소리 방벽 / 초월 — 기술 줄임말입니다</dd>
-                    <dt>그라비 / 용검 / 타이어 / 자폭 / EMP</dt><dd>중력자탄 / 용검 / 죽이는 타이어 / 자폭 / EMP — 위험 궁 줄임말입니다</dd>
-                    <dt>자방 / 아방</dt><dd>자리야의 자기 방벽 / 아군 방벽(방벽 씌우기)입니다</dd>
-                    <dt>매트릭스 먹기</dt><dd>D.Va 방어 매트릭스로 투사체·궁을 지우는 것입니다. "디바 먹어 주세요!"</dd>
-                    <dt>힐봇</dt><dd>힐만 하고 딜·생존 판단이 없는 힐러를 낮춰 부르는 말입니다</dd>
-                    <dt>던진다 / 트롤</dt><dd>고의로 지는 플레이입니다. 무리한 진입도 결과적으로는 던지는 것입니다</dd>
-                    <dt>틸트</dt><dd>화가 나서 판단이 무너진 상태입니다. 한 판 쉬는 것이 좋습니다</dd>
-                    <dt>티어</dt><dd>브론즈 → 실버 → 골드 → 플래티넘 → 다이아몬드 → 마스터 → 그랜드마스터 → 챔피언 순입니다</dd>
-                    <dt>밴</dt><dd>경쟁전 시작 전 영웅 금지 투표입니다. 메타 픽·카운터 픽이 주로 밴됩니다</dd>
-                    <dt>특전 (퍽)</dt><dd>경기 중 선택하는 영웅 강화입니다. 소특전 → 대특전 순으로 고릅니다</dd>
-                </dl>
+                <h3><span class="card-icon">📖</span>용어 사전</h3>
+                <p>인게임에서 실제로 쓰는 말 60여 개를 검색할 수 있는 <strong>📚 용어 사전</strong> 탭으로 옮겼습니다. 실전 표현 · 반대 행동 · 관련 개념까지 함께 보여 드립니다.</p>
+                <p style="margin-top:.6rem"><button class="btn btn-primary" onclick="switchSection(9)">📚 용어 사전 열기</button></p>
+            </div>
+            <div class="card deep-only">
+                <h3><span class="card-icon">🔬</span>심화 노트 — 상위 티어가 실제로 계산하는 것</h3>
+                <ul class="kv">
+                    <li><span>자원 교환</span><strong>한타는 체력·쿨·궁이라는 자원의 교환입니다. 내 쿨 하나로 상대 쿨 둘을 빼면 이득, 내 궁으로 상대 생존기 하나만 뺐으면 손해입니다. 킬이 안 나도 "교환에서 이겼는가"를 보세요.</strong></li>
+                    <li><span>쿨다운 트래킹</span><strong>상대 힐러 생존기 하나에서 시작해 탱커 이동기(점프·돌진), 딜러 이탈기(리콜·질풍참)까지 늘립니다. 세는 순서: 생존기 → 이동기 → CC.</strong></li>
+                    <li><span>궁 경제</span><strong>궁은 "쓰면 다음 한타까지 못 돌아오는" 자원입니다. 한타당 1~2개, 콤보로, 상대 궁이 없을 때. 상대에게 궁 충전을 주지 않는 것(탱커에게 무의미한 딜 금지)도 궁 경제입니다.</strong></li>
+                    <li><span>시선 분산</span><strong>상대 5명 중 2명이 나를 보면 정면은 5:3입니다. 트레이서·레킹볼·솜브라의 가치는 킬이 아니라 시선입니다. 반대로 우리 시선이 분산되면 우리가 집니다.</strong></li>
+                    <li><span>타이밍</span><strong>진입은 "상대 생존기 빠짐 + 우리 5명 + 궁 우위" 세 조건이 겹치는 5초입니다. 조건이 하나 빠지면 기다립니다. 기다리는 것도 플레이입니다.</strong></li>
+                    <li><span>공간</span><strong>탱커가 만드는 "딜러가 안전하게 설 수 있는 영역"입니다. 상대 탱커가 죽으면 공간을 먹고, 우리 탱커가 죽으면 공간을 포기합니다. 공간이 곧 딜입니다.</strong></li>
+                    <li><span>승리 조건</span><strong>모드마다 다릅니다. 쟁탈은 99%에서의 궁 개수, 호위는 오버타임 카트 터치, 격돌은 스폰 어드밴티지. "이 한타를 왜 하는가"를 알면 무리한 한타가 사라집니다.</strong></li>
+                </ul>
             </div>
 
 
@@ -1350,6 +1586,8 @@
                 <span class="section-title-icon">🦸</span>
                 영웅 도감
             </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>영웅 풀은 역할당 2~3개면 충분합니다. 카드를 누르면 운영 핵심·하지 말아야 할 행동·궁 사용법이 열립니다.</p></div></div>
+
             <div class="card">
                 <p>한국 서버 <strong>공식 표기</strong> 기준 전체 로스터. <strong>★</strong>이 적을수록 입문이 쉽고, <span class="hero-badge">뉴비 추천</span>이 붙은 영웅부터 잡아 보세요. 각 카드의 코치 한마디는 실제 인게임에서 쓰는 말 그대로입니다.</p>
             </div>
@@ -1360,15 +1598,28 @@
                 </div>
                 <span class="hero-count" id="hero-count"></span>
             </div>
-            <div class="hero-filters" id="hero-filters">
-                <button class="filter-btn active" onclick="filterHeroes('all',this)">전체</button>
-                <button class="filter-btn" onclick="filterHeroes('tank',this)">🛡️ 돌격</button>
-                <button class="filter-btn" onclick="filterHeroes('dps',this)">⚔️ 공격</button>
-                <button class="filter-btn" onclick="filterHeroes('support',this)">💚 지원</button>
-                <button class="filter-btn" onclick="filterHeroes('newbie',this)">⭐ 뉴비 추천만</button>
+            <div class="hero-filters" id="hero-filters" role="group" aria-label="역할 필터">
+                <button class="filter-btn active" aria-pressed="true" onclick="filterHeroes('all',this)">전체</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('tank',this)">🛡️ 돌격</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('dps',this)">⚔️ 공격</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('support',this)">💚 지원</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('newbie',this)">⭐ 뉴비 추천만</button>
             </div>
+            <div class="hero-filters" id="hero-tag-filters" role="group" aria-label="플레이스타일 필터" style="margin:.5rem 0 1.25rem"></div>
             <div class="hero-grid" id="hero-grid"></div>
             <div class="hero-empty" id="hero-empty" style="display:none;">조건에 맞는 영웅이 없습니다.</div>
+
+            <div class="card" style="margin-top:1.5rem">
+                <h3><span class="card-icon">🧭</span>나에게 맞는 영웅 찾기 — 플레이스타일 추천</h3>
+                <p>좋아하는 플레이를 골라 주세요 (여러 개 가능). 점수 계산으로 가장 잘 맞는 영웅 3명을 추천합니다.</p>
+                <div id="style-quiz" style="margin-top:.8rem"></div>
+                <div class="style-row">
+                    <label for="style-role" class="sr-only">역할 제한</label>
+                    <select id="style-role"><option value="all">역할 상관없음</option><option value="tank">🛡️ 돌격만</option><option value="dps">⚔️ 공격만</option><option value="support">💚 지원만</option></select>
+                    <button class="btn btn-primary" id="style-submit" onclick="runStyleQuiz()" disabled>항목을 골라 주세요</button>
+                </div>
+                <div id="style-result"></div>
+            </div>
 
             <!-- Quiz 19 -->
             <div class="quiz-container">
@@ -1414,337 +1665,156 @@
                 <div id="result-body"><p style="color:var(--text-3);"><span class="quiz-total">21</span>문제를 모두 풀면 결과가 여기에 표시됩니다.</p></div>
             </div>
         </section>
+
+        <!-- Section 8: Situational Training -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">🧪</span>
+                상황판단 훈련
+            </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>정답을 외우는 훈련이 아닙니다. "이 상황에서 나라면?"을 판단하고, 왜 그런지 이유를 읽는 훈련입니다.</p></div></div>
+            <div class="coach-intro">
+                <div class="coach-avatar">🧪</div>
+                <div>
+                    <div class="coach-kicker">SITUATION TRAINING</div>
+                    <p>실제 경기 상황을 <strong>상황 → 판단 → 행동 → 이유</strong> 순서로 훈련합니다. 선택하면 🟢 좋은 판단 / 🟡 상황에 따라 다름 / 🔴 위험한 판단과 함께 <strong>왜 그런지, 프로라면 어떻게 생각하는지</strong>를 보여 드립니다. 풀이 기록은 이 기기에만 저장됩니다.</p>
+                </div>
+            </div>
+            <div class="subtabs" role="tablist" aria-label="훈련 도구">
+                <button class="subtab active" role="tab" aria-selected="true" data-tool="situations" onclick="showTrainTool('situations',this)">🧪 상황판단 문제</button>
+                <button class="subtab" role="tab" aria-selected="false" data-tool="side" onclick="showTrainTool('side',this)">🧭 사이드 vs 본대</button>
+                <button class="subtab" role="tab" aria-selected="false" data-tool="advisor" onclick="showTrainTool('advisor',this)">🤔 지금 뭘 해야 하지?</button>
+                <button class="subtab" role="tab" aria-selected="false" data-tool="fight" onclick="showTrainTool('fight',this)">⚖️ 한타 상태</button>
+                <button class="subtab" role="tab" aria-selected="false" data-tool="checklist" onclick="showTrainTool('checklist',this)">✅ 한타 전 체크리스트</button>
+                <button class="subtab" role="tab" aria-selected="false" data-tool="review" onclick="showTrainTool('review',this)">💀 죽었을 때 복기</button>
+            </div>
+
+            <div class="train-tool" id="tool-situations">
+                <div class="filter-row" id="sit-cat-filters"></div>
+                <div class="filter-row" id="sit-diff-filters"><span class="f-label">난이도</span>
+                    <button class="filter-btn active" data-val="all" aria-pressed="true" onclick="setSitFilter('diff','all',this)">전체</button>
+                    <button class="filter-btn" data-val="beginner" aria-pressed="false" onclick="setSitFilter('diff','beginner',this)">🟢 입문</button>
+                    <button class="filter-btn" data-val="intermediate" aria-pressed="false" onclick="setSitFilter('diff','intermediate',this)">🟡 중급</button>
+                    <button class="filter-btn" data-val="advanced" aria-pressed="false" onclick="setSitFilter('diff','advanced',this)">🔴 고급</button>
+                </div>
+                <div class="filter-row" id="sit-role-filters"><span class="f-label">역할</span>
+                    <button class="filter-btn active" data-val="all" aria-pressed="true" onclick="setSitFilter('role','all',this)">전체</button>
+                    <button class="filter-btn" data-val="tank" aria-pressed="false" onclick="setSitFilter('role','tank',this)">🛡️ 돌격</button>
+                    <button class="filter-btn" data-val="dps" aria-pressed="false" onclick="setSitFilter('role','dps',this)">⚔️ 공격</button>
+                    <button class="filter-btn" data-val="support" aria-pressed="false" onclick="setSitFilter('role','support',this)">💚 지원</button>
+                    <span class="hero-count" id="sit-count" style="margin-left:auto"></span>
+                    <button class="btn btn-outline" style="padding:.35rem .8rem;font-size:.78rem" onclick="resetSituations()">풀이 기록 초기화</button>
+                </div>
+                <div id="sit-list"></div>
+            </div>
+
+            <div class="train-tool" id="tool-side" hidden>
+                <div class="card">
+                    <h3><span class="card-icon">🧭</span>사이드는 목적이 아니라 수단입니다</h3>
+                    <p>"딜러 = 무조건 사이드"는 가장 흔한 오해입니다. 사이드가 열리는 조건은 네 가지입니다: <strong>① 팀이 정면 시선을 잡고 있다 ② 우리 5명 생존 ③ 상대 핵심 생존기가 빠졌다 ④ 상대 후방에 고립된 타겟이 있다.</strong> 4개면 🟢 진입, 2~3개면 🟡 짧은 각, 2개 이하면 🔴 본대 유지입니다.</p>
+                    <div class="formation" style="margin-top:.8rem">
+                        <div class="f-row"><span class="f-tag" style="background:var(--success)">🟢 사이드 진입</span><span class="f-tag" style="background:#b07a00">🟡 짧은 사이드각</span><span class="f-tag" style="background:var(--danger)">🔴 본대 유지</span></div>
+                    </div>
+                </div>
+                <div class="filter-row"><span class="hero-count" id="side-count"></span></div>
+                <div id="side-list"></div>
+            </div>
+
+            <div class="train-tool" id="tool-advisor" hidden>
+                <div class="card">
+                    <h3><span class="card-icon">🤔</span>지금 뭘 해야 하지?</h3>
+                    <p>상황을 고르면 미리 만들어진 판단 규칙에서 가장 적절한 행동을 우선순위대로 보여 드립니다. AI가 아니라 <strong>규칙 기반</strong>이라 즉시, 오프라인에서도 작동합니다.</p>
+                    <div class="adv-form" id="advisor-form" style="margin-top:.9rem"></div>
+                    <div id="advisor-result" role="status" aria-live="polite"></div>
+                </div>
+            </div>
+
+            <div class="train-tool" id="tool-fight" hidden>
+                <div class="card">
+                    <h3><span class="card-icon">⚖️</span>한타 상태별 행동 우선순위</h3>
+                    <p>숫자만 보지 마세요. 같은 4:5라도 <strong>HP · 궁 · 위치 · 쿨다운</strong>에 따라 판단이 달라집니다. 상태를 누르면 우선순위와 네 가지 기준을 보여 드립니다.</p>
+                    <div id="fight-states" style="margin-top:.9rem"></div>
+                </div>
+            </div>
+
+            <div class="train-tool" id="tool-checklist" hidden>
+                <div class="card">
+                    <h3><span class="card-icon">✅</span>한타 전 5초 체크리스트</h3>
+                    <p>게임 직전 10초 안에 볼 수 있는 초간단 체크리스트입니다. 전부 체크하면 자동으로 초기화되고 XP를 드립니다.</p>
+                    <div class="tip-box coach-note"><div class="tip-title">🎯 코치 메시지</div><div class="tip-content">모든 것을 생각할 필요 없습니다. <strong>딱 1~2개만 확인하세요.</strong> 처음엔 "우리 팀 5명인가?" 하나면 충분합니다.</div></div>
+                    <div id="checklist"></div>
+                    <p class="fig-muted" id="checklist-done" style="font-size:.85rem;color:var(--text-3)"></p>
+                </div>
+            </div>
+
+            <div class="train-tool" id="tool-review" hidden>
+                <div class="card">
+                    <h3><span class="card-icon">💀</span>죽었을 때 복기 — 나는 왜 죽었나?</h3>
+                    <p>영상 분석이 아닙니다. 죽은 직후 <strong>스스로 체크하는 자기진단</strong>입니다. 해당하는 이유를 고르고 기록하면 오늘 가장 많이 한 실수를 통계로 보여 드립니다.</p>
+                    <div id="review-list" style="margin-top:.8rem"></div>
+                    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0 1rem"><button class="btn btn-primary" onclick="submitReview()">기록하기</button></div>
+                    <div id="review-feedback"></div>
+                    <div id="review-stats" style="margin-top:1rem"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Learning Stats -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">📊</span>
+                나의 학습 분석
+            </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>점수는 순위가 아니라 "다음에 무엇을 공부할지"를 알려 주는 나침반입니다. 가장 낮은 분야 하나만 고쳐도 승률이 오릅니다.</p></div></div>
+            <div id="stats-body"></div>
+        </section>
+
+        <!-- Section 10: Glossary -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">📚</span>
+                용어 사전
+            </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>용어를 몰라서 콜을 못 알아듣는 것이 뉴비의 첫 번째 벽입니다. "스태거", "각", "스즈" 세 개만 알아도 팀 콜의 절반이 들립니다.</p></div></div>
+            <div class="hero-toolbar">
+                <div class="hero-search-wrap has-value" id="glossary-search-wrap">
+                    <label for="glossary-search" class="sr-only">용어 검색</label>
+                    <input class="hero-search" id="glossary-search" type="search" placeholder="용어 검색 (예: 스태거, 스즈, 각)" oninput="renderGlossary(this.value)" autocomplete="off">
+                </div>
+                <span class="hero-count" id="glossary-count"></span>
+            </div>
+            <div id="glossary-list" style="margin-top:1rem"></div>
+        </section>
+    </div>
+
+    <div class="modal" id="hero-modal" hidden role="dialog" aria-modal="true" aria-labelledby="hero-modal-title" onclick="if(event.target===this)closeModal('hero-modal')">
+        <div class="modal-panel">
+            <button class="modal-close" onclick="closeModal('hero-modal')" aria-label="닫기">✕</button>
+            <div id="hero-modal-body"></div>
+        </div>
+    </div>
+    <div class="modal" id="search-modal" hidden role="dialog" aria-modal="true" aria-label="전체 검색" onclick="if(event.target===this)closeModal('search-modal')">
+        <div class="modal-panel search-panel">
+            <button class="modal-close" onclick="closeModal('search-modal')" aria-label="닫기">✕</button>
+            <label for="global-search" class="sr-only">전체 검색</label>
+            <div class="hero-search-wrap"><input class="hero-search" id="global-search" type="search" placeholder="영웅 · 용어 · 맵 · 전략 · 상황 · 퀴즈 검색" oninput="runSearch(this.value)" autocomplete="off"></div>
+            <div class="search-results" id="search-results"></div>
+        </div>
     </div>
 
     <footer>
         <p>© 2026 오버워치 뉴비 완벽 가이드 | 초보자를 위해 만들었습니다</p>
-        <p style="margin-top: .4rem;">21개의 실전 퀴즈로 게임 감각을 키워 보세요!</p>
+        <p style="margin-top: .4rem;">21개의 실전 퀴즈와 60개의 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
     </footer>
 
-    <script>
-        const quizAnswers = [
-            { correct: 1, message: "정답! 오버워치는 5v5 팀 기반 게임입니다." },
-            { correct: 1, message: "정답! 개인 점수보다 팀의 승리가 가장 중요합니다." },
-            { correct: 1, message: "정답! 서로 다른 역할이 함께 일할 때 팀이 강해집니다." },
-            { correct: 1, message: "정답! 탱커는 생존이 쉽고 게임의 기본을 배우기에 최적입니다." },
-            { correct: 1, message: "정답! 탱커는 팀의 방패 역할을 합니다." },
-            { correct: 1, message: "정답! 힐러는 팀원들의 체력을 관리하는 것이 가장 중요합니다." },
-            { correct: 1, message: "정답! 팀원이 부활할 때까지 안전한 곳에서 기다려야 합니다." },
-            { correct: 1, message: "정답! 힐러를 무시하면 팀 전체가 빠르게 죽습니다." },
-            { correct: 1, message: "정답! 팀과 함께 작전을 공유하는 의사소통이 가장 중요합니다." },
-            { correct: 1, message: "정답! 높은 곳에서 적을 내려다보는 것이 가장 유리합니다." },
-            { correct: 1, message: "정답! 팀을 분산하고 엄폐물 뒤에 숨어야 합니다." },
-            { correct: 1, message: "정답! 여러 번 플레이하면서 천천히 배우는 것이 최고의 방법입니다." },
-            { correct: 1, message: "정답! 딜러는 탱커 뒤에서 안전하게 위치해야 합니다." },
-            { correct: 1, message: "정답! 체력이 낮으면 안전한 곳으로 물러나 회복해야 합니다." },
-            { correct: 1, message: "정답! 팀에게 알리고 함께 힐러를 처치하는 것이 중요합니다!" },
-            { correct: 1, message: "정답! 다이브 > 포크 > 브롤 > 다이브. 다이브는 뭉쳐서 받아치는 브롤에 약합니다." },
-            { correct: 0, message: "정답! 생존기가 빠진 10초가 들어갈 타이밍입니다. \"스즈 빠졌어요\" 콜과 함께 진입하세요." },
-            { correct: 2, message: "정답! 궁 어드밴티지는 한타를 열지 말지 정하는 1순위 기준입니다." },
-            { correct: 1, message: "정답! 솔저: 76은 기본 히트스캔에 자힐까지 있어 딜러 입문에 최적입니다." },
-            { correct: 0, message: "정답! 공중 영웅은 히트스캔으로 잡습니다. 투사체로는 맞추기 어렵습니다." },
-            { correct: 2, message: "정답! 레즈하다 죽으면 2명 손해입니다. 안전할 때만 쓰세요." }
-        ];
-
-        const TOTAL_QUIZ = quizAnswers.length;
-        const SECTION_COUNT = 7;
-        const STORAGE_KEY = 'ow-guide-progress';
-
-        const heroes = [
-            // ===== 돌격 =====
-            { name:'라인하르트', role:'tank', diff:1, newbie:true, tag:'브롤', desc:'방벽을 들고 라인을 잡는 탱커의 기본형입니다. 돌진은 "이니시"가 아니면 아끼고, 방벽은 팀이 지나갈 때만 듭니다. 대지분쇄는 나노·그라비와 콤보로 씁니다.' },
-            { name:'오리사', role:'tank', diff:1, newbie:true, tag:'포크/브롤', desc:'튼튼하고 단순합니다. 창으로 밀어내며 라인을 유지합니다. 강화를 쓰는 타이밍(CC 무시)만 익히면 됩니다. 브롤 탱커 상대로 강합니다.' },
-            { name:'D.Va', role:'tank', diff:2, newbie:false, tag:'다이브', desc:'매트릭스로 궁·투사체를 "먹는" 것이 핵심입니다. 부스터로 백라인을 다이브한 뒤 이탈합니다. 메카가 터져도 파일럿으로 살아남으면 궁이 다시 찹니다.' },
-            { name:'자리야', role:'tank', diff:2, newbie:false, tag:'브롤', desc:'자방·아방으로 에너지를 모아 화력을 올립니다. 아방을 다이브 들어가는 아군에게 씌우는 것이 기본입니다. 그라비는 팀 궁 콤보의 시작점입니다.' },
-            { name:'윈스턴', role:'tank', diff:3, newbie:false, tag:'다이브', desc:'점프로 힐러에게 뛰어드는 다이브 탱커의 원조입니다. 방벽을 깔고 테슬라로 힐러를 압박합니다. 뛰어들 때 팀이 따라오는지 확인하는 것이 전부입니다.' },
-            { name:'시그마', role:'tank', diff:3, newbie:false, tag:'포크', desc:'방벽 배치·흡수·바위(CC)를 씁니다. 포크 조합의 핵심입니다. 중력 붕괴는 그라비급 콤보 궁입니다. 방벽을 팀 각도에 맞춰 놓는 감각이 필요합니다.' },
-            { name:'정커퀸', role:'tank', diff:3, newbie:false, tag:'브롤', desc:'출혈로 자힐하며 붙는 브롤 탱커입니다. 외침으로 팀 이속·과다 체력을 줍니다. 파괴의 함성은 나노와 콤보로 씁니다. 힐러 없이는 혼자 살아남기 어렵습니다.' },
-            { name:'라마트라', role:'tank', diff:3, newbie:false, tag:'포크/브롤', desc:'옴닉(방벽·포크) ↔ 네메시스(브롤) 형태를 전환합니다. 절멸은 붙어 있는 적이 있는 한 끝나지 않습니다. 나노를 받으면 한타를 혼자 끝낼 수 있습니다.' },
-            { name:'로드호그', role:'tank', diff:2, newbie:false, tag:'브롤', desc:'갈고리로 한 명을 끌어와 원콤을 냅니다. 자힐(숨 돌리기)이 있어 힐 의존도가 낮습니다. 궁 충전을 많이 준다는 것이 단점입니다. 갈고리 각만 보면 됩니다.' },
-            { name:'레킹볼', role:'tank', diff:4, newbie:false, tag:'다이브', desc:'구르기·갈고리로 백라인을 흔드는 교란형입니다. 팀과 따로 노는 것 같지만 "어그로 끌기"가 할 일입니다. 저티어에서는 팀이 따라오지 못해 어렵습니다.' },
-            { name:'둠피스트', role:'tank', diff:4, newbie:false, tag:'다이브', desc:'로켓 펀치로 벽꿍, 슬램으로 진입합니다. 쿨타임을 돌리며 들락날락합니다. 기술이 다 빠지면 그냥 큰 표적이 됩니다. 조작 난도 최상입니다.' },
-            { name:'마우가', role:'tank', diff:2, newbie:false, tag:'브롤', desc:'쌍기관총 과열로 치명타, 심장 박동으로 자힐·팀힐을 합니다. 돌진으로 라인을 밉니다. 케이지 파이트로 힐러를 가둡니다. 아나 수류탄에 약합니다.' },
-            { name:'헤이즈', role:'tank', diff:3, newbie:false, tag:'다이브/브롤', desc:'벽 타기·도약으로 고지에 접근하고, 가시 방어로 근접 반격합니다. 다이브와 브롤의 중간입니다. 기동성 있는 탱커를 원하면 추천합니다.' },
-            // ===== 공격 =====
-            { name:'솔저: 76', role:'dps', diff:1, newbie:true, tag:'히트스캔', desc:'가장 기본적인 히트스캔입니다. 질주로 이동하고, 생체장으로 자힐·팀힐을 합니다. 헬릭스 로켓은 근접 마무리용입니다. 딜러 입문은 이 영웅을 강력히 추천합니다.' },
-            { name:'바스티온', role:'dps', diff:1, newbie:true, tag:'포크', desc:'포격 형태의 화력이 최상입니다. 위치만 잘 잡으면 됩니다. 방벽을 녹이는 데 최고입니다. 다이브가 오면 약하니 팀 근처에 있으세요.' },
-            { name:'리퍼', role:'dps', diff:2, newbie:true, tag:'브롤', desc:'근접 샷건과 생명력 흡수를 씁니다. 탱커를 녹이는 카운터입니다. 그림자 밟기로 플랭크 → 뒤에서 죽음의 꽃을 씁니다. 윈스턴·D.Va를 잡습니다.' },
-            { name:'토르비욘', role:'dps', diff:2, newbie:true, tag:'포크', desc:'포탑을 깔고 자동 딜을 넣습니다. 과부하로 근접이 강합니다. 겐지·트레이서 카운터입니다. 수비 맵에서는 포탑 위치가 곧 실력입니다.' },
-            { name:'메이', role:'dps', diff:2, newbie:false, tag:'브롤', desc:'빙벽으로 길을 막고 팀을 가르며, 냉각수로 둔화시킵니다. 다이브 카운터입니다. 눈보라는 포화·타이어와 콤보로 씁니다. 빙벽을 잘못 세우면 아군을 갈라 위험하게 만드니 주의하세요.' },
-            { name:'캐서디', role:'dps', diff:3, newbie:false, tag:'히트스캔', desc:'중거리 히트스캔의 교과서입니다. 자기장 수류탄으로 플랭커를 잡습니다. 황야의 무법자는 위험하니 상대 CC가 빠진 뒤에 쓰세요.' },
-            { name:'애쉬', role:'dps', diff:3, newbie:false, tag:'히트스캔/포크', desc:'정조준 히트스캔과 다이너마이트 광역 화상을 씁니다. 밥으로 힐러를 압박하고 궁을 뺍니다. 포크 조합의 주력 딜러입니다.' },
-            { name:'파라', role:'dps', diff:3, newbie:false, tag:'투사체', desc:'공중에서 로켓 스플래시를 넣습니다. 상대에 히트스캔이 있으면 픽을 바꿔야 합니다. 포화는 그라비·눈보라 뒤에 쓰세요. 혼자 떠 있으면 위도우메이커의 표적이 됩니다.' },
-            { name:'트레이서', role:'dps', diff:4, newbie:false, tag:'다이브', desc:'점멸·리콜로 백라인을 교란합니다. 리콜이 빠진 트레이서는 매우 위험합니다. 펄스 폭탄은 탱커보다 힐러에게 쓰세요. 조작 난도 최상입니다.' },
-            { name:'겐지', role:'dps', diff:4, newbie:false, tag:'다이브', desc:'질풍참 초기화로 킬을 이어가고, 디플로 궁을 반사합니다. 용검 + 나노는 최강 콤보입니다. 진입·이탈 판단이 전부입니다. 브리기테·메이가 나오면 픽을 바꾸세요.' },
-            { name:'위도우메이커', role:'dps', diff:4, newbie:false, tag:'히트스캔/포크', desc:'헤드샷 원킬 저격수입니다. 고지에서 한타 시작 전 첫 킬을 내는 것이 할 일입니다. 다이브가 오면 갈고리로 이탈합니다. 에임이 뒷받침되지 않으면 팀에 부담이 됩니다.' },
-            { name:'한조', role:'dps', diff:4, newbie:false, tag:'투사체/포크', desc:'투사체 저격수입니다. 음파 화살로 벽 뒤 시야를 확보합니다. 용의 일격은 그라비와 콤보로 씁니다. 폭풍 화살로 근접에 대응합니다. 에임 편차가 큽니다.' },
-            { name:'정커랫', role:'dps', diff:2, newbie:false, tag:'투사체', desc:'유탄 스팸으로 초크·방벽을 압박합니다. 덫+지뢰로 플랭커를 잡습니다. 타이어는 그라비·눈보라와 콤보로 씁니다. 지뢰 점프로 고지에 오릅니다.' },
-            { name:'시메트라', role:'dps', diff:2, newbie:false, tag:'포크', desc:'광선이 방벽에 충전됩니다. 순간이동기로 팀 이동·고지 진입을 돕습니다. 감시 포탑으로 플랭크 루트를 봉쇄합니다. 라인하르트 상대로 강합니다.' },
-            { name:'솜브라', role:'dps', diff:3, newbie:false, tag:'다이브', desc:'은신·해킹으로 백라인을 교란하고, 위치 이동기로 탈출합니다. EMP는 방벽·보호막을 다 벗기고 침묵시킵니다. 킬보다는 정보와 압박이 할 일입니다.' },
-            { name:'소전', role:'dps', diff:3, newbie:false, tag:'히트스캔/다이브', desc:'레일건 충전 원샷을 냅니다. 파워 슬라이드로 고지 진입·이탈합니다. 파열탄으로 힐러를 압박합니다. 다이브·포크 모두 가능한 만능 영웅입니다.' },
-            { name:'에코', role:'dps', diff:3, newbie:false, tag:'투사체/다이브', desc:'비행 + 집중 광선으로 체력이 없는 적을 녹입니다. 복제로 상대 영웅의 궁을 빌려 씁니다. 파라처럼 히트스캔에 약합니다.' },
-            { name:'벤처', role:'dps', diff:3, newbie:false, tag:'다이브/브롤', desc:'굴착으로 땅속 이동·무적, 분쇄 돌진으로 진입합니다. 근접 딜이 강하고 이탈이 확실합니다. 다이브에 브롤이 섞인 느낌입니다.' },
-            { name:'프레야', role:'dps', diff:3, newbie:false, tag:'투사체/포크', desc:'석궁 연사 + 급속 사격을 씁니다. 대시로 공중 이동합니다. 중거리 포크에 강하고 궁으로 광역 폭발을 냅니다. 투사체 에임이 필요합니다.' },
-            // ===== 지원 =====
-            { name:'메르시', role:'support', diff:1, newbie:true, tag:'포크/다이브', desc:'가디언 엔젤로 아군 사이를 이동하며 힐·증폭 빔을 씁니다. 레즈는 안전할 때만 하세요(레즈하다 죽으면 2명 손해입니다). 딜러 증폭이 곧 실력입니다.' },
-            { name:'모이라', role:'support', diff:1, newbie:true, tag:'브롤', desc:'에임이 거의 필요 없습니다. 소멸로 이탈합니다. 힐 구슬·딜 구슬을 선택합니다. 힐봇이 되기 쉬우니 딜 구슬도 쓰세요. 플랭커를 잡습니다.' },
-            { name:'루시우', role:'support', diff:2, newbie:true, tag:'브롤/다이브', desc:'스피드·힐 오라를 전환합니다. 브롤 조합의 진입은 곧 루시우 스피드입니다. 비트(소리 방벽)는 상대 궁 타이밍에 쓰세요. 벽타기를 익히면 잘 죽지 않습니다.' },
-            { name:'브리기테', role:'support', diff:2, newbie:false, tag:'브롤', desc:'방패 밀쳐내기(CC)·회복 팩을 씁니다. 겐지·트레이서 카운터입니다. 프론트 근처에서 도리깨를 휘두르면 광역 힐이 됩니다. 백라인을 지키는 힐러입니다.' },
-            { name:'바티스트', role:'support', diff:3, newbie:false, tag:'포크', desc:'불사 장치로 팀 전멸을 막습니다 — 타이밍이 곧 실력입니다. 증폭 매트릭스로 힐·딜을 두 배로 만듭니다. 히트스캔 딜도 셉니다. 포크 조합의 핵심입니다.' },
-            { name:'키리코', role:'support', diff:3, newbie:false, tag:'다이브', desc:'순보로 벽 너머 아군에게 이동합니다. 스즈로 CC 해제·무적을 줍니다. 여우 질주는 진입 궁입니다. 쿠나이 헤드샷이 강합니다. 다이브 조합의 필수 영웅입니다.' },
-            { name:'아나', role:'support', diff:4, newbie:false, tag:'포크', desc:'스코프로 힐·딜을 합니다. 슬립으로 궁을 끊고, 생체 수류탄으로 힐을 차단합니다. 나노는 탱커·겐지에게 주세요. 도주기가 없어 위치가 생명입니다.' },
-            { name:'젠야타', role:'support', diff:3, newbie:false, tag:'포크', desc:'부조화로 타겟이 받는 피해를 늘립니다 — 팀 화력을 올리는 힐러입니다. 조화로 원거리 힐을 합니다. 트랜스(초월)는 방어 궁입니다. 발차기 넉백이 유용합니다.' },
-            { name:'일리아리', role:'support', diff:3, newbie:false, tag:'포크', desc:'태양석 힐 탑 설치 + 충전 히트스캔을 씁니다. 딜이 센 힐러입니다. 탑 위치가 곧 실력입니다. 도주기가 약해서 위치 선정이 필수입니다.' },
-            { name:'라이프위버', role:'support', diff:2, newbie:false, tag:'포크/브롤', desc:'생명의 손길로 위험한 아군을 당겨옵니다. 꽃잎 발판으로 고지에 올려 줍니다. 당기기 타이밍을 잘못 잡으면 팀에 피해가 가니 주의하세요.' },
-            { name:'주노', role:'support', diff:2, newbie:false, tag:'다이브', desc:'글라이드로 기동하고, 궤도 광선으로 이속·힐을 줍니다. 유도 로켓으로 힐합니다. 다이브 조합 힐러입니다. 이동 중 힐이 편해 입문용으로도 괜찮습니다.' },
-            { name:'우양', role:'support', diff:3, newbie:false, tag:'포크/브롤', desc:'물을 다루는 지원가입니다. 파도로 이동·밀치기, 물 방울로 아군을 보호합니다. 새 영웅이라 패치마다 성능 변동이 큽니다.' },
-        ];
-        const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
-        const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
-
-        // 퀴즈 번호 표시 + 총 문항 수 반영
-        function initQuizCounters() {
-            document.querySelectorAll('.quiz-container').forEach((c, i) => {
-                const cnt = c.querySelector('.quiz-counter');
-                if (cnt) cnt.textContent = `총 ${TOTAL_QUIZ}개 문제 중 ${i + 1}번째`;
-            });
-            document.getElementById('score-total').textContent = TOTAL_QUIZ;
-            document.querySelectorAll('.quiz-total').forEach(el => el.textContent = TOTAL_QUIZ);
-        }
-
-        // 모바일 카드형 표를 위해 각 셀에 헤더 라벨 부여
-        function labelTableCells() {
-            document.querySelectorAll('table.tbl').forEach(t => {
-                const heads = Array.from(t.querySelectorAll('thead th')).map(th => th.textContent.trim());
-                t.querySelectorAll('tbody tr').forEach(tr => {
-                    let col = 0;
-                    tr.querySelectorAll('td').forEach(td => {
-                        const span = td.colSpan || 1;
-                        if (span === 1 && heads[col]) td.dataset.label = heads[col];
-                        col += span;
-                    });
-                });
-            });
-        }
-
-        function renderHeroes() {
-            const grid = document.getElementById('hero-grid');
-            grid.innerHTML = heroes.map(h => `
-                <div class="hero-card" data-role="${h.role}" data-newbie="${h.newbie}">
-                    <div class="hero-head">
-                        <span class="hero-name">${h.name}${h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : ''}</span>
-                        <span class="hero-role role-${h.role}"><svg><use href="#${roleIcon[h.role]}"/></svg>${roleLabel[h.role]}</span>
-                    </div>
-                    <div class="hero-meta"><span class="hero-diff" title="난이도 ${h.diff}/4">${'★'.repeat(h.diff)}${'☆'.repeat(4 - h.diff)}</span><span class="hero-tag">${h.tag}</span></div>
-                    <div class="hero-desc">${h.desc}</div>
-                    <svg class="hero-emblem"><use href="#${roleIcon[h.role]}"/></svg>
-                </div>`).join('');
-            }
-
-            let heroRole = 'all';
-            function filterHeroes(role, btn) {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                heroRole = role;
-                applyHeroFilter();
-            }
-            function clearHeroSearch() {
-                document.getElementById('hero-search').value = '';
-                applyHeroFilter();
-                document.getElementById('hero-search').focus();
-            }
-            function normalize(str) { return str.toLowerCase().replace(/[\s.:·]/g, ''); }
-            function applyHeroFilter() {
-                const input = document.getElementById('hero-search');
-                const q = normalize(input.value);
-                document.getElementById('hero-search-wrap').classList.toggle('has-value', q.length > 0);
-                let visible = 0;
-                document.querySelectorAll('.hero-card').forEach((card, i) => {
-                    const h = heroes[i];
-                    const roleOk = heroRole === 'all' || (heroRole === 'newbie' ? h.newbie : h.role === heroRole);
-                    const hay = normalize(h.name + roleLabel[h.role] + h.tag + h.desc);
-                    const textOk = !q || hay.includes(q);
-                    const show = roleOk && textOk;
-                    card.classList.toggle('hidden', !show);
-                    if (show) visible++;
-                    // 이름 하이라이트
-                    const nameEl = card.querySelector('.hero-name');
-                    const badge = h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : '';
-                    if (q && normalize(h.name).includes(q)) {
-                        const re = new RegExp(input.value.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-                        nameEl.innerHTML = h.name.replace(re, m => `<mark class="hl">${m}</mark>`) + badge;
-                    } else {
-                        nameEl.innerHTML = h.name + badge;
-                    }
-                });
-                document.getElementById('hero-empty').style.display = visible ? 'none' : 'block';
-                document.getElementById('hero-count').textContent = `${visible} / ${heroes.length}명`;
-            }
-
-        // ---- 진행도 저장 (localStorage) ----
-        let state = { answers: {}, section: 0 };   // answers: { quizIndex: selectedIndex }
-
-        function loadState() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (raw) state = Object.assign(state, JSON.parse(raw));
-            } catch (e) { /* 저장된 데이터가 없거나 손상됨 */ }
-        }
-        function saveState() {
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-        }
-
-        function resetProgress() {
-            if (!confirm('퀴즈 답안과 학습 진행도를 모두 초기화하시겠습니까?')) return;
-            state = { answers: {}, section: 0 };
-            saveState();
-            location.reload();
-        }
-
-        let currentSection = 0;
-        const sections = document.querySelectorAll('.section');
-        const progressDots = document.querySelectorAll('.nav-tab');
-
-        function switchSection(index) {
-            sections.forEach(section => section.classList.remove('active'));
-            progressDots.forEach(dot => dot.classList.remove('active'));
-
-            currentSection = index;
-            sections[currentSection].classList.add('active');
-            progressDots[currentSection].classList.add('active');
-
-            state.section = index;
-            saveState();
-            updateProgress();
-            window.scrollTo(0, 0);
-        }
-
-        function updateProgress() {
-            // 진행도 = 탭 진행(50%) + 퀴즈 풀이(50%)
-            const solved = Object.keys(state.answers).length;
-            const correct = Object.entries(state.answers).filter(([i, a]) => quizAnswers[i].correct === a).length;
-            const sectionPart = ((currentSection + 1) / SECTION_COUNT) * 50;
-            const quizPart = (solved / TOTAL_QUIZ) * 50;
-            document.getElementById('progress-fill').style.width = (sectionPart + quizPart) + '%';
-            document.getElementById('score-solved').textContent = solved;
-            document.getElementById('score-correct').textContent = correct;
-            if (solved === TOTAL_QUIZ) renderResult(correct);
-        }
-
-        function quizSectionIndex(quizIndex) {
-            const fb = document.getElementById(`feedback-${quizIndex}`);
-            return Array.from(sections).indexOf(fb.closest('.section'));
-        }
-
-        function checkAnswer(quizIndex, selectedAnswer, silent) {
-            const feedback = document.getElementById(`feedback-${quizIndex}`);
-            const container = feedback.closest('.quiz-container');
-            const quiz = quizAnswers[quizIndex];
-            if (container.classList.contains('answered') && !silent) return;   // 한 번 답하면 잠금
-
-            const options = container.querySelectorAll('.quiz-option');
-            options.forEach(o => o.classList.remove('selected-correct', 'selected-wrong'));
-            container.classList.add('answered');
-
-            if (selectedAnswer === quiz.correct) {
-                feedback.classList.remove('incorrect');
-                feedback.classList.add('correct', 'show');
-                feedback.textContent = '✓ ' + quiz.message;
-                options[selectedAnswer].classList.add('selected-correct');
-            } else {
-                feedback.classList.remove('correct');
-                feedback.classList.add('incorrect', 'show');
-                feedback.textContent = '✗ 아쉽습니다. 정답: ' + options[quiz.correct].textContent;
-                options[selectedAnswer].classList.add('selected-wrong');
-                options[quiz.correct].classList.add('selected-correct');
-            }
-
-            if (!silent) {
-                state.answers[quizIndex] = selectedAnswer;
-                saveState();
-                updateProgress();
-            }
-        }
-
-        function renderResult(correct) {
-            const body = document.getElementById('result-body');
-            const pct = Math.round((correct / TOTAL_QUIZ) * 100);
-            let grade, msg;
-            if (pct === 100) { grade = '🏆 완벽합니다!'; msg = '모든 문제를 맞히셨습니다. 이제 실전으로 가시면 됩니다!'; }
-            else if (pct >= 80) { grade = '🥇 훌륭합니다'; msg = '기본기가 탄탄합니다. 틀린 부분만 다시 확인해 보세요.'; }
-            else if (pct >= 60) { grade = '🥈 좋습니다'; msg = '핵심은 이해하셨습니다. 약한 파트를 복습해 보세요.'; }
-            else { grade = '📖 복습이 필요합니다'; msg = '괜찮습니다! 틀린 문제의 파트로 돌아가 다시 읽어 보세요.'; }
-
-            const wrong = Object.entries(state.answers)
-                .filter(([i, a]) => quizAnswers[i].correct !== a)
-                .map(([i]) => Number(i));
-
-            const wrongHtml = wrong.length ? `
-                <div class="result-wrong">
-                    <strong>❌ 틀린 문제 (${wrong.length}개)</strong>
-                    ${wrong.map(i => {
-                        const q = document.getElementById(`feedback-${i}`).closest('.quiz-container').querySelector('.quiz-question').textContent;
-                        const sec = quizSectionIndex(i);
-                        return `<div class="result-wrong-item">퀴즈 ${i + 1}. ${q.replace('❓', '').trim()}<br>
-                            <a onclick="goToQuiz(${i}, ${sec})">→ ${progressDots[sec].textContent.trim()} 파트로 이동</a></div>`;
-                    }).join('')}
-                </div>` : '';
-
-            body.innerHTML = `
-                <div class="result-score">${correct} / ${TOTAL_QUIZ}</div>
-                <div class="result-grade">${grade}</div>
-                <p>${msg}</p>
-                ${wrongHtml}
-                <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;">
-                    <button class="btn btn-primary" onclick="retryQuiz()">🔄 퀴즈 다시 풀기</button>
-                    <button class="btn btn-outline" onclick="switchSection(0)">📘 처음부터 다시 읽기</button>
-                </div>`;
-        }
-
-        function goToQuiz(quizIndex, sectionIndex) {
-            switchSection(sectionIndex);
-            setTimeout(() => document.getElementById(`feedback-${quizIndex}`).closest('.quiz-container').scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
-        }
-
-        function retryQuiz() {
-            state.answers = {};
-            saveState();
-            document.querySelectorAll('.quiz-container').forEach(c => {
-                c.classList.remove('answered');
-                c.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected-correct', 'selected-wrong'));
-                const fb = c.querySelector('.quiz-feedback');
-                fb.className = 'quiz-feedback'; fb.textContent = '';
-            });
-            document.getElementById('result-body').innerHTML = `<p style="color:var(--text-3);">${TOTAL_QUIZ}문제를 모두 풀면 결과가 여기에 표시됩니다.</p>`;
-            switchSection(0);
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.getElementById('theme-icon');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('theme-icon').textContent = '☀️';
-            }
-            renderHeroes();
-            applyHeroFilter();
-            initQuizCounters();
-            labelTableCells();
-            loadState();
-            // 저장된 답안 복원
-            Object.entries(state.answers).forEach(([i, a]) => checkAnswer(Number(i), a, true));
-            switchSection(Math.min(state.section || 0, SECTION_COUNT - 1));
-        });
-    </script>
+    <script src="data/heroes.js"></script>
+    <script src="data/heroes-detail.js"></script>
+    <script src="data/situations.js"></script>
+    <script src="data/training.js"></script>
+    <script src="data/maps.js"></script>
+    <script src="data/glossary.js"></script>
+    <script src="data/quizzes.js"></script>
+    <script src="data/counters.js"></script>
+    <script src="app.js?v=2"></script>
 </body>
 </html>
