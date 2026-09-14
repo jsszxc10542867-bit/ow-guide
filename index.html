@@ -635,6 +635,8 @@
         .daily-box h3 { font-size:1.2rem; margin-bottom:.35rem; }
         .daily-box p { opacity:.95; font-size:.95rem; }
         .daily-actions { display:flex; flex-wrap:wrap; gap:.5rem; margin:.9rem 0; }
+        .daily-box .btn-outline { color:#fff; border-color:rgba(255,255,255,.4); }
+        .daily-box .btn-outline:hover { border-color:#fff; color:#fff; }
         .daily-box .tip-box { background:rgba(255,255,255,.1); border-left-color:var(--ow-orange); }
         .daily-box .tip-box .tip-title { color:#fff; } .daily-box .tip-box .tip-content { color:#fff; opacity:.95; }
         .daily-box .fig-muted { fill:none; color:rgba(255,255,255,.7); }
@@ -889,6 +891,54 @@
         .quiz-map-link { margin-top:.6rem; padding:.45rem .9rem; font-size:.82rem; }
         @media (max-width:900px) { .tm-layout { grid-template-columns:1fr; } .tm-detail { position:static; } .tm-d-cols { grid-template-columns:1fr; } .tm-formula li { grid-template-columns:1fr; } }
         @media (max-width:600px) { .tm-controls .tm-row { flex-direction:column; gap:.2rem; } .tm-row-label { padding-top:0; width:auto; } .tm-sit-desc { margin-left:0; } .tm-layers-row { flex-direction:column; gap:.2rem; } .tm-zoom button { width:42px; height:42px; } .tm-select-wrap select { width:100%; } }
+        /* ===== 디자인 업그레이드 ===== */
+        html { font-size: 15.5px; }
+        body { background-image: radial-gradient(rgba(15,27,51,0.045) 1px, transparent 1px); background-size: 22px 22px; }
+        body.dark-mode { background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px); }
+        .card { border-top: 3px solid transparent; }
+        .card:hover { border-top-color: var(--accent); }
+        .card h3 { font-size: 1.15rem; letter-spacing: -.01em; }
+        .card h3::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line), transparent); margin-left: .6rem; }
+        .section-title { font-size: 2.05rem; }
+        .section-title-icon { box-shadow: inset 0 0 0 1px var(--line); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), var(--ow-orange-deep)); }
+        body.dark-mode .btn-primary { background: linear-gradient(135deg, #ff5a55, var(--accent)); }
+        .btn-ghost { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.28); backdrop-filter: blur(4px); }
+        .btn-ghost:hover { background: rgba(255,255,255,.22); }
+        .nav-tab.active { box-shadow: 0 6px 16px var(--accent-soft), inset 0 -2px 0 rgba(0,0,0,.08); }
+        .progress-container { background: linear-gradient(180deg, var(--bg-elev), var(--bg-soft)); }
+        .quiz-option:hover:not(:disabled) { box-shadow: 0 4px 12px var(--accent-soft); }
+        .hero-card::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--role-c), transparent); }
+        .kv li { border-left: 3px solid var(--line-strong); }
+        .tip-box.coach-note { box-shadow: var(--shadow-md); }
+        footer { padding-top: 2rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; max-width: 800px; margin: 0 auto 1.6rem; text-align: left; }
+        .footer-grid strong { display: block; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-2); margin-bottom: .45rem; }
+        .footer-grid a { display: block; color: var(--text-3); text-decoration: none; padding: .18rem 0; cursor: pointer; font-size: .86rem; }
+        .footer-grid a:hover { color: var(--accent); }
+        .to-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--bg-elev); color: var(--text); font-size: 1.2rem; font-weight: 800; cursor: pointer; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; transform: translateY(8px); z-index: 90; }
+        .to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+        /* 홈 히어로 */
+        .hero-banner { position: relative; overflow: hidden; border-radius: var(--radius); background: var(--header-bg); color: #fff; padding: 2.4rem 2rem 2rem; margin-bottom: 1rem; box-shadow: var(--shadow-lg); }
+        .hb-bg { position: absolute; inset: 0; background-image: linear-gradient(115deg, transparent 0 55%, rgba(255,255,255,.05) 55% 57%, transparent 57% 100%), linear-gradient(115deg, transparent 0 68%, rgba(255,255,255,.04) 68% 74%, transparent 74% 100%), radial-gradient(600px 300px at 90% 10%, rgba(249,158,26,.28), transparent 60%); pointer-events: none; }
+        .hb-inner { position: relative; z-index: 1; max-width: 760px; }
+        .hb-kicker { font-family: var(--font-display); letter-spacing: .22em; font-size: .78rem; color: var(--ow-orange); margin-bottom: .6rem; }
+        body.dark-mode .hb-kicker { color: #ffb3b0; }
+        .hb-title { font-family: var(--font-display); font-size: 2.1rem; line-height: 1.2; letter-spacing: -.01em; margin-bottom: .7rem; }
+        .hb-title span { color: var(--ow-orange); }
+        body.dark-mode .hb-title span { color: #ff8a86; }
+        .hb-sub { font-size: 1rem; opacity: .9; margin-bottom: 1.1rem; max-width: 620px; }
+        .hb-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.4rem; }
+        .hb-stats { display: flex; flex-wrap: wrap; gap: .5rem 1.8rem; }
+        .hb-stats div { display: flex; flex-direction: column; }
+        .hb-stats b { font-family: var(--font-display); font-size: 1.7rem; line-height: 1; }
+        .hb-stats span { font-size: .78rem; opacity: .8; }
+        .learn-path { display: flex; gap: .35rem; align-items: center; overflow-x: auto; scrollbar-width: none; padding: .5rem .2rem; margin-bottom: 1rem; }
+        .learn-path::-webkit-scrollbar { display: none; }
+        .lp-label { flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .1em; color: var(--text-3); margin-right: .3rem; }
+        .learn-path button { flex: none; padding: .4rem .75rem; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg-elev); color: var(--text-2); font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer; min-height: 34px; }
+        .learn-path button:hover { border-color: var(--accent); color: var(--text); }
+        @media (max-width: 600px) { .hero-banner { padding: 1.6rem 1.2rem 1.4rem; } .hb-title { font-size: 1.5rem; } .hb-stats { gap: .5rem 1.1rem; } .hb-stats b { font-size: 1.35rem; } html { font-size: 15px; } }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -976,6 +1026,29 @@
             <div class="section-title">
                 <span class="section-title-icon">🎮</span>
                 게임 기본 알아보기
+            </div>
+            <div class="hero-banner">
+                <div class="hb-bg" aria-hidden="true"></div>
+                <div class="hb-inner">
+                    <div class="hb-kicker">COACH PLAYBOOK · OVERWATCH 2</div>
+                    <h2 class="hb-title">아무 생각 없이 싸우지 말고,<br><span>"지금 내가 왜 여기 있는가"</span>를 알고 싸우세요.</h2>
+                    <p class="hb-sub">챔피언 코치 시점에서 뉴비가 무엇을 몰라서 지는지를 역으로 정리한 실전 학습 플랫폼입니다. 30분이면 게임이 다르게 보입니다.</p>
+                    <div class="hb-actions">
+                        <button class="btn btn-primary" onclick="goToDailySituation()">🎯 오늘의 훈련 시작</button>
+                        <button class="btn btn-ghost" onclick="switchSection(7)">🧪 상황판단 훈련</button>
+                        <button class="btn btn-ghost" onclick="switchSection(3)">🗺️ 실제 맵 전술 지도</button>
+                    </div>
+                    <div class="hb-stats">
+                        <div><b id="hb-heroes">44</b><span>영웅 도감</span></div>
+                        <div><b id="hb-sits">61</b><span>상황판단 문제</span></div>
+                        <div><b id="hb-quiz">21</b><span>실전 퀴즈</span></div>
+                        <div><b id="hb-gl">62</b><span>용어 사전</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="learn-path" aria-label="학습 흐름">
+                <span class="lp-label">학습 흐름</span>
+                <button onclick="switchSection(0)">① 게임 이해</button><button onclick="switchSection(1)">② 역할</button><button onclick="switchSection(3)">③ 포지션</button><button onclick="switchSection(2)">④ 한타</button><button onclick="switchSection(4)">⑤ 안 죽기</button><button onclick="switchSection(5)">⑥ 궁·쿨</button><button onclick="switchSection(6)">⑦ 영웅 선택</button><button onclick="switchSection(7)">⑧ 상황판단</button><button onclick="switchSection(8)">⑨ 약점 확인</button>
             </div>
             <div class="daily-box" id="daily-box"></div>
             <div class="mode-note newbie">🟢 뉴비 모드입니다. 어려운 카드(쿨 트래킹·궁 콤보 등)는 숨기고 핵심만 보여 드립니다.</div>
@@ -1966,7 +2039,13 @@
         </div>
     </div>
 
+    <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
     <footer>
+        <div class="footer-grid">
+            <div><strong>배우기</strong><a onclick="switchSection(0)">게임 기본</a><a onclick="switchSection(1)">캐릭터 역할</a><a onclick="switchSection(2)">기초 전술</a><a onclick="switchSection(5)">고급 전략</a></div>
+            <div><strong>훈련하기</strong><a onclick="switchSection(7)">상황판단 훈련</a><a onclick="switchSection(3)">전술 지도</a><a onclick="switchSection(6)">영웅 도감</a><a onclick="switchSection(8)">나의 학습 분석</a></div>
+            <div><strong>참고</strong><a onclick="switchSection(9)">용어 사전</a><a onclick="openSearch()">전체 검색 (/)</a><a href="https://overwatch.statbanana.com/images" target="_blank" rel="noopener">맵 이미지: StatBanana</a></div>
+        </div>
         <p>© 2026 오버워치 뉴비 완벽 가이드 | 초보자를 위해 만들었습니다</p>
         <p style="margin-top: .4rem;">21개의 실전 퀴즈와 60개의 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
     </footer>
@@ -1983,6 +2062,6 @@
     <script src="data/maps/kings-row.js"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
 </body>
 </html>

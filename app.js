@@ -958,5 +958,10 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') { document.querySelectorAll('.modal:not([hidden])').forEach(m => closeModal(m.id)); }
     if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
   });
+  // 맨 위로 버튼 · 히어로 통계
+  const toTop = document.getElementById('to-top');
+  if (toTop) window.addEventListener('scroll', () => toTop.classList.toggle('show', window.scrollY > 600), { passive: true });
+  const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setTxt('hb-heroes', heroes.length); setTxt('hb-sits', SITUATIONS.length); setTxt('hb-quiz', TOTAL_QUIZ); setTxt('hb-gl', GLOSSARY.length);
   window.addEventListener('hashchange', () => { const i = sectionFromHash(); if (i !== null && i !== currentSection) switchSection(i, { noHash: true }); });
 });
