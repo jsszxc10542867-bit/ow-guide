@@ -939,6 +939,16 @@
         .learn-path button { flex: none; padding: .4rem .75rem; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg-elev); color: var(--text-2); font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer; min-height: 34px; }
         .learn-path button:hover { border-color: var(--accent); color: var(--text); }
         @media (max-width: 600px) { .hero-banner { padding: 1.6rem 1.2rem 1.4rem; } .hb-title { font-size: 1.5rem; } .hb-stats { gap: .5rem 1.1rem; } .hb-stats b { font-size: 1.35rem; } html { font-size: 15px; } }
+        /* 상황판단: 역할 탭 · 영웅 칩 */
+        .sit-role-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin-bottom:.8rem; }
+        .sit-role-tab { display:flex; flex-direction:column; align-items:center; gap:.1rem; padding:.7rem .5rem; border-radius:12px; border:1.5px solid var(--line); background:var(--bg-elev); color:var(--text-2); font:inherit; cursor:pointer; min-height:72px; border-top:4px solid var(--line-strong); transition:transform .15s, box-shadow .15s; }
+        .sit-role-tab.r-tank { border-top-color:#3d7bd9; } .sit-role-tab.r-dps { border-top-color:#e04a4a; } .sit-role-tab.r-support { border-top-color:#2fae6c; } .sit-role-tab.r-all { border-top-color:var(--accent); }
+        .sit-role-tab.active { background:var(--accent-soft); color:var(--text); box-shadow:var(--shadow-md); transform:translateY(-2px); border-color:var(--accent); }
+        .srt-icon { font-size:1.3rem; } .srt-label { font-weight:800; font-size:.95rem; } .srt-count { font-size:.72rem; color:var(--text-3); font-variant-numeric:tabular-nums; }
+        .hero-chip small { color:var(--text-3); font-weight:600; margin-left:.15rem; }
+        .filter-btn.hero-chip.active small { color:inherit; opacity:.8; }
+        .sit-hero-hint { font-size:.85rem; color:var(--text-2); margin:-.2rem 0 .8rem; }
+        @media (max-width:600px) { .sit-role-tabs { grid-template-columns:repeat(2,1fr); } }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -1926,6 +1936,9 @@
             </div>
 
             <div class="train-tool" id="tool-situations">
+                <div class="sit-role-tabs" id="sit-role-tabs" role="tablist" aria-label="역할별 상황판단"></div>
+                <div class="filter-row" id="sit-hero-chips"></div>
+                <p class="fig-muted sit-hero-hint" id="sit-hero-hint"></p>
                 <div class="filter-row" id="sit-cat-filters"></div>
                 <div class="filter-row" id="sit-diff-filters"><span class="f-label">난이도</span>
                     <button class="filter-btn active" data-val="all" aria-pressed="true" onclick="setSitFilter('diff','all',this)">전체</button>
@@ -1933,11 +1946,7 @@
                     <button class="filter-btn" data-val="intermediate" aria-pressed="false" onclick="setSitFilter('diff','intermediate',this)">🟡 중급</button>
                     <button class="filter-btn" data-val="advanced" aria-pressed="false" onclick="setSitFilter('diff','advanced',this)">🔴 고급</button>
                 </div>
-                <div class="filter-row" id="sit-role-filters"><span class="f-label">역할</span>
-                    <button class="filter-btn active" data-val="all" aria-pressed="true" onclick="setSitFilter('role','all',this)">전체</button>
-                    <button class="filter-btn" data-val="tank" aria-pressed="false" onclick="setSitFilter('role','tank',this)">🛡️ 돌격</button>
-                    <button class="filter-btn" data-val="dps" aria-pressed="false" onclick="setSitFilter('role','dps',this)">⚔️ 공격</button>
-                    <button class="filter-btn" data-val="support" aria-pressed="false" onclick="setSitFilter('role','support',this)">💚 지원</button>
+                <div class="filter-row" id="sit-role-filters">
                     <span class="hero-count" id="sit-count" style="margin-left:auto"></span>
                     <button class="btn btn-outline" style="padding:.35rem .8rem;font-size:.78rem" onclick="resetSituations()">풀이 기록 초기화</button>
                 </div>
@@ -2047,12 +2056,13 @@
             <div><strong>참고</strong><a onclick="switchSection(9)">용어 사전</a><a onclick="openSearch()">전체 검색 (/)</a><a href="https://overwatch.statbanana.com/images" target="_blank" rel="noopener">맵 이미지: StatBanana</a></div>
         </div>
         <p>© 2026 오버워치 뉴비 완벽 가이드 | 초보자를 위해 만들었습니다</p>
-        <p style="margin-top: .4rem;">21개의 실전 퀴즈와 60개의 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
+        <p style="margin-top: .4rem;">21개의 실전 퀴즈와 100여 개의 역할·영웅별 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
     </footer>
 
     <script src="data/heroes.js"></script>
     <script src="data/heroes-detail.js"></script>
     <script src="data/situations.js"></script>
+    <script src="data/situations-heroes.js"></script>
     <script src="data/training.js"></script>
     <script src="data/maps.js"></script>
     <script src="data/glossary.js"></script>
@@ -2062,6 +2072,6 @@
     <script src="data/maps/kings-row.js"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=5"></script>
+    <script src="app.js?v=6"></script>
 </body>
 </html>

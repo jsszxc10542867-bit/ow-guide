@@ -519,7 +519,9 @@ function filterMaps(mode, btn) {
 }
 
 // ---------- 상황판단 훈련 ----------
-let sitCat = 'all', sitDiff = 'all', sitRole = 'all';
+let sitCat = 'all', sitDiff = 'all', sitRole = 'all', sitHero = 'all';
+// 상황의 실제 역할 = 내 영웅의 역할 (role:'any'인 문제도 영웅 기준으로 분류)
+function sitRoleOf(s) { const h = heroes.find(x => x.name === s.hero); return h ? h.role : (s.role === 'any' ? 'dps' : s.role); }
 let trainTool = 'situations';
 function showTrainTool(id, btn) {
   trainTool = id;
@@ -532,11 +534,38 @@ function showTrainTool(id, btn) {
 }
 function renderSituationFilters() {
   const cats = document.getElementById('sit-cat-filters'); if (!cats) return;
-  cats.innerHTML = `<button class="filter-btn active" aria-pressed="true" onclick="setSitFilter('cat','all',this)">전체</button>` +
-    Object.entries(SITUATION_CATS).filter(([k]) => k !== 'side').map(([k, v]) => `<button class="filter-btn" aria-pressed="false" onclick="setSitFilter('cat','${k}',this)">${v.icon} ${v.label}</button>`).join('');
+  cats.innerHTML = `<span class="f-label">유형</span><button class="filter-btn ${sitCat === 'all' ? 'active' : ''}" aria-pressed="${sitCat === 'all'}" onclick="setSitFilter('cat','all',this)">전체</button>` +
+    Object.entries(SITUATION_CATS).filter(([k]) => k !== 'side').map(([k, v]) => `<button class="filter-btn ${sitCat === k ? 'active' : ''}" aria-pressed="${sitCat === k}" onclick="setSitFilter('cat','${k}',this)">${v.icon} ${v.label}</button>`).join('');
+  renderSitRoleTabs(); renderSitHeroChips();
 }
+// 1단계: 역할 탭 (탱커 / 딜러 / 힐러)
+function renderSitRoleTabs() {
+  const el = document.getElementById('sit-role-tabs'); if (!el) return;
+  const pool = SITUATIONS.filter(s => s.cat !== 'side');
+  const cnt = r => pool.filter(s => r === 'all' || sitRoleOf(s) === r).length;
+  const done = r => pool.filter(s => (r === 'all' || sitRoleOf(s) === r) && state.sit[s.id] !== undefined).length;
+  const tabs = [['all', '전체', '📚'], ['tank', '탱커', '🛡️'], ['dps', '딜러', '⚔️'], ['support', '힐러', '💚']];
+  el.innerHTML = tabs.map(([r, l, ic]) => `<button class="sit-role-tab ${sitRole === r ? 'active' : ''} r-${r}" role="tab" aria-selected="${sitRole === r}" onclick="setSitRole('${r}')"><span class="srt-icon">${ic}</span><span class="srt-label">${l}</span><span class="srt-count">${done(r)}/${cnt(r)}</span></button>`).join('');
+}
+function setSitRole(r) { sitRole = r; sitHero = 'all'; renderSitRoleTabs(); renderSitHeroChips(); renderSituations(false); }
+// 2단계: 영웅 칩 (해당 역할에서 문제가 있는 영웅만, 문제 수 표시)
+function renderSitHeroChips() {
+  const el = document.getElementById('sit-hero-chips'); if (!el) return;
+  const pool = SITUATIONS.filter(s => s.cat !== 'side' && (sitRole === 'all' || sitRoleOf(s) === sitRole));
+  const byHero = {}; pool.forEach(s => { byHero[s.hero] = byHero[s.hero] || { n: 0, d: 0 }; byHero[s.hero].n++; if (state.sit[s.id] !== undefined) byHero[s.hero].d++; });
+  const names = Object.keys(byHero).sort((a, b) => byHero[b].n - byHero[a].n || a.localeCompare(b, 'ko'));
+  if (sitHero !== 'all' && !byHero[sitHero]) sitHero = 'all';
+  el.innerHTML = `<span class="f-label">영웅</span><button class="filter-btn ${sitHero === 'all' ? 'active' : ''}" aria-pressed="${sitHero === 'all'}" onclick="setSitHero('all')">전체 (${pool.length})</button>` +
+    names.map(n => `<button class="filter-btn hero-chip ${sitHero === n ? 'active' : ''}" aria-pressed="${sitHero === n}" onclick="setSitHero(this.dataset.h)" data-h="${n}">${n} <small>${byHero[n].d}/${byHero[n].n}</small></button>`).join('');
+  const hint = document.getElementById('sit-hero-hint');
+  if (hint) {
+    if (sitHero === 'all') hint.innerHTML = sitRole === 'all' ? '역할을 고르면 그 역할의 영웅별 상황이 나옵니다. 내 주력 영웅부터 풀어 보세요.' : `${{ tank: '탱커', dps: '딜러', support: '힐러' }[sitRole]} 영웅별 상황입니다. 영웅을 누르면 그 영웅으로 겪는 판단만 모아 보여 드립니다.`;
+    else { const d = HERO_DETAILS[sitHero]; hint.innerHTML = `<b>${sitHero}</b> 상황 ${byHero[sitHero].n}개${d ? ` · 💬 "${d.coach}"` : ''} <button class="pill pill-btn" onclick="openHero(${heroes.findIndex(h => h.name === sitHero)})">영웅 상세</button>`; }
+  }
+}
+function setSitHero(n) { sitHero = n; renderSitHeroChips(); renderSituations(false); }
 function setSitFilter(kind, val, btn) {
-  if (kind === 'cat') sitCat = val; if (kind === 'diff') sitDiff = val; if (kind === 'role') sitRole = val;
+  if (kind === 'cat') sitCat = val; if (kind === 'diff') sitDiff = val;
   const wrap = btn.parentElement;
   wrap.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
   btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
@@ -549,7 +578,8 @@ function renderSituations(sideOnly) {
   if (!sideOnly) {
     if (sitCat !== 'all') list = list.filter(s => s.cat === sitCat);
     if (sitDiff !== 'all') list = list.filter(s => s.diff === sitDiff);
-    if (sitRole !== 'all') list = list.filter(s => s.role === sitRole || s.role === 'any');
+    if (sitRole !== 'all') list = list.filter(s => sitRoleOf(s) === sitRole);
+    if (sitHero !== 'all') list = list.filter(s => s.hero === sitHero);
   }
   const done = list.filter(s => state.sit[s.id] !== undefined).length;
   const cnt = document.getElementById(sideOnly ? 'side-count' : 'sit-count');
@@ -559,7 +589,7 @@ function renderSituations(sideOnly) {
 function situationHTML(s) {
   const cat = SITUATION_CATS[s.cat]; const diff = DIFF_META[s.diff];
   const chosen = state.sit[s.id];
-  const roleTxt = s.role === 'any' ? '모든 역할' : roleLabel[s.role];
+  const roleTxt = roleLabel[sitRoleOf(s)] + ' · ' + s.hero;
   return `
   <div class="sit-card ${chosen !== undefined ? 'answered' : ''}" id="sit-${s.id}">
     <div class="sit-head">
@@ -607,6 +637,7 @@ function answerSituation(id, i) {
   updateProgress();
   const cnt = document.getElementById(s.cat === 'side' ? 'side-count' : 'sit-count');
   if (cnt) { const m = cnt.textContent.match(/(\d+) \/ (\d+)/); if (m) cnt.textContent = `${Number(m[1]) + 1} / ${m[2]} 풀이`; }
+  if (s.cat !== 'side') { renderSitRoleTabs(); renderSitHeroChips(); }
   // 오늘의 훈련 문제였다면 미션 표시
   const daily = getDailyTopic();
   if (daily.situation === id) { markDaily('sitDone'); renderDaily(); }
@@ -757,7 +788,7 @@ function goToDailySituation() {
   switchSection(7);
   const tool = SITUATIONS.find(x => x.id === t.situation).cat === 'side' ? 'side' : 'situations';
   showTrainTool(tool, document.querySelector(`.subtab[data-tool="${tool}"]`));
-  if (tool === 'situations') { sitCat = 'all'; sitDiff = 'all'; sitRole = 'all'; renderSituationFilters(); document.querySelectorAll('#sit-diff-filters .filter-btn, #sit-role-filters .filter-btn').forEach((b, i) => { b.classList.toggle('active', b.dataset.val === 'all'); }); renderSituations(false); }
+  if (tool === 'situations') { sitCat = 'all'; sitDiff = 'all'; sitRole = 'all'; sitHero = 'all'; renderSituationFilters(); document.querySelectorAll('#sit-diff-filters .filter-btn, #sit-role-filters .filter-btn').forEach((b, i) => { b.classList.toggle('active', b.dataset.val === 'all'); }); renderSituations(false); }
   setTimeout(() => { const el = document.getElementById('sit-' + t.situation); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('flash'); } }, 80);
 }
 
@@ -774,7 +805,7 @@ function getLearningAnalysis() {
     const sc = vScore[s.choices[c].v];
     sitN++; sitScore += sc;
     if (!cats[s.cat]) cats[s.cat] = { n: 0, s: 0 }; cats[s.cat].n++; cats[s.cat].s += sc;
-    if (s.role !== 'any') { roles[s.role].n++; roles[s.role].s += sc; }
+    { const r = sitRoleOf(s); roles[r].n++; roles[r].s += sc; }
   });
   const catList = Object.entries(SITUATION_CATS).map(([k, m]) => ({ key: k, label: m.label, icon: m.icon, n: cats[k] ? cats[k].n : 0, pct: cats[k] ? Math.round(cats[k].s / cats[k].n * 100) : null }));
   const rated = catList.filter(c => c.n >= 2);
@@ -873,7 +904,7 @@ function buildSearchIndex() {
   heroes.forEach((h, i) => { const d = HERO_DETAILS[h.name] || {}; idx.push({ cat: '영웅', title: h.name, sub: `${roleLabel[h.role]} · ${h.tag}`, text: heroSearchText(h), go: () => { switchSection(6); openHero(i); } }); });
   GLOSSARY.forEach(g => idx.push({ cat: '용어', title: g.term, sub: g.def, text: normalize([g.term, ...(g.alias || []), g.def, g.use].join(' ')), go: () => searchGlossary(g.term) }));
   MAPS.forEach(m => idx.push({ cat: '맵', title: m.name, sub: MAP_MODES[m.mode] + ' · ' + m.mistake, text: normalize([m.name, m.en, MAP_MODES[m.mode], ...m.high, ...m.choke, m.main, ...m.side, m.atk, m.def, m.mistake].join(' ')), go: () => { switchSection(3); setTimeout(() => { const el = document.getElementById('map-list'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60); } }));
-  SITUATIONS.forEach(s => idx.push({ cat: '상황판단', title: s.title, sub: `${SITUATION_CATS[s.cat].label} · ${s.sub} · ${s.hero}`, text: normalize([s.title, s.sub, s.hero, ...s.team, ...s.enemy, ...s.facts, s.q, s.keyPoint, ...s.choices.map(c => c.t)].join(' ')), go: () => { switchSection(7); const tool = s.cat === 'side' ? 'side' : 'situations'; showTrainTool(tool, document.querySelector(`.subtab[data-tool="${tool}"]`)); if (tool === 'situations') { sitCat = 'all'; sitDiff = 'all'; sitRole = 'all'; renderSituationFilters(); renderSituations(false); } setTimeout(() => { const el = document.getElementById('sit-' + s.id); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('flash'); } }, 80); } }));
+  SITUATIONS.forEach(s => idx.push({ cat: '상황판단', title: s.title, sub: `${SITUATION_CATS[s.cat].label} · ${s.sub} · ${s.hero}`, text: normalize([s.title, s.sub, s.hero, ...s.team, ...s.enemy, ...s.facts, s.q, s.keyPoint, ...s.choices.map(c => c.t)].join(' ')), go: () => { switchSection(7); const tool = s.cat === 'side' ? 'side' : 'situations'; showTrainTool(tool, document.querySelector(`.subtab[data-tool="${tool}"]`)); if (tool === 'situations') { sitCat = 'all'; sitDiff = 'all'; sitRole = 'all'; sitHero = 'all'; renderSituationFilters(); renderSituations(false); } setTimeout(() => { const el = document.getElementById('sit-' + s.id); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('flash'); } }, 80); } }));
   // 전략 카드 (h3 제목 + 본문)
   document.querySelectorAll('.section').forEach((sec, si) => {
     if (si >= 7) return;
