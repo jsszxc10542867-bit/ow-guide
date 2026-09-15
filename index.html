@@ -1246,6 +1246,39 @@
         .card + .card, .quiz-container + .quiz-container, .card + .quiz-container, .quiz-container + .card { margin-top: 1rem; }
         .lesson-head { padding: .9rem 0 1.1rem; margin-bottom: 1.2rem; }
         .hero-banner { padding: 2rem 2rem 1.8rem; }
+        /* ===== ① 히어로 높이 축소 ===== */
+        .hero-banner { padding: 1.6rem 1.8rem 1.4rem; margin-bottom: .6rem; }
+        .hero-banner .hb-inner { gap: 1.4rem; grid-template-columns: minmax(0, 1.3fr) minmax(240px, .75fr); }
+        .hb-title { font-size: 1.85rem; margin-bottom: .5rem; }
+        .hb-sub { font-size: .95rem; margin-bottom: .8rem; max-width: 560px; }
+        .hb-actions { margin-bottom: .9rem; }
+        .hb-stats b { font-size: 1.35rem; } .hb-stats span { font-size: .8rem; }
+        .hb-tactical svg { max-height: 230px; }
+        .hb-tactical figcaption { margin-top: .35rem; font-size: .8rem; }
+        .btn-primary { padding: .65rem 1.15rem; }
+        @media (max-width: 600px) { .hero-banner { padding: 1.3rem 1.1rem 1.2rem; } .hb-title { font-size: 1.45rem; } .hb-tactical { display: none; } }
+
+        /* ===== ② 퀴즈: 시험지 느낌 탈피 ===== */
+        .quiz-container { max-width: 860px; padding: 1.1rem 1.3rem 1rem; border-left: 4px solid var(--accent); }
+        .quiz-title { display: inline-block; font-family: var(--font-display); font-size: .76rem; letter-spacing: .2em; color: var(--accent); background: transparent; padding: 0; margin-bottom: .35rem; }
+        .quiz-title::before { content: "QUIZ · "; }
+        .quiz-question { font-size: 1.12rem; line-height: 1.45; }
+        .quiz-options { grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: .5rem; }
+        .quiz-option { padding: .6rem .85rem; font-size: .96rem; border-width: 1px; background: var(--bg-soft); }
+        .quiz-option:hover:not(:disabled) { background: var(--bg-elev); }
+        .quiz-feedback { margin-top: .7rem; }
+        @media (max-width: 600px) { .quiz-options { grid-template-columns: 1fr; } }
+
+        /* ===== ③ 배우기 파트 리듬: 번호 매기기 + 짝수 카드는 플랫(본문형) ===== */
+        .section { counter-reset: chap; }
+        .section:not(.home) .card > h3:first-child::before, .section.home .home-sec ~ .card > h3:first-child::before { counter-increment: chap; content: counter(chap, decimal-leading-zero); font-family: var(--font-display); font-size: .82rem; letter-spacing: .12em; color: var(--accent); margin-right: .4rem; }
+        .section:not(.home) .card:nth-of-type(even):not(.adv-only):not(.deep-only):not(.focus-card) { background: transparent; border: 0; border-left: 3px solid var(--line-strong); border-radius: 0; box-shadow: none; padding: .4rem 0 .6rem 1.3rem; }
+        .section:not(.home) .card:nth-of-type(even):not(.adv-only):not(.deep-only):not(.focus-card):hover { border-top-color: transparent; }
+        .section:not(.home) .card:nth-of-type(even):not(.adv-only):not(.deep-only) > h3::after { display: none; }
+        .card h3 { font-size: 1.2rem; }
+        .card { margin-bottom: 1.4rem; }
+        .card + .card, .quiz-container + .quiz-container, .card + .quiz-container, .quiz-container + .card { margin-top: 1.4rem; }
+        .tip-box, .remember { max-width: 900px; }
     </style>
 </head>
 <body>
