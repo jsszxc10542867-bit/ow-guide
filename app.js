@@ -343,12 +343,22 @@ function labelTableCells() {
 // ---------- 영웅 도감 ----------
 let heroRole = 'all';
 let heroTags = new Set();
+// 영웅 초상화: assets/heroes/<slug>.png 가 있으면 사용, 없으면 역할색 모노그램으로 대체
+function heroSlug(h) { return (h.en || h.name).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, ''); }
+function heroAvatar(h, size) {
+  const ch = h.name.replace(/^D\./, '').trim().charAt(0);
+  return `<span class="hero-avatar role-${h.role}" style="--sz:${size}px" aria-hidden="true"><img src="assets/heroes/${heroSlug(h)}.png" alt="" loading="lazy" onerror="this.remove()"><b>${ch}</b></span>`;
+}
 function renderHeroes() {
   const grid = document.getElementById('hero-grid');
   grid.innerHTML = heroes.map((h, i) => `
     <div class="hero-card" data-role="${h.role}" data-newbie="${h.newbie}" role="button" tabindex="0" aria-label="${h.name} 상세 보기" onclick="openHero(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHero(${i});}">
       <div class="hero-head">
-        <span class="hero-name">${h.name}${h.year === 2026 ? ' <span class="hero-badge badge-new">NEW</span>' : ''}${h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : ''}</span>
+        ${heroAvatar(h, 48)}
+        <div class="hero-title">
+          <span class="hero-name">${h.name}</span>
+          <span class="hero-badges">${h.year === 2026 ? '<span class="hero-badge badge-new">NEW</span>' : ''}${h.newbie ? '<span class="hero-badge">뉴비 추천</span>' : ''}</span>
+        </div>
         <span class="hero-role role-${h.role}"><svg><use href="#${roleIcon[h.role]}"/></svg>${roleLabel[h.role]}</span>
       </div>
       <div class="hero-meta"><span class="hero-diff" title="난이도 ${h.diff}/4">${'★'.repeat(h.diff)}${'☆'.repeat(4 - h.diff)}</span><span class="hero-tag">${h.tag}</span></div>
@@ -399,12 +409,11 @@ function applyHeroFilter() {
     card.classList.toggle('hidden', !show);
     if (show) visible++;
     const nameEl = card.querySelector('.hero-name');
-    const badge = (h.year === 2026 ? ' <span class="hero-badge badge-new">NEW</span>' : '') + (h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : '');
     if (q && normalize(h.name).includes(q)) {
       const re = new RegExp(escapeRe(input.value.trim()), 'i');
-      nameEl.innerHTML = h.name.replace(re, m => `<mark class="hl">${m}</mark>`) + badge;
+      nameEl.innerHTML = h.name.replace(re, m => `<mark class="hl">${m}</mark>`);
     } else {
-      nameEl.innerHTML = h.name + badge;
+      nameEl.textContent = h.name;
     }
   });
   document.getElementById('hero-empty').style.display = visible ? 'none' : 'block';
@@ -424,7 +433,7 @@ function openHero(i) {
   } else {
     body.innerHTML = `
       <div class="hm-head role-${h.role}">
-        <div class="role-emblem"><svg><use href="#${roleIcon[h.role]}"/></svg></div>
+        ${heroAvatar(h, 72)}
         <div>
           <div class="hm-kicker">${roleLabel[h.role]} · ${h.tag} · 난이도 ${'★'.repeat(h.diff)}${'☆'.repeat(4 - h.diff)}${h.newbie ? ' · <span class="hero-badge">뉴비 추천</span>' : ''}</div>
           <h2 id="hero-modal-title">${h.name}</h2>

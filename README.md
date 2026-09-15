@@ -29,6 +29,7 @@ data/
   guides.js         심화 가이드 9편 (GUIDES: 마크다운 원문 포함, 사이트 내 리더로 렌더) — guides/phase3/*.md 에서 생성
 guides/phase3/      심화 가이드 마크다운 원본 (Phase 3: 캐릭터·역할·팀 전술·랭크·카운터·포지셔닝·훈련 로드맵·멘탈·프로 사례)
 assets/             로고, OG 이미지
+  heroes/           영웅 초상화 (선택) — assets/heroes/<영문 소문자 슬러그>.png 를 넣으면 도감 카드·상세에 자동 표시 (예: winston.png, dva.png, soldier76.png, jetpackcat.png, torbjorn.png, lucio.png). 없으면 역할색 모노그램
 ```
 
 ## 콘텐츠 추가 방법

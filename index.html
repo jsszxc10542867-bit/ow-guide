@@ -1323,6 +1323,28 @@
         .growth-empty { font-size: .92rem; color: var(--accent); font-weight: 700; padding: .3rem .7rem; border: 1.5px dashed var(--accent-soft); border-radius: 999px; justify-self: start; background: var(--accent-soft); }
         .growth-row.empty:hover .growth-empty { background: var(--accent); color: var(--accent-ink); }
         @media (max-width: 760px) { .growth-row.empty { grid-template-columns: 1fr; } }
+        /* ===== 영웅 도감 카드 v2: 초상화 + 유연한 높이 ===== */
+        .hero-grid { grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1rem; align-items: stretch; }
+        .hero-card { display: flex; flex-direction: column; height: auto; min-height: 0; overflow: visible; padding: 1.1rem 1.15rem 1.1rem 1.3rem; }
+        .hero-card::after { border-radius: var(--radius) var(--radius) 0 0; }
+        .hero-card::before { border-radius: var(--radius) 0 0 var(--radius); }
+        .hero-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .65rem; margin-bottom: .5rem; }
+        .hero-avatar { --sz: 48px; width: var(--sz); height: var(--sz); border-radius: 50%; flex: none; display: inline-flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--role-c, var(--accent)); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: calc(var(--sz) * .42); box-shadow: 0 0 0 3px var(--bg-elev), 0 0 0 4.5px var(--role-c, var(--accent)); }
+        .hero-avatar.role-tank { --role-c: #3d7bd9; } .hero-avatar.role-dps { --role-c: #e04a4a; } .hero-avatar.role-support { --role-c: #2fae6c; }
+        .hero-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+        .hero-avatar b { position: relative; z-index: 0; }
+        .hero-title { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+        .hero-name { font-size: 1.15rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hero-badges { display: flex; flex-wrap: wrap; gap: .25rem; }
+        .hero-badges:empty { display: none; }
+        .hero-badge { margin: 0; }
+        .hero-role { white-space: nowrap; align-self: start; }
+        .hero-meta { margin-bottom: .55rem; }
+        .hero-desc { flex: 1 1 auto; font-size: .95rem; line-height: 1.6; overflow-wrap: anywhere; }
+        .hero-more { margin-top: .8rem; padding-top: .6rem; border-top: 1px dashed var(--line); font-size: .85rem; }
+        .hero-emblem { right: 8px; bottom: 6px; width: 56px; height: 56px; opacity: .06; }
+        .hm-head .hero-avatar { --sz: 72px; box-shadow: 0 0 0 3px var(--bg-soft), 0 0 0 5px var(--role-c); }
+        @media (max-width: 600px) { .hero-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -2510,6 +2532,6 @@
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=3"></script>
     <script src="home.js?v=3"></script>
-    <script src="app.js?v=19"></script>
+    <script src="app.js?v=20"></script>
 </body>
 </html>
