@@ -314,6 +314,7 @@ function retryQuiz() {
 
 // 포지셔닝 관련 퀴즈에 "지도에서 확인하기" 버튼
 function addQuizMapLinks() {
+  if (typeof TM_ENABLED !== 'undefined' && !TM_ENABLED) return;
   quizAnswers.forEach((q, i) => {
     if (q.cat !== 'positioning' && q.topic !== 'sideCond' && q.topic !== 'highground') return;
     const fb = document.getElementById(`feedback-${i}`); if (!fb) return;
@@ -469,7 +470,7 @@ function openHero(i) {
         <div class="hm-card"><h4>🤝 추천 영웅 조합</h4><div class="hm-tags">${d.synergy.map(n => heroLink(n)).join('')}</div></div>
       </div>
       <div class="tip-box coach-note" style="margin-bottom:0"><div class="tip-title">💡 이것만 기억하세요</div><div class="tip-content">${d.coach}</div></div>
-      <div style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn btn-primary" onclick="closeModal('hero-modal'); tmOpen({hero:'${h.name.replace(/'/g, "\'")}'})">🗺️ 이 영웅의 맵 포지션 보기</button></div>`;
+      <div style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap">${(typeof TM_ENABLED !== 'undefined' && !TM_ENABLED) ? '' : `<button class="btn btn-primary" onclick="closeModal('hero-modal'); tmOpen({hero:'${h.name.replace(/'/g, "\'")}'})">🗺️ 이 영웅의 맵 포지션 보기</button>`}</div>`;
   }
   modal.hidden = false; document.body.classList.add('modal-open');
   modal.querySelector('.modal-close').focus();

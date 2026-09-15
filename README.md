@@ -10,7 +10,7 @@ https://jsszxc10542867-bit.github.io/ow-guide/
 index.html          마크업 + CSS (탭 10개)
 app.js              모든 동작 (탭, 퀴즈, 상황판단, 규칙 엔진, 통계, 검색, 모달)
 home.js             🏠 홈 대시보드(index 0)·레슨 헤더·기록 컴포넌트 — 게임 기본 레슨은 section 11(#basics) (LESSON_META 레슨 헤더, PRO_MINDSET, MY PROGRESS 성장 지표, 오답노트, 추천 훈련)
-tmap.js             🧭 전술 지도 모듈 (SVG 렌더, 마커/루트/레이어, 줌·이동, 필터, 추천, 암기 모드, 맵 퀴즈)
+tmap.js             🧭 전술 지도 모듈 — 현재 TM_ENABLED=false(점검 중): 마커 좌표 인게임 검증 후 true로 켜면 뷰어·퀴즈 링크·도감 버튼이 다시 열림 (SVG 렌더, 마커/루트/레이어, 줌·이동, 필터, 추천, 암기 모드, 맵 퀴즈)
 data/
   maps/schema.js   전술 지도 데이터 구조 설명 + TACTICAL_MAPS 선언
   maps/kings-row.js, lijiang-tower.js, circuit-royal.js   전술 지도 3개 (지형·포지션·루트·고지·위험·엄폐·힐팩·교전·퀴즈)

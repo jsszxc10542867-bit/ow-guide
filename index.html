@@ -1352,6 +1352,11 @@
         .nav-groups { justify-content: flex-start; }
         .nav-primary { width: 100%; }
         @media (min-width: 769px) and (max-width: 1000px) { .nav-tab { font-size: .88rem; padding: .5rem .7rem; } }
+        body.tm-off .tm-only { display: none !important; }
+        .tm-only-inline { font-size: .85rem; color: var(--warning); font-weight: 700; }
+        .tm-maint { border: 1.5px dashed var(--warning); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 1.2rem; background: rgba(242,178,51,.08); }
+        .tm-maint h3 { margin: .2rem 0 .4rem; font-size: 1.15rem; }
+        .tm-maint p { margin: 0; color: var(--text-2); max-width: 70ch; }
     </style>
 </head>
 <body>
@@ -1399,7 +1404,7 @@
                 </div>
                 <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅별 핵심 공략</button>
                 <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
-                <button data-index="3" class="nav-tab nav-dup" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 실전 맵</button>
+                <button data-index="3" class="nav-tab nav-dup" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵 가이드</button>
                 <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 학습 분석</button>
             </div>
         </nav>
@@ -1416,7 +1421,7 @@
                     <div class="hb-actions">
                         <button class="btn btn-primary" onclick="goToDailySituation()">오늘의 훈련 시작 →</button>
                         <button class="btn btn-ghost" onclick="switchSection(7)">상황판단 훈련</button>
-                        <button class="btn btn-ghost" onclick="switchSection(3)">실제 맵 전술 지도</button>
+                        <button class="btn btn-ghost" onclick="switchSection(6)">영웅별 핵심 공략</button>
                     </div>
                     <div class="hb-stats">
                         <div><b id="hb-heroes">53</b><span>영웅 분석</span></div>
@@ -1461,10 +1466,10 @@
             <section class="home-sec" id="home-features">
                 <div class="feature-pair">
                     <a class="feature" onclick="switchSection(3)">
-                        <span class="kicker">TACTICAL MAP</span>
-                        <h3>실제 맵으로 배우는 포지셔닝</h3>
-                        <p>King's Row 실제 오버헤드 맵 위에 추천 포지션·고지·위험 지역·시야선·사이드 루트를 표시합니다. 마커를 누르면 "어디 · 왜 · 언제 · 무엇을 노림 · 언제 빠짐"이 나옵니다.</p>
-                        <span class="feature-cta">지도 열기 →</span>
+                        <span class="kicker">MAPS &amp; POSITIONING</span>
+                        <h3>맵과 포지셔닝 <small class="tm-only-inline">· 전술 지도 점검 중</small></h3>
+                        <p>12개 맵의 고지·초크·사이드 루트·힐팩과 역할별 자리를 정리했습니다. 실제 오버헤드 지도 위 마커(전술 지도)는 좌표 검증이 끝나면 다시 열립니다.</p>
+                        <span class="feature-cta">맵 가이드 보기 →</span>
                     </a>
                     <a class="feature" onclick="switchSection(7)">
                         <span class="kicker">SITUATION TRAINING</span>
@@ -1695,9 +1700,14 @@
                 <span class="section-title-icon">🗺️</span>
                 맵과 포지셔닝
             </div>
-            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>"좋은 위치"가 아니라 "왜 그 위치에 있는가"가 중요합니다. 실제 맵 위의 마커를 누르면 어디 · 왜 · 언제 · 무엇을 노림 · 언제 빠짐을 알려 드립니다.</p></div></div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>"좋은 위치"가 아니라 "왜 그 위치에 있는가"가 중요합니다. 맵마다 고지·초크·사이드 루트·힐팩이 어디인지 알고 서는 것이 포지셔닝의 절반입니다.</p></div></div>
+            <div class="tm-maint" id="tm-maint" hidden>
+                <span class="kicker">TACTICAL MAP · 점검 중</span>
+                <h3>실제 맵 전술 지도는 점검 중입니다</h3>
+                <p>King's Row 오버헤드 지도 위 포지션·루트 마커의 좌표를 인게임과 대조하는 중이라 잠시 닫아 두었습니다. 검증이 끝나면 다시 열립니다. 아래 맵별 텍스트 가이드와 포지셔닝 원칙은 그대로 이용하실 수 있습니다.</p>
+            </div>
             <!-- ===== MapViewer: 실제 오버헤드 맵 + SVG 전술 오버레이 ===== -->
-            <div class="card tm-controls" id="tm-map-viewer">
+            <div class="card tm-controls tm-only" id="tm-map-viewer">
                 <div class="tm-row"><span class="tm-row-label">맵 선택</span>
                     <div class="tm-select-wrap"><label for="tm-map-select" class="sr-only">맵 선택</label><select id="tm-map-select" onchange="tmSelectMap(this.value)"></select></div>
                 </div>
@@ -1725,7 +1735,7 @@
                 </div>
             </div>
 
-            <div class="card" id="tm-advisor" hidden>
+            <div class="card tm-only" id="tm-advisor" hidden>
                 <h3><span class="card-icon">🤔</span>지금 나는 어디에 있어야 하지?</h3>
                 <p>역할·영웅·상황을 고르면 이 맵에서 <strong>⭐ 지금 추천 위치</strong>를 실제 지도에 표시하고 이유 · 다음 행동 · 도망 경로를 설명합니다. 규칙 기반이라 즉시 작동합니다.</p>
                 <div class="adv-form" id="tm-adv-form" style="margin-top:.8rem"></div>
@@ -1733,7 +1743,7 @@
                 <div id="tm-adv-result" role="status" aria-live="polite" style="margin-top:.8rem"></div>
             </div>
 
-            <div class="card" id="tm-side-judge" hidden>
+            <div class="card tm-only" id="tm-side-judge" hidden>
                 <h3><span class="card-icon">🧭</span>본대에 있을까? 사이드에 갈까?</h3>
                 <p>조건을 고르면 규칙으로 판단합니다. <strong>사이드는 목적이 아니라 수단입니다.</strong> 조건 하나가 빠지면 답이 바뀝니다.</p>
                 <div class="adv-form" id="tm-side-form" style="margin-top:.8rem"></div>
@@ -1741,7 +1751,7 @@
                 <div id="tm-side-result" role="status" aria-live="polite" style="margin-top:.8rem"></div>
             </div>
 
-            <div class="tm-layout">
+            <div class="tm-layout tm-only">
                 <div class="tm-map-col">
                     <div class="tm-map-head"><strong id="tm-title"></strong><span class="fig-muted" id="tm-count" style="font-size:.8rem"></span></div>
                     <p class="tm-intro" id="tm-intro"></p>
@@ -2533,8 +2543,8 @@
     <script src="data/maps/registry.js"></script>
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
-    <script src="tmap.js?v=3"></script>
-    <script src="home.js?v=3"></script>
-    <script src="app.js?v=22"></script>
+    <script src="tmap.js?v=4"></script>
+    <script src="home.js?v=4"></script>
+    <script src="app.js?v=23"></script>
 </body>
 </html>

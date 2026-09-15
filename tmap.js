@@ -26,7 +26,10 @@ function tmState() {
 }
 
 // ---------- 초기화 ----------
+// 점검 플래그: false면 지도 뷰어를 숨기고 안내만 표시 (마커 좌표 인게임 검증 후 true로)
+const TM_ENABLED = false;
 function tmInit() {
+  if (!TM_ENABLED) { document.body.classList.add('tm-off'); const n = document.getElementById('tm-maint'); if (n) n.hidden = false; return; }
   if (TM.inited) return;
   TM.inited = true;
   MAP_LAYERS.forEach(l => TM.layers[l.key] = l.basic);
@@ -515,6 +518,7 @@ function tmOpen(opts) {
   opts = opts || {};
   switchSection(3);
   tmInit();
+  if (!TM_ENABLED) return;
   if (opts.map && TACTICAL_MAPS[opts.map]) tmSelectMap(opts.map);
   if (opts.role) { const b = document.querySelector(`#tm-roles .filter-btn[data-role="${opts.role}"]`); if (b) tmSetRole(opts.role, b); }
   if (opts.hero) {
