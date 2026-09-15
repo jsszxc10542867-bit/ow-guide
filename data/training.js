@@ -8,12 +8,34 @@ const ADVISOR_FIELDS = [
   { key:'esc',   label:'생존기',    options:[['yes','생존기 있음'],['no','생존기 없음']] },
   { key:'fight', label:'한타 상태', options:[['pre','시작 전'],['poke','대치 중'],['mid','한타 중'],['win','우리 팀 유리'],['lose','우리 팀 불리'],['end','한타 종료']] },
   { key:'pos',   label:'내 위치',   options:[['main','본대'],['side','사이드'],['high','고지'],['enemyback','적 후방'],['ourback','우리 후방']] },
-  { key:'ult',   label:'궁극기',    options:[['none','없음'],['have','있음'],['ourAdv','우리 팀 궁 우세'],['enemyAdv','상대 궁 우세'],['unknown','모름']] }
+  { key:'ult',   label:'궁극기',    options:[['none','없음'],['have','있음'],['ourAdv','우리 팀 궁 우세'],['enemyAdv','상대 궁 우세'],['unknown','모름']] },
+  { key:'side',  label:'우리 사이드', options:[['unknown','모름 / 없음'],['won','사이드가 뚫었음'],['lost','사이드가 밀렸음'],['even','사이드 동수 대치'],['alone','사이드 혼자(1명)']] }
 ];
 
 // 규칙: 위에서부터 검사, 조건이 맞는 규칙을 우선순위(priority) 순으로 최대 3개 표시
 // when: { key: [허용값...] }  — 모든 키가 맞아야 통과. 없는 키는 조건 없음.
 const ADVISOR_RULES = [
+  // ===== 4단계: 본대·사이드 순환 규칙 (플레타 프로처럼 배우기 1·2) =====
+  { id:'r_side_won_main', priority:92, when:{side:['won'], pos:['main']}, verdict:'mixed',
+    title:'우리 사이드가 뚫었습니다 — 본대는 조심', action:'사이드가 뚫렸다 = 상대 인원이 본대에 몰려 있다는 정보입니다. 피 관리하며 천천히. 사이드가 어그로를 많이 먹으면 그때 푸시하세요.',
+    why:'사이드가 이미 많이 파 놓은 상황에서 본대가 강하게 나가면 상대 다수에게 혼자 맞습니다. 본대와 사이드는 서로 위치를 보며 템포를 맞춥니다.',
+    call:'"사이드 뚫렸다, 본대 천천히"' },
+  { id:'r_side_lost_main', priority:92, when:{side:['lost'], pos:['main']}, verdict:'mixed',
+    title:'우리 사이드가 밀렸습니다 — 입구 압박 해제', action:'사이드 딜각이 열렸으니 입구 압박은 불가능합니다. 뒤로 빠져 반반 구도를 유지하고 궁이 차면 다시 나가세요. 단, 상대 본대 인원이 적다는 뜻이기도 하니 정면 자리는 근거를 보고.',
+    why:'입구 압박은 우리 사이드가 밀리지 않는다는 전제 위에 섭니다. 사이드가 빠졌는데 본대가 유지하면 양쪽에서 맞고 포커싱당합니다.',
+    call:'"사이드 밀렸다, 빠져서 반반"' },
+  { id:'r_side_alone', priority:90, when:{side:['alone'], role:['support']}, verdict:'mixed',
+    title:'사이드가 혼자입니다 — 붙어 주세요', action:'상대가 2명으로 사이드를 밀러 오면 1:2로 무너집니다. 브리기테·키리코라면 사이드 딜러 옆에 붙어 같이 막으세요.',
+    why:'사이드가 약하면 입구 압박 자체가 무너집니다. 받아치기 힐러가 붙는 것이 정답입니다.',
+    call:'"내가 사이드 붙을게"' },
+  { id:'r_retake_side_first', priority:88, when:{fight:['pre'], pos:['side']}, verdict:'good',
+    title:'리테이크는 사이드가 먼저', action:'사이드 영웅이 먼저 나가 길을 열고 정보를 줍니다. 본대는 그걸 보고 기다립니다. 수월하면 본대가 천천히 따라오고, 2~3명에게 막히면 본대가 세게 나갑니다.',
+    why:'본대가 사이드보다 먼저 나가면 사이드는 아무것도 못 하고 본대만 터집니다.',
+    call:'"사이드 먼저 열게, 본대 기다려"' },
+  { id:'r_side_even_main', priority:80, when:{side:['even'], pos:['main'], fight:['poke','mid']}, verdict:'good',
+    title:'사이드 동수 — 본대도 같이 밀어도 됩니다', action:'사이드와 본대 인원이 같이 배치되어 있으면 본대를 밀어도 됩니다. 단 사이드가 밀리는 순간 같이 빠질 준비.',
+    why:'인원수가 같으면 정면 싸움이 성립합니다. 사이드 결과에 따라 즉시 템포를 바꾸세요.',
+    call:'"사이드 반반, 정면 같이 가자"' },
   { id:'r_dead3', priority:100, when:{count:['3v5']}, verdict:'bad',
     title:'후퇴 · 리그룹이 최우선입니다', action:'지금 싸우지 마세요. 코너 뒤로 빠져 팀 리스폰을 맞추세요.',
     why:'3:5는 궁이 있어도 이기기 어렵습니다. 남은 인원이 살아서 5명으로 다음 한타를 여는 것이 승리로 가는 유일한 길입니다.',

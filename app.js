@@ -697,7 +697,7 @@ function situationResultHTML(s, i) {
       <div class="why-box"><h5><span class="kicker">WHY</span>왜 그런가</h5><p>${c.why}</p>${bestTxt}</div>
       <div class="why-box"><h5><span class="kicker">WHAT MATTERS NOW</span>지금 봐야 할 정보</h5><ul>${s.keyInfo.map(k => `<li>${k}</li>`).join('')}</ul></div>
       <div class="why-box"><h5><span class="kicker">OPTIONS</span>각 선택의 장점 / 위험</h5><ul>${s.choices.map((o, j) => `<li class="${j === i ? 'mine' : ''}">${VERDICT_META[o.v].icon} <strong>${o.t.replace(/^🟢 |^🟡 |^🔴 /, '')}</strong><br><small>${o.why}</small></li>`).join('')}</ul></div>
-      <div class="why-box pro"><h5><span class="kicker">PRO VIEW</span>프로는 이렇게 봅니다</h5><p>${s.pro}</p></div>
+      <div class="why-box pro"><h5><span class="kicker">PRO VIEW</span>프로는 이렇게 봅니다</h5><p>${s.pro}</p>${s.src ? `<span class="sit-src">${s.src}</span>` : ''}</div>
     </div>
     <div class="tip-box coach-note"><div class="tip-title"><span class="kicker">WHAT TO CHECK NEXT</span> 다음 게임에서 확인할 것</div><div class="tip-content">${s.keyPoint}</div></div>`;
 }

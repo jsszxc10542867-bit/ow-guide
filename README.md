@@ -21,6 +21,7 @@ data/
   situations.js     상황판단 문제 (SITUATIONS) + 카테고리/난이도/판정 메타
   situations-heroes.js  영웅별 추가 상황판단 문제 (SITUATIONS에 합쳐짐, 탭에서 역할→영웅으로 분류)
   situations-new2026.js 2026 신규 영웅 상황판단 문제 (영웅당 3개)
+  situations-lectures.js 프로·해설 강의 사례 상황판단 26문제 (src: 출처, 플레타·투유·옵치토크쇼·프로즈·R·희성·말카)
   situations-heroes2.js 영웅별 상황판단 2차 — 문제가 없던 14명 (영웅당 2개)
   training.js       "지금 뭘 해야 하지?" 규칙(ADVISOR_RULES), 한타 상태(FIGHT_STATES), 체크리스트, 복기 항목, 오늘의 훈련 주제, 레벨/XP
   maps.js           맵 12개 (고지·초크·루트·힐팩·역할별 위치·흔한 실수)

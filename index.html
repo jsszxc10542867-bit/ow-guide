@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오버워치 교과서</title>
     <link rel="canonical" href="https://jsszxc10542867-bit.github.io/ow-guide/">
-    <meta name="description" content="일반 유저가 직접 정리한 오버워치 교과서 — 역할, 전술, 실제 맵 포지셔닝, 영웅 53명 도감, 상황판단 훈련 150문제 이상, 랭크·멘탈 심화 가이드">
+    <meta name="description" content="일반 유저가 직접 정리한 오버워치 교과서 — 역할, 전술, 실제 맵 포지셔닝, 영웅 53명 도감, 상황판단 훈련 180문제 이상, 랭크·멘탈 심화 가이드">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="오버워치 교과서">
     <meta property="og:title" content="오버워치 교과서">
-    <meta property="og:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 53명 · 상황판단 150문제 이상 · 실제 맵 전술 지도">
+    <meta property="og:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 53명 · 상황판단 180문제 이상 · 실제 맵 전술 지도">
     <meta property="og:url" content="https://jsszxc10542867-bit.github.io/ow-guide/">
     <meta property="og:image" content="https://jsszxc10542867-bit.github.io/ow-guide/assets/og.png">
     <meta property="og:image:width" content="1200">
@@ -17,7 +17,7 @@
     <meta property="og:locale" content="ko_KR">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="오버워치 교과서">
-    <meta name="twitter:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 53명 · 상황판단 150문제 이상 · 실제 맵 전술 지도">
+    <meta name="twitter:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 53명 · 상황판단 180문제 이상 · 실제 맵 전술 지도">
     <meta name="twitter:image" content="https://jsszxc10542867-bit.github.io/ow-guide/assets/og.png">
     <meta name="theme-color" content="#0f1b33">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1390,6 +1390,8 @@
         .ins-refs a { color:var(--accent); text-decoration:none; font-weight:600; }
         .ins-refs a:hover { text-decoration:underline; }
         body.dark-mode .ins-refs a { color:#ff8a86; }
+        .sit-src { display:inline-block; margin-top:.5rem; font-size:.78rem; color:var(--text-3); }
+        .sit-src::before { content:"📺 "; }
     </style>
 </head>
 <body>
@@ -1458,7 +1460,7 @@
                     </div>
                     <div class="hb-stats">
                         <div><b id="hb-heroes">53</b><span>영웅 분석</span></div>
-                        <div><b id="hb-sits">158</b><span>상황 판단</span></div>
+                        <div><b id="hb-sits">184</b><span>상황 판단</span></div>
                         <div><b id="hb-quiz">21</b><span>실전 훈련</span></div>
                         <div><b id="hb-gl">62</b><span>핵심 용어</span></div>
                     </div>
@@ -2961,13 +2963,14 @@
     </footer>
 
     <script defer src="data/heroes.js?v=7"></script>
-    <script defer src="data/heroes-detail.js?v=6"></script>
+    <script defer src="data/heroes-detail.js?v=7"></script>
     <script defer src="data/heroes-insight.js?v=1"></script>
     <script defer src="data/situations.js?v=3"></script>
     <script defer src="data/situations-heroes.js?v=3"></script>
     <script defer src="data/situations-heroes2.js?v=4"></script>
     <script defer src="data/situations-new2026.js?v=4"></script>
-    <script defer src="data/training.js?v=3"></script>
+    <script defer src="data/situations-lectures.js?v=1"></script>
+    <script defer src="data/training.js?v=4"></script>
     <script defer src="data/maps.js?v=2"></script>
     <script defer src="data/glossary.js?v=6"></script>
     <script defer src="data/quizzes.js?v=2"></script>
@@ -2978,6 +2981,6 @@
     <script defer src="data/map-situations.js?v=2"></script>
     <script defer src="tmap.js?v=4"></script>
     <script defer src="home.js?v=7"></script>
-    <script defer src="app.js?v=29"></script>
+    <script defer src="app.js?v=30"></script>
 </body>
 </html>
