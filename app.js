@@ -75,6 +75,8 @@ function levelInfo(xp) {
 }
 function renderLevel() {
   const { cur, next, pct } = levelInfo(state.xp || 0);
+  const pill = document.getElementById('level-pill');
+  if (pill) pill.innerHTML = `<span class="lp-lv">Lv.${cur.lv}</span><span class="lp-xp">${state.xp || 0} XP</span><span class="lp-bar"><i style="width:${pct}%"></i></span>`;
   const el = document.getElementById('level-box');
   if (!el) return;
   el.innerHTML = `
@@ -124,10 +126,9 @@ function updateProgress() {
   const sectionPart = ((currentSection + 1) / SECTION_COUNT) * 30;
   const quizPart = (solved / TOTAL_QUIZ) * 35;
   const sitPart = Math.min(1, sitDone / SITUATIONS.length) * 35;
-  document.getElementById('progress-fill').style.width = (sectionPart + quizPart + sitPart) + '%';
-  document.getElementById('score-solved').textContent = solved;
-  document.getElementById('score-correct').textContent = correct;
-  const s = document.getElementById('score-sit'); if (s) s.textContent = sitDone;
+  const setT = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const fill = document.getElementById('progress-fill'); if (fill) fill.style.width = (sectionPart + quizPart + sitPart) + '%';
+  setT('score-solved', solved); setT('score-correct', correct); setT('score-sit', sitDone);
   if (solved === TOTAL_QUIZ) renderResult(correct);
 }
 
@@ -154,7 +155,7 @@ function initQuizCounters() {
     const fb = c.querySelector('.quiz-feedback');
     if (fb) { fb.setAttribute('role', 'status'); fb.setAttribute('aria-live', 'polite'); }
   });
-  document.getElementById('score-total').textContent = TOTAL_QUIZ;
+  { const el = document.getElementById('score-total'); if (el) el.textContent = TOTAL_QUIZ; }
   document.querySelectorAll('.quiz-total').forEach(el => el.textContent = TOTAL_QUIZ);
 }
 function quizSectionIndex(quizIndex) {

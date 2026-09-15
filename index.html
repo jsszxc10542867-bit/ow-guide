@@ -993,6 +993,13 @@
         .md a.md-hero { color:var(--accent); font-weight:700; text-decoration:underline dotted; text-underline-offset:3px; cursor:pointer; }
         .md pre a.md-hero { text-decoration:none; border-bottom:1px dotted var(--accent); }
         body.dark-mode .md a.md-hero { color:#ff8a86; }
+        /* 헤더 레벨 배지 (상단 진행도 카드 대체) */
+        .level-pill { display:inline-flex; align-items:center; gap:.4rem; padding:.45rem .8rem; border-radius:999px; border:1.5px solid rgba(255,255,255,.28); background:rgba(255,255,255,.12); color:#fff; font:inherit; font-size:.8rem; font-weight:700; cursor:pointer; min-height:40px; white-space:nowrap; }
+        .level-pill:hover { background:rgba(255,255,255,.22); }
+        .level-pill .lp-lv { background:var(--ow-orange); color:#1a1a1a; border-radius:999px; padding:.1rem .5rem; font-family:var(--font-display); font-size:.72rem; letter-spacing:.04em; }
+        .level-pill .lp-bar { width:56px; height:5px; border-radius:99px; background:rgba(255,255,255,.2); overflow:hidden; }
+        .level-pill .lp-bar i { display:block; height:100%; background:var(--ow-orange); }
+        @media (max-width:600px) { .level-pill .lp-xp, .level-pill .lp-bar { display:none; } .level-pill { padding:.4rem .6rem; } }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -1030,6 +1037,7 @@
                 <span>오버워치 뉴비 가이드 <small class="logo-sub">COACH PLAYBOOK</small></span>
             </div>
             <div style="display:flex;gap:.5rem;align-items:center;">
+            <button class="level-pill" id="level-pill" onclick="switchSection(8)" title="나의 학습 분석 보기" aria-label="현재 레벨과 XP. 누르면 학습 분석으로 이동"></button>
             <button class="search-btn" onclick="openSearch()" aria-label="전체 검색 열기">🔍 <span class="search-label">검색</span> <kbd>/</kbd></button>
             <button class="theme-toggle" onclick="toggleTheme()" title="다크모드 전환" aria-label="다크모드 전환">
                 <span id="theme-icon">🌙</span>
@@ -1060,20 +1068,6 @@
                 <button class="mode-btn" data-mode="advanced" aria-pressed="false" onclick="setMode('advanced')">🔴 심화</button>
             </div>
             <span class="fig-muted" style="font-size:.78rem;color:var(--text-3)">← 탭을 좌우로 밀어 더 많은 메뉴를 볼 수 있습니다</span>
-        </div>
-
-        <div class="progress-container">
-            <div class="progress-label">학습 진행도</div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 20%;" id="progress-fill"></div>
-            </div>
-            <div class="quiz-score-bar">
-                <span>📝 퀴즈: <strong id="score-solved">0</strong>/<span id="score-total">15</span> 풀이</span>
-                <span>✅ 정답: <strong id="score-correct">0</strong></span>
-                <span>🧪 상황판단: <strong id="score-sit">0</strong> 풀이</span>
-                <button class="btn btn-outline" onclick="resetProgress()">진행도 초기화</button>
-            </div>
-            <div class="level-box" id="level-box"></div>
         </div>
 
         <!-- Section 1: Game Basics -->
@@ -2140,6 +2134,6 @@
     <script src="data/maps/kings-row.js"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=9"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>
