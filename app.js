@@ -347,7 +347,7 @@ let heroTags = new Set();
 // 영웅 초상화: assets/heroes/<slug>.webp (블리자드 공식 영웅 페이지 초상화, 팬 콘텐츠 정책에 따른 비상업적 사용)
 function heroSlug(h) { return (h.en || h.name).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, ''); }
 function heroAvatar(h, size) {
-  return `<span class="hero-avatar role-${h.role}" style="--sz:${size}px" aria-hidden="true"><img src="assets/heroes/${heroSlug(h)}.webp" alt="" loading="lazy" decoding="async" width="256" height="256" onerror="this.parentElement.classList.add('noimg');this.remove()"><svg class="av-fallback"><use href="#${roleIcon[h.role]}"/></svg></span>`;
+  return `<span class="hero-avatar role-${h.role}" style="--sz:${size}px" aria-hidden="true"><img src="assets/heroes/${heroSlug(h)}.webp" alt="${h.name}" loading="lazy" decoding="async" width="256" height="256" onerror="this.parentElement.classList.add('noimg');this.remove()"><svg class="av-fallback"><use href="#${roleIcon[h.role]}"/></svg></span>`;
 }
 function renderHeroes() {
   const grid = document.getElementById('hero-grid');
