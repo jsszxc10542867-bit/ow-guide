@@ -9,6 +9,7 @@ https://jsszxc10542867-bit.github.io/ow-guide/
 ```
 index.html          마크업 + CSS (탭 10개)
 app.js              모든 동작 (탭, 퀴즈, 상황판단, 규칙 엔진, 통계, 검색, 모달)
+home.js             🏠 교과서 홈/레슨/기록 컴포넌트 (LESSON_META 레슨 헤더, PRO_MINDSET, MY PROGRESS 성장 지표, 오답노트, 추천 훈련)
 tmap.js             🧭 전술 지도 모듈 (SVG 렌더, 마커/루트/레이어, 줌·이동, 필터, 추천, 암기 모드, 맵 퀴즈)
 data/
   maps/schema.js   전술 지도 데이터 구조 설명 + TACTICAL_MAPS 선언

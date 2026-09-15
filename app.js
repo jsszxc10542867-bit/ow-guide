@@ -42,7 +42,7 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) state = Object.assign(state, JSON.parse(raw));
   } catch (e) { /* 저장된 데이터가 없거나 손상됨 */ }
-  ['answers', 'sit', 'deaths', 'daily', 'checklist', 'tmap', 'guides'].forEach(k => { if (!state[k] || typeof state[k] !== 'object') state[k] = {}; });
+  ['answers', 'sit', 'deaths', 'daily', 'checklist', 'tmap', 'guides', 'lessons'].forEach(k => { if (!state[k] || typeof state[k] !== 'object') state[k] = {}; });
   if (typeof state.xp !== 'number') state.xp = 0;
 }
 function saveState() {
@@ -109,7 +109,11 @@ function switchSection(index, opts) {
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   if (!(opts && opts.noHash)) history.replaceState(null, '', '#' + SECTION_HASH[index]);
   updateBottomNav();
+  document.querySelectorAll('.nav-dup').forEach(b => { const on = Number(b.dataset.index) === index; b.classList.toggle('active', on); b.setAttribute('aria-selected', on); });
+  if (typeof markLessonRead === 'function') markLessonRead(index);
+  if (index === 0 && typeof renderHomeProgress === 'function') renderHomeProgress();
   if (index === 8) renderStats();
+  if (index === 8 && typeof renderMistakes === 'function') renderMistakes();
   if (index === 10) renderGuideIndex();
   if (index === 3 && typeof tmInit === 'function') tmInit();
 }
@@ -646,12 +650,12 @@ function situationResultHTML(s, i) {
   return `
     <div class="verdict ${v.cls}"><span class="verdict-icon">${v.icon}</span><strong>${v.label}</strong></div>
     <div class="why-grid">
-      <div class="why-box"><h5>❓ 왜?</h5><p>${c.why}</p>${bestTxt}</div>
-      <div class="why-box"><h5>🔎 현재 상황에서 중요한 정보</h5><ul>${s.keyInfo.map(k => `<li>${k}</li>`).join('')}</ul></div>
-      <div class="why-box"><h5>⚖️ 이 행동의 장점 / 위험</h5><ul>${s.choices.map((o, j) => `<li class="${j === i ? 'mine' : ''}">${VERDICT_META[o.v].icon} <strong>${o.t.replace(/^🟢 |^🟡 |^🔴 /, '')}</strong><br><small>${o.why}</small></li>`).join('')}</ul></div>
-      <div class="why-box pro"><h5>🏆 프로 플레이어라면</h5><p>${s.pro}</p></div>
+      <div class="why-box"><h5><span class="kicker">WHY</span>왜 그런가</h5><p>${c.why}</p>${bestTxt}</div>
+      <div class="why-box"><h5><span class="kicker">WHAT MATTERS NOW</span>지금 봐야 할 정보</h5><ul>${s.keyInfo.map(k => `<li>${k}</li>`).join('')}</ul></div>
+      <div class="why-box"><h5><span class="kicker">OPTIONS</span>각 선택의 장점 / 위험</h5><ul>${s.choices.map((o, j) => `<li class="${j === i ? 'mine' : ''}">${VERDICT_META[o.v].icon} <strong>${o.t.replace(/^🟢 |^🟡 |^🔴 /, '')}</strong><br><small>${o.why}</small></li>`).join('')}</ul></div>
+      <div class="why-box pro"><h5><span class="kicker">PRO VIEW</span>프로는 이렇게 봅니다</h5><p>${s.pro}</p></div>
     </div>
-    <div class="tip-box coach-note"><div class="tip-title">💡 이것만 기억하세요</div><div class="tip-content">${s.keyPoint}</div></div>`;
+    <div class="tip-box coach-note"><div class="tip-title"><span class="kicker">WHAT TO CHECK NEXT</span> 다음 게임에서 확인할 것</div><div class="tip-content">${s.keyPoint}</div></div>`;
 }
 function answerSituation(id, i) {
   if (state.sit[id] !== undefined) return;
@@ -801,7 +805,7 @@ function renderDaily() {
   const st = state.daily[todayKey()] || {};
   const done = st.sitDone || state.sit[t.situation] !== undefined;
   box.innerHTML = `
-    <div class="daily-head"><span class="daily-kicker">🎯 오늘의 훈련 · ${todayKey()}</span><span class="daily-sub">오늘은 이것 하나만 공부하세요.</span></div>
+    <div class="daily-head"><span class="daily-kicker">${todayKey()}</span><span class="daily-sub">오늘은 이것 하나만 공부하세요.</span></div>
     <h3>오늘의 주제: ${t.title}</h3>
     <p>${t.desc}</p>
     <div class="daily-actions">
@@ -1095,7 +1099,7 @@ function toggleTheme() {
 // ---------- 초기화 ----------
 window.addEventListener('DOMContentLoaded', () => {
   sections = document.querySelectorAll('.section');
-  progressDots = Array.from(document.querySelectorAll('.nav-tab')).sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+  progressDots = Array.from(document.querySelectorAll('.nav-tab:not(.nav-dup)')).sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     document.getElementById('theme-icon').textContent = '☀️';
@@ -1132,7 +1136,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // 맨 위로 버튼 · 히어로 통계
   const toTop = document.getElementById('to-top');
   if (toTop) window.addEventListener('scroll', () => toTop.classList.toggle('show', window.scrollY > 600), { passive: true });
+  if (typeof renderLessonHeads === 'function') { renderLessonHeads(); renderProMindset(); renderHomeProgress(); }
   const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  setTxt('hb-heroes', heroes.length); setTxt('hb-sits', SITUATIONS.length); setTxt('hb-quiz', TOTAL_QUIZ); setTxt('hb-gl', GLOSSARY.length);
+  setTxt('hb-heroes', heroes.length); setTxt('hb-sits', SITUATIONS.length); setTxt('hb-quiz', TOTAL_QUIZ); setTxt('hb-gl', GLOSSARY.length); setTxt('hf-sits', SITUATIONS.length + '문제');
   window.addEventListener('hashchange', () => { const i = sectionFromHash(); if (i !== null && i !== currentSection) switchSection(i, { noHash: true }); });
 });
