@@ -157,25 +157,22 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 1.75rem 1.5rem 4rem; }
 
         /* ===== 탭 ===== */
-        .nav-tabs {
-            display: flex; gap: 6px;
-            padding: 6px;
-            background: var(--bg-elev);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            box-shadow: var(--shadow-sm);
-            overflow-x: auto; scrollbar-width: none;
-            margin-bottom: 1.5rem;
-            position: sticky; top: 82px; z-index: 50;
+        /* ===== 메뉴: 데스크톱 그룹형 ===== */
+        .nav-groups {
+            display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; align-items: center;
+            padding: .6rem .9rem;
+            background: var(--bg-elev); border: 1px solid var(--line); border-radius: 16px;
+            box-shadow: var(--shadow-sm); margin-bottom: 1.4rem;
         }
-        .nav-tabs::-webkit-scrollbar { display: none; }
+        .nav-group { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+        .ng-label { font-size: .72rem; font-weight: 800; letter-spacing: .08em; color: var(--text-3); white-space: nowrap; padding-right: .55rem; border-right: 1px solid var(--line-strong); }
+        .ng-tabs { display: flex; flex-wrap: wrap; gap: .3rem; }
         .nav-tab {
-            flex: 1 0 auto;
-            padding: .65rem 1.1rem;
+            padding: .5rem .85rem;
             border: none; border-radius: 999px;
             background: transparent;
             color: var(--text-2);
-            font: inherit; font-weight: 600; font-size: .92rem;
+            font: inherit; font-weight: 600; font-size: .86rem;
             white-space: nowrap; cursor: pointer;
             transition: background .2s, color .2s, box-shadow .2s;
         }
@@ -184,7 +181,34 @@
             background: var(--accent); color: var(--accent-ink);
             box-shadow: 0 4px 12px var(--accent-soft);
         }
-
+        /* ===== 메뉴: 모바일 하단 탭바 + 시트 ===== */
+        .bottom-nav { display: none; }
+        .sheet-backdrop { position: fixed; inset: 0; background: rgba(10,14,25,.45); z-index: 120; }
+        .sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 121; background: var(--bg-elev); border-radius: 20px 20px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,.25); padding: .5rem 1rem calc(1rem + env(safe-area-inset-bottom)); max-height: 80vh; overflow-y: auto; animation: sheetUp .22s ease-out; }
+        @keyframes sheetUp { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+        .sheet-handle { width: 40px; height: 4px; border-radius: 99px; background: var(--line-strong); margin: .3rem auto .7rem; }
+        .sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6rem; }
+        .sheet-head strong { font-size: 1rem; }
+        .sheet-head .modal-close { position: static; }
+        .sheet-body { display: grid; gap: .4rem; }
+        .sheet-item { display: flex; align-items: center; gap: .8rem; width: 100%; text-align: left; padding: .75rem .85rem; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--text); font: inherit; cursor: pointer; min-height: 56px; }
+        .sheet-item.active { border-color: var(--accent); background: var(--accent-soft); }
+        .sheet-item .si-ic { font-size: 1.35rem; width: 32px; text-align: center; }
+        .sheet-item b { display: block; font-size: .95rem; }
+        .sheet-item small { color: var(--text-3); font-size: .78rem; }
+        .sheet-item .si-step { margin-left: auto; font-size: .72rem; color: var(--text-3); font-weight: 700; }
+        .sheet-section { font-size: .72rem; font-weight: 800; letter-spacing: .1em; color: var(--text-3); margin: .6rem 0 .1rem; }
+        @media (max-width: 768px) {
+            .nav-groups { display: none; }
+            body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+            .bottom-nav { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 100; background: var(--bg-elev); border-top: 1px solid var(--line); padding: .3rem 0 calc(.3rem + env(safe-area-inset-bottom)); box-shadow: 0 -4px 16px rgba(0,0,0,.08); }
+            .bn-btn { display: flex; flex-direction: column; align-items: center; gap: .1rem; padding: .3rem 0; border: none; background: transparent; color: var(--text-3); font: inherit; font-size: .68rem; font-weight: 700; cursor: pointer; min-height: 52px; }
+            .bn-ic { font-size: 1.3rem; line-height: 1; }
+            .bn-btn.active { color: var(--accent); }
+            .bn-btn.active .bn-ic { transform: translateY(-2px); }
+            .to-top { bottom: calc(84px + env(safe-area-inset-bottom)); }
+            .toolbar-row { margin-bottom: .6rem; }
+        }
         /* ===== 진행도 ===== */
         .progress-container {
             background: var(--bg-elev);
@@ -460,8 +484,6 @@
             .header-container { padding: .8rem 1rem; }
             .logo { font-size: 1.1rem; gap: 10px; }
             .logo-img { width: 40px; height: 40px; }
-            .nav-tabs { top: 66px; }
-            .nav-tab { flex: 0 0 auto; padding: .55rem .9rem; font-size: .85rem; }
             .section-title { font-size: 1.5rem; }
             .card, .quiz-container { padding: 1.2rem 1.15rem; }
             .result-score { font-size: 3rem; }
@@ -1047,19 +1069,25 @@
     </header>
 
     <div class="container">
-        <div class="nav-tabs" role="tablist" aria-label="가이드 메뉴">
-            <button data-index="0" class="nav-tab active" role="tab" aria-selected="true" onclick="switchSection(0)">🏠 게임 기본</button>
-            <button data-index="1" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)">👥 캐릭터 역할</button>
-            <button data-index="2" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)">🎯 기초 전술</button>
-            <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵과 포지셔닝</button>
-            <button data-index="4" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)">🔥 실전 팁</button>
-            <button data-index="5" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)">🧠 고급 전략</button>
-            <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
-            <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
-            <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 나의 학습 분석</button>
-            <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
-            <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
-        </div>
+        <nav class="nav-groups" role="tablist" aria-label="가이드 메뉴">
+            <div class="nav-group"><span class="ng-label">📖 배우기</span><div class="ng-tabs">
+                <button data-index="0" class="nav-tab active" role="tab" aria-selected="true" onclick="switchSection(0)">🏠 게임 기본</button>
+                <button data-index="1" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)">👥 캐릭터 역할</button>
+                <button data-index="2" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)">🎯 기초 전술</button>
+                <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵과 포지셔닝</button>
+                <button data-index="4" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)">🔥 실전 팁</button>
+                <button data-index="5" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)">🧠 고급 전략</button>
+            </div></div>
+            <div class="nav-group"><span class="ng-label">🎯 훈련하기</span><div class="ng-tabs">
+                <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
+                <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
+                <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
+            </div></div>
+            <div class="nav-group"><span class="ng-label">📊 내 기록</span><div class="ng-tabs">
+                <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 나의 학습 분석</button>
+                <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
+            </div></div>
+        </nav>
         <div class="toolbar-row">
             <div class="mode-switch" role="group" aria-label="학습 수준">
                 <span>학습 수준</span>
@@ -1067,7 +1095,6 @@
                 <button class="mode-btn active" data-mode="normal" aria-pressed="true" onclick="setMode('normal')">🔵 일반</button>
                 <button class="mode-btn" data-mode="advanced" aria-pressed="false" onclick="setMode('advanced')">🔴 심화</button>
             </div>
-            <span class="fig-muted" style="font-size:.78rem;color:var(--text-3)">← 탭을 좌우로 밀어 더 많은 메뉴를 볼 수 있습니다</span>
         </div>
 
         <!-- Section 1: Game Basics -->
@@ -2107,6 +2134,19 @@
         </div>
     </div>
 
+    <nav class="bottom-nav" id="bottom-nav" aria-label="모바일 메뉴">
+        <button class="bn-btn" data-bn="home" onclick="switchSection(0)"><span class="bn-ic">🏠</span><span>홈</span></button>
+        <button class="bn-btn" data-bn="learn" onclick="openSheet('learn')"><span class="bn-ic">📖</span><span>배우기</span></button>
+        <button class="bn-btn" data-bn="train" onclick="switchSection(7)"><span class="bn-ic">🧪</span><span>훈련</span></button>
+        <button class="bn-btn" data-bn="heroes" onclick="switchSection(6)"><span class="bn-ic">🦸</span><span>도감</span></button>
+        <button class="bn-btn" data-bn="more" onclick="openSheet('more')"><span class="bn-ic">☰</span><span>더보기</span></button>
+    </nav>
+    <div class="sheet-backdrop" id="sheet-backdrop" hidden onclick="closeSheet()"></div>
+    <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-head"><strong id="sheet-title"></strong><button class="modal-close" onclick="closeSheet()" aria-label="닫기">✕</button></div>
+        <div class="sheet-body" id="sheet-body"></div>
+    </div>
     <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
     <footer>
         <div class="footer-grid">
@@ -2134,6 +2174,6 @@
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=11"></script>
+    <script src="app.js?v=12"></script>
 </body>
 </html>

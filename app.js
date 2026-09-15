@@ -108,9 +108,49 @@ function switchSection(index, opts) {
   updateProgress();
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   if (!(opts && opts.noHash)) history.replaceState(null, '', '#' + SECTION_HASH[index]);
+  updateBottomNav();
   if (index === 8) renderStats();
   if (index === 10) renderGuideIndex();
   if (index === 3 && typeof tmInit === 'function') tmInit();
+}
+// ---------- 모바일 하단 탭바 · 시트 ----------
+const NAV_ITEMS = [
+  { i: 0, ic: '🏠', t: '게임 기본', d: '규칙 · 모드 · 승리 조건', g: 'learn' },
+  { i: 1, ic: '👥', t: '캐릭터 역할', d: '탱커 · 딜러 · 힐러가 하는 일', g: 'learn' },
+  { i: 2, ic: '🎯', t: '기초 전술', d: '한타 · 궁 관리 · 리그룹', g: 'learn' },
+  { i: 3, ic: '🗺️', t: '맵과 포지셔닝', d: '실제 맵 위 전술 지도', g: 'learn' },
+  { i: 4, ic: '🔥', t: '실전 팁', d: '안 죽는 법 · 콜 · 습관', g: 'learn' },
+  { i: 5, ic: '🧠', t: '고급 전략', d: '조합 · 카운터 · 템포', g: 'learn' },
+  { i: 7, ic: '🧪', t: '상황판단 훈련', d: '역할 → 영웅별 실전 판단', g: 'train' },
+  { i: 6, ic: '🦸', t: '영웅 도감', d: '52명 상세 · 플레이스타일 추천', g: 'train' },
+  { i: 10, ic: '📖', t: '심화 가이드', d: '멘탈 · 랭크 · 훈련 로드맵', g: 'train' },
+  { i: 8, ic: '📊', t: '나의 학습 분석', d: '약점 · 점수 · 초기화', g: 'record' },
+  { i: 9, ic: '📚', t: '용어 사전', d: '스태거 · 각 · 스즈…', g: 'record' }
+];
+function bnKeyOf(i) { return i === 0 ? 'home' : i === 7 ? 'train' : i === 6 ? 'heroes' : i <= 5 ? 'learn' : 'more'; }
+function updateBottomNav() {
+  const k = bnKeyOf(currentSection);
+  document.querySelectorAll('.bn-btn').forEach(b => b.classList.toggle('active', b.dataset.bn === k));
+}
+function openSheet(kind) {
+  const sheet = document.getElementById('sheet'), bd = document.getElementById('sheet-backdrop'), body = document.getElementById('sheet-body');
+  const item = (n, step) => `<button class="sheet-item ${currentSection === n.i ? 'active' : ''}" onclick="closeSheet(); switchSection(${n.i})"><span class="si-ic">${n.ic}</span><span><b>${n.t}</b><small>${n.d}</small></span>${step ? `<span class="si-step">${step}</span>` : ''}</button>`;
+  if (kind === 'learn') {
+    document.getElementById('sheet-title').textContent = '📖 배우기 — 순서대로 읽으세요';
+    body.innerHTML = NAV_ITEMS.filter(n => n.g === 'learn').map((n, idx) => item(n, `${idx + 1}단계`)).join('');
+  } else {
+    document.getElementById('sheet-title').textContent = '☰ 더보기';
+    body.innerHTML = `<div class="sheet-section">훈련하기</div>` + NAV_ITEMS.filter(n => n.g === 'train').map(n => item(n)).join('') +
+      `<div class="sheet-section">내 기록</div>` + NAV_ITEMS.filter(n => n.g === 'record').map(n => item(n)).join('') +
+      `<div class="sheet-section">학습 수준</div><div class="mode-switch" style="padding:.2rem 0">` +
+      ['newbie', 'normal', 'advanced'].map(m => `<button class="mode-btn ${state.mode === m ? 'active' : ''}" aria-pressed="${state.mode === m}" onclick="setMode('${m}'); openSheet('more')">${{ newbie: '🟢 뉴비', normal: '🔵 일반', advanced: '🔴 심화' }[m]}</button>`).join('') + `</div>` +
+      `<button class="sheet-item" onclick="closeSheet(); openSearch()"><span class="si-ic">🔍</span><span><b>전체 검색</b><small>영웅 · 용어 · 상황 · 가이드</small></span></button>`;
+  }
+  sheet.hidden = false; bd.hidden = false; document.body.style.overflow = 'hidden';
+}
+function closeSheet() {
+  const sheet = document.getElementById('sheet'), bd = document.getElementById('sheet-backdrop');
+  if (sheet) sheet.hidden = true; if (bd) bd.hidden = true; document.body.style.overflow = '';
 }
 function sectionFromHash() {
   const h = location.hash.replace('#', '');
@@ -1096,11 +1136,11 @@ window.addEventListener('DOMContentLoaded', () => {
   switchSection(fromHash !== null ? fromHash : Math.min(state.section || 0, SECTION_COUNT - 1), { noHash: fromHash === null });
   try { const gq = new URLSearchParams(location.search).get('guide'); if (gq) openGuide(gq); } catch (e) {}
   // 키보드: 탭 좌우 이동, ESC로 모달 닫기, / 로 검색
-  document.querySelector('.nav-tabs').addEventListener('keydown', e => {
+  document.querySelector('.nav-groups').addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); switchSection(currentSection + (e.key === 'ArrowRight' ? 1 : -1)); progressDots[currentSection].focus(); }
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { document.querySelectorAll('.modal:not([hidden])').forEach(m => closeModal(m.id)); }
+    if (e.key === 'Escape') { document.querySelectorAll('.modal:not([hidden])').forEach(m => closeModal(m.id)); closeSheet(); }
     if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
   });
   // 맨 위로 버튼 · 히어로 통계
