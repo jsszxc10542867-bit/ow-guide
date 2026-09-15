@@ -96,6 +96,14 @@ function toast(msg) {
 // 사이트 안 이동 기록 (헤더 ← 버튼용: 브라우저 밖으로 나가지 않음)
 const NAV_STACK = []; let _navBack = false;
 function goBackInSite() { if (!NAV_STACK.length) return; _navBack = true; const i = NAV_STACK.pop(); switchSection(i); _navBack = false; }
+// 내비 드롭다운
+function toggleDd(id) { const el = document.getElementById(id); const open = !el.classList.contains('open'); closeDd(); if (open) { el.classList.add('open'); el.querySelector('.nav-dd-btn').setAttribute('aria-expanded', 'true'); } }
+function closeDd() { document.querySelectorAll('.nav-dd.open').forEach(d => { d.classList.remove('open'); d.querySelector('.nav-dd-btn').setAttribute('aria-expanded', 'false'); }); }
+document.addEventListener('click', e => { if (!e.target.closest('.nav-dd')) closeDd(); });
+function updateDdState(index) {
+  document.querySelectorAll('.nav-dd').forEach(dd => { const inGroup = !!dd.querySelector(`.nav-tab[data-index="${index}"]`); dd.querySelector('.nav-dd-btn').classList.toggle('in-group', inGroup); });
+  const cur = document.getElementById('dd-learn-cur'); if (cur) { const t = document.querySelector(`#dd-learn .nav-tab[data-index="${index}"]`); cur.textContent = t ? t.textContent.replace(/^\d+\s*/, '').trim() : ''; }
+}
 function updateBackBtn() { const b = document.getElementById('back-btn'); if (b) b.hidden = NAV_STACK.length === 0; }
 function switchSection(index, opts) {
   index = Math.max(0, Math.min(SECTION_COUNT - 1, index));
@@ -108,7 +116,6 @@ function switchSection(index, opts) {
   progressDots[currentSection].classList.add('active');
   progressDots[currentSection].setAttribute('aria-selected', 'true');
   progressDots[currentSection].setAttribute('tabindex', '0');
-  progressDots[currentSection].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
   state.section = index;
   saveState();
   updateProgress();
@@ -116,6 +123,7 @@ function switchSection(index, opts) {
   // 탭 이동은 브라우저 기록에 남깁니다(뒤로가기로 이전 탭 복귀). 같은 탭이면 기록을 늘리지 않습니다.
   if (!(opts && opts.noHash)) { const h = '#' + SECTION_HASH[index]; if (location.hash !== h) history.pushState(null, '', h); }
   updateBottomNav();
+  closeDd(); updateDdState(index);
   document.querySelectorAll('.nav-dup').forEach(b => { const on = Number(b.dataset.index) === index; b.classList.toggle('active', on); b.setAttribute('aria-selected', on); });
   if (typeof markLessonRead === 'function') markLessonRead(index);
   if (index === 0 && typeof renderHomeProgress === 'function') renderHomeProgress();
@@ -1106,7 +1114,7 @@ function toggleTheme() {
 // ---------- 초기화 ----------
 window.addEventListener('DOMContentLoaded', () => {
   sections = document.querySelectorAll('.section');
-  progressDots = Array.from(document.querySelectorAll('.nav-tab:not(.nav-dup)')).sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+  progressDots = Array.from(document.querySelectorAll('.nav-tab[data-index]:not(.nav-dup)')).sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
   if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     document.getElementById('theme-icon').textContent = '☀️';

@@ -1298,6 +1298,31 @@
         .lesson-card.next::after { content: "다음"; position: absolute; top: .8rem; right: .9rem; font-size: .72rem; font-weight: 800; color: var(--accent); }
         .section.home .hero-banner { margin-top: .4rem; }
         .section.home .lesson-head { display: none; }
+        /* ===== 내비 v3: 1줄 + 드롭다운 ===== */
+        .nav-groups { flex-wrap: nowrap; gap: .5rem; padding: .45rem .6rem; align-items: center; overflow: visible; position: relative; z-index: 60; }
+        .nav-primary { display: flex; align-items: center; gap: .25rem; flex-wrap: wrap; }
+        .nav-dd { position: relative; }
+        .nav-dd-right { margin-left: auto; }
+        .nav-dd-btn { display: inline-flex; align-items: center; gap: .35rem; }
+        .nav-dd-btn.secondary { color: var(--text-3); font-size: .86rem; }
+        .dd-caret { font-size: .8em; opacity: .7; transition: transform .15s; }
+        .nav-dd.open .dd-caret { transform: rotate(180deg); }
+        .nav-dd-btn.in-group { background: var(--accent-soft); color: var(--text); }
+        .dd-cur { font-weight: 600; color: var(--text-2); font-size: .86em; }
+        .dd-cur:not(:empty)::before { content: "· "; }
+        .nav-dd-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; min-width: 240px; background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-lg); padding: .45rem; z-index: 200; }
+        .nav-dd-menu.right { left: auto; right: 0; }
+        .nav-dd.open .nav-dd-menu { display: grid; gap: .15rem; }
+        .nav-dd-menu .nav-tab { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left; border-radius: 9px; padding: .55rem .75rem; font-size: .95rem; }
+        .nav-dd-menu .nav-tab i { font-style: normal; font-family: var(--font-display); font-size: .78rem; letter-spacing: .1em; color: var(--accent); min-width: 1.6em; }
+        .nav-dd-menu .nav-tab.active i { color: inherit; }
+        .dd-title { font-family: var(--font-display); font-size: .72rem; letter-spacing: .18em; color: var(--text-3); padding: .3rem .75rem .35rem; }
+        body.dark-mode .nav-dd-menu { background: var(--surface-3); }
+        @media (max-width: 768px) { .nav-groups { display: none; } }
+        .growth-row.empty { grid-template-columns: 170px 1fr; }
+        .growth-empty { font-size: .92rem; color: var(--accent); font-weight: 700; padding: .3rem .7rem; border: 1.5px dashed var(--accent-soft); border-radius: 999px; justify-self: start; background: var(--accent-soft); }
+        .growth-row.empty:hover .growth-empty { background: var(--accent); color: var(--accent-ink); }
+        @media (max-width: 760px) { .growth-row.empty { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -1326,29 +1351,32 @@
 
     <div class="container">
         <nav class="nav-groups" role="tablist" aria-label="가이드 메뉴">
-            <div class="nav-group home-group"><div class="ng-tabs">
+            <div class="nav-primary">
                 <button data-index="0" class="nav-tab active" role="tab" aria-selected="true" onclick="switchSection(0)">🏠 홈</button>
-            </div></div>
-            <div class="nav-group"><span class="ng-label">📖 배우기</span><div class="ng-tabs">
-                <button data-index="11" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(11)">🎮 게임 기본</button>
-                <button data-index="1" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)">👥 캐릭터 역할</button>
-                <button data-index="2" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)">🎯 기초 전술</button>
-                <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵과 포지셔닝</button>
-                <button data-index="4" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)">🔥 실전 팁</button>
-                <button data-index="5" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)">🧠 고급 전략</button>
-            </div></div>
-            <div class="nav-group"><span class="ng-label">🎯 훈련 · 실전</span><div class="ng-tabs">
+                <div class="nav-dd" id="dd-learn">
+                    <button class="nav-tab nav-dd-btn" type="button" aria-haspopup="true" aria-expanded="false" onclick="toggleDd('dd-learn')">📖 배우기 <span class="dd-cur" id="dd-learn-cur"></span><span class="dd-caret">▾</span></button>
+                    <div class="nav-dd-menu" role="menu">
+                        <div class="dd-title">LESSONS · 순서대로</div>
+                        <button data-index="11" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(11)"><i>01</i> 게임 기본</button>
+                        <button data-index="1" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)"><i>02</i> 캐릭터 역할</button>
+                        <button data-index="2" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)"><i>03</i> 기초 전술</button>
+                        <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)"><i>04</i> 맵과 포지셔닝</button>
+                        <button data-index="4" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)"><i>05</i> 실전 팁</button>
+                        <button data-index="5" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)"><i>06</i> 고급 전략</button>
+                    </div>
+                </div>
                 <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
                 <button data-index="3" class="nav-tab nav-dup" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 실전 맵</button>
-            </div></div>
-            <div class="nav-group"><span class="ng-label">📊 분석하기</span><div class="ng-tabs">
-                <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 나의 학습 분석</button>
-            </div></div>
-            <div class="nav-group secondary"><span class="ng-label">자료</span><div class="ng-tabs">
-                <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
-                <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
-                <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
-            </div></div>
+                <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 학습 분석</button>
+            </div>
+            <div class="nav-dd nav-dd-right" id="dd-ref">
+                <button class="nav-tab nav-dd-btn secondary" type="button" aria-haspopup="true" aria-expanded="false" onclick="toggleDd('dd-ref')">자료 <span class="dd-caret">▾</span></button>
+                <div class="nav-dd-menu right" role="menu">
+                    <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
+                    <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
+                    <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
+                </div>
+            </div>
         </nav>
 
         <!-- Section 1: Game Basics -->
@@ -2481,7 +2509,7 @@
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=3"></script>
-    <script src="home.js?v=2"></script>
-    <script src="app.js?v=18"></script>
+    <script src="home.js?v=3"></script>
+    <script src="app.js?v=19"></script>
 </body>
 </html>

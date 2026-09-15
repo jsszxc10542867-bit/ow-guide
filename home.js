@@ -79,10 +79,13 @@ function renderHomeProgress() {
   const el = document.getElementById('my-progress'); if (!el) return;
   const g = growthMetrics(); const nx = nextLesson(); _nextLessonGo = nx.go;
   const mistakes = mistakeList();
-  const bar = r => `<button class="growth-row" onclick="switchSection(${r.go})" title="${r.hint}">
+  const EMPTY_CTA = { gameiq: '퀴즈 풀고 내 점수 확인하기 →', positioning: '포지션 문제 2개 풀면 채워집니다 →', teamfight: '한타 문제 2개 풀면 채워집니다 →', decision: '상황판단 1문제부터 시작 →' };
+  const bar = r => r.pct === null
+    ? `<button class="growth-row empty" onclick="switchSection(${r.go})"><span class="growth-label"><b>${r.label}</b><small>${r.ko}</small></span><span class="growth-empty">${EMPTY_CTA[r.key]}</span></button>`
+    : `<button class="growth-row" onclick="switchSection(${r.go})" title="${r.hint}">
       <span class="growth-label"><b>${r.label}</b><small>${r.ko}</small></span>
-      <span class="growth-bar"><i style="width:${r.pct === null ? 0 : r.pct}%"></i></span>
-      <span class="growth-pct">${r.pct === null ? '—' : r.pct + '%'}</span></button>`;
+      <span class="growth-bar"><i style="width:${r.pct}%"></i></span>
+      <span class="growth-pct">${r.pct}%</span></button>`;
   el.innerHTML = `
     <div class="sec-head"><span class="kicker">MY PROGRESS</span><h2>나의 성장</h2><span class="sec-side">Lv.${g.a.level.cur.lv} ${g.a.level.cur.name} · ${g.a.xp} XP${mistakes.length ? ` · <a onclick="switchSection(8)">오답 ${mistakes.length}개</a>` : ''}</span></div>
     <div class="growth-grid">
