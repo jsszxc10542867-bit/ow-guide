@@ -111,7 +111,7 @@
         useWhen: '우리 5명 생존 + 카트가 전진 중 + 상대 시선이 카트에 묶였을 때.', avoidWhen: '아군 탱커가 죽었거나 4:5일 때. 상대 포탑이 골목에 있을 때.', needs: ['이탈기 1개', '팀 5명'], escape: '골목 되돌아가기 (왕복 20초).', distance: '깊습니다. 본대가 무너지면 즉시 복귀.', caution: '아군 탱커가 죽었다면 깊게 들어가지 마세요.' },
       { id: 'kr-r4', level: 'side', points: poly([[640, 540], [606, 470], [598, 400], [590, 335]]), roles: ['dps'], heroes: ['애쉬', '솔저: 76', '한조', '소전'], situations: ['attackStart', 'defense', 'fightStart'], verified: false,
         title: '사이드: 카트 → 거리 2층 창문', from: '카트 옆', via: '북쪽 건물 계단', to: '거리 2층 창문(kr-p7)', purpose: '거리 구간 고지를 잡습니다. 카트가 거리에 들어오기 전에.',
-        useWhen: '카트가 A를 막 벗어났을 때.', avoidWhen: '팀이 아직 A 광장에 있을 때 (너무 앞선 위치).', needs: ['탱커가 카트 옆에 있음'], escape: '계단으로 내려가 카트 뒤로.', distance: '카트에서 15m 이내.', caution: '계단이 좁습니다. 정커랫 덫 주의.' }
+        useWhen: '카트가 A를 막 벗어났을 때.', avoidWhen: '팀이 아직 A 광장에 있을 때 (너무 앞선 위치).', needs: ['탱커가 카트 옆에 있음'], escape: '계단으로 내려가 카트 뒤로.', distance: '카트에서 15m 이내.', caution: '계단이 좁습니다. 정크랫 덫 주의.' }
     ],
     highgrounds: [
       { id: 'kr-h1', points: poly([[600, 622], [668, 622], [668, 700], [600, 700]]), label: '호텔 2층 발코니', roles: ['dps'], heroes: ['소전', '애쉬', '솔저: 76', '위도우메이커'], verified: false,
