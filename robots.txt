@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jsszxc10542867-bit.github.io/ow-guide/sitemap.xml

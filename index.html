@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오버워치 교과서</title>
+    <link rel="canonical" href="https://jsszxc10542867-bit.github.io/ow-guide/">
     <meta name="description" content="일반 유저가 직접 정리한 오버워치 교과서 — 역할, 전술, 실제 맵 포지셔닝, 영웅 53명 도감, 상황판단 훈련 150문제 이상, 랭크·멘탈 심화 가이드">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="오버워치 교과서">
@@ -935,7 +936,7 @@
         footer { padding-top: 2rem; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; max-width: 800px; margin: 0 auto 1.6rem; text-align: left; }
         .footer-grid strong { display: block; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-2); margin-bottom: .45rem; }
-        .footer-grid a { display: block; color: var(--text-3); text-decoration: none; padding: .18rem 0; cursor: pointer; font-size: .86rem; }
+        .footer-grid a { display: flex; align-items: center; min-height: 40px; color: var(--text-3); text-decoration: none; padding: .18rem 0; cursor: pointer; font-size: .86rem; }
         .footer-grid a:hover { color: var(--accent); }
         .to-top { position: fixed; right: 18px; bottom: 18px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--bg-elev); color: var(--text); font-size: 1.2rem; font-weight: 800; cursor: pointer; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; transform: translateY(8px); z-index: 90; }
         .to-top.show { opacity: 1; pointer-events: auto; transform: none; }
@@ -1359,6 +1360,8 @@
         .tm-maint p { margin: 0; color: var(--text-2); max-width: 70ch; }
         h1.logo-text { font: inherit; font-size: 1.15rem; font-weight: 700; margin: 0; }
         @media (max-width: 480px) { .logo-sub { display: none; } }
+        .soon-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--warning); vertical-align: middle; margin-left: 2px; }
+        .nav-tab.active .soon-dot { background: var(--accent-ink); opacity: .7; }
     </style>
 </head>
 <body>
@@ -1406,7 +1409,7 @@
                 </div>
                 <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅별 핵심 공략</button>
                 <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
-                <button data-index="3" class="nav-tab nav-dup" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵 가이드</button>
+                <button data-index="3" class="nav-tab nav-dup" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵 가이드 <span class="soon-dot" title="전술 지도 준비 중" aria-hidden="true"></span></button>
                 <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 학습 분석</button>
             </div>
         </nav>
@@ -1469,7 +1472,7 @@
                 <div class="feature-pair">
                     <a class="feature" onclick="switchSection(3)">
                         <span class="kicker">MAPS &amp; POSITIONING</span>
-                        <h3>맵과 포지셔닝 <small class="tm-only-inline">· 전술 지도 점검 중</small></h3>
+                        <h3>맵과 포지셔닝 <small class="tm-only-inline">· 전술 지도 준비 중</small></h3>
                         <p>12개 맵의 고지·초크·사이드 루트·힐팩과 역할별 자리를 정리했습니다. 실제 오버헤드 지도 위 마커(전술 지도)는 좌표 검증이 끝나면 다시 열립니다.</p>
                         <span class="feature-cta">맵 가이드 보기 →</span>
                     </a>
@@ -1704,9 +1707,9 @@
             </div>
             <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>"좋은 위치"가 아니라 "왜 그 위치에 있는가"가 중요합니다. 맵마다 고지·초크·사이드 루트·힐팩이 어디인지 알고 서는 것이 포지셔닝의 절반입니다.</p></div></div>
             <div class="tm-maint" id="tm-maint" hidden>
-                <span class="kicker">TACTICAL MAP · 점검 중</span>
-                <h3>실제 맵 전술 지도는 점검 중입니다</h3>
-                <p>King's Row 오버헤드 지도 위 포지션·루트 마커의 좌표를 인게임과 대조하는 중이라 잠시 닫아 두었습니다. 검증이 끝나면 다시 열립니다. 아래 맵별 텍스트 가이드와 포지셔닝 원칙은 그대로 이용하실 수 있습니다.</p>
+                <span class="kicker">TACTICAL MAP · COMING SOON</span>
+                <h3>실제 맵 전술 지도 — 곧 공개됩니다</h3>
+                <p>King's Row 오버헤드 지도 위 포지션·루트 마커의 좌표를 인게임과 대조하는 중입니다. 검증이 끝나는 대로 공개됩니다. 아래 맵별 텍스트 가이드와 포지셔닝 원칙은 그대로 이용하실 수 있습니다.</p>
             </div>
             <!-- ===== MapViewer: 실제 오버헤드 맵 + SVG 전술 오버레이 ===== -->
             <div class="card tm-controls tm-only" id="tm-map-viewer">
