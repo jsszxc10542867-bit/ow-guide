@@ -1043,6 +1043,36 @@
         .hero-meta .hero-diff { margin-bottom: 0; }
         .hero-tag { font-size: .7rem; font-weight: 700; color: var(--text-3); background: var(--bg-soft); padding: .15rem .5rem; border-radius: 6px; }
         .card p em { font-style: normal; font-weight: 700; color: var(--text); background: var(--accent-soft); padding: 0 .3rem; border-radius: 4px; }
+        /* ===== 가독성·가시성 레이어 (마지막에 적용) ===== */
+        html { font-size: 17px; }
+        @media (max-width: 600px) { html { font-size: 16px; } }
+        :root { --text-2: #3f4a5c; --text-3: #6a7486; --line: #d9dfe9; --line-strong: #c3cbd8; }
+        body.dark-mode { --text-2: #c4c7d1; --text-3: #9aa0ae; --line: #2e2f37; --line-strong: #41434d; }
+        body { line-height: 1.75; }
+        /* 본문 계열: 1rem 이상, 줄 길이 제한 */
+        .card p, .tip-content, .steps li, .kv li, .sit-facts, .hm-card .steps li, .hm-card p, .hero-desc, .role-card small, .md, .quiz-option, .sit-choice, .choice-why, .gl-def, .gl-use, .stat-tile small { font-size: 1rem; }
+        .card p, .tip-content, .steps li, .md p, .md li { max-width: 78ch; }
+        .card h3 { font-size: 1.25rem; }
+        .section-title { font-size: 2.2rem; }
+        .sit-title { font-size: 1.25rem; } .sit-q { font-size: 1.08rem; }
+        .hm-card h4 { font-size: 1rem; } .hm-kicker { font-size: .88rem; }
+        /* 보조 텍스트 하한선: .88rem */
+        small, .fig-muted, .hero-count, .figure-cap, .quiz-counter, .level-xp, .daily-sub, .mode-switch, .sheet-item small, .guide-card p, .guide-card small, .hero-meta, .hero-tag, .mode-note, .sit-hero-hint, .stats-grid small, .hb-stats span, .footer-grid a, footer p { font-size: .9rem; }
+        /* 라벨·배지 하한선: .8rem */
+        .ng-label, .sheet-section, .diff-badge, .sit-cat, .hero-badge, .remember strong, .tbl th, .guide-group, .lp-label, .f-label, .srt-count, .hero-chip small, .quiz-option.best-mark::after, .hb-kicker, .daily-kicker, .search-btn kbd, .level-step, .tm-legend, .tm-attribution { font-size: .8rem; }
+        .nav-tab { font-size: .95rem; padding: .55rem .95rem; }
+        .filter-btn, .subtab, .mode-btn, .btn { font-size: .95rem; }
+        .btn { font-weight: 700; }
+        /* 표 */
+        .tbl td { font-size: .98rem; line-height: 1.6; }
+        @media (min-width: 601px) { .tbl td:first-child, .tbl th:first-child { white-space: nowrap; } }
+        /* 카드 여백·경계 강화 */
+        .card, .quiz-container { border: 1px solid var(--line); }
+        .card h3 { margin-bottom: .8rem; }
+        /* 강조 텍스트는 본문색 */
+        .card p strong, .tip-content strong, .steps li strong, .kv li strong { color: var(--text); }
+        /* 링크·버튼 포커스 대비 */
+        a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
     </style>
 </head>
 <body>
@@ -2174,6 +2204,6 @@
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=12"></script>
+    <script src="app.js?v=13"></script>
 </body>
 </html>
