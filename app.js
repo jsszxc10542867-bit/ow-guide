@@ -14,8 +14,13 @@ const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
 const HERO_TAG_META = {
   'new':'🆕 2026 신규', 'aim-easy':'🎯 에임 쉬움', 'low-ops':'🧠 운영 난이도 낮음', 'mobile':'⚡ 기동성 높음',
-  'aggressive':'🔥 공격적', 'stable':'🛡️ 안정적', 'solo':'👥 팀 의존도 낮음'
+  'aggressive':'🔥 공격적', 'stable':'🛡️ 안정적', 'solo':'👥 팀 의존도 낮음',
+  'shield':'🛡 방벽 있음', 'noshield':'⚠️ 방벽 없음', 'main':'🎯 메인딜', 'sub':'🌀 서브딜', 'mainheal':'💚 본대 힐 감당'
 };
+const HERO_FLAG_LABEL = { shield:'방벽', noshield:'방벽 X', main:'메인딜', sub:'서브딜', mainheal:'본대 힐' };
+const INSIGHT_FLAGS = new Set(['shield', 'noshield', 'main', 'sub', 'mainheal']);
+function heroFlagHtml(h) { return heroFlags(h).map(f => `<span class="hero-flag f-${f}">${HERO_FLAG_LABEL[f]}</span>`).join(''); }
+function heroFlags(h) { const ins = (typeof HERO_INSIGHT !== 'undefined') && HERO_INSIGHT[h.name]; return (ins && ins.flags) || []; }
 
 // ---------- 상태 ----------
 let state = {
@@ -356,7 +361,7 @@ function renderHeroes() {
       <div class="hero-head">
         ${heroAvatar(h, 48)}
         <div class="hero-title">
-          <span class="hero-name">${h.name}</span>
+          <span class="hero-name">${h.name}${heroFlagHtml(h)}</span>
           <span class="hero-badges">${h.year === 2026 ? '<span class="hero-badge badge-new">NEW</span>' : ''}${h.newbie ? '<span class="hero-badge">뉴비 추천</span>' : ''}</span>
         </div>
         <span class="hero-role role-${h.role}"><svg><use href="#${roleIcon[h.role]}"/></svg>${roleLabel[h.role]}</span>
@@ -392,7 +397,10 @@ function heroSearchText(h) {
   const d = HERO_DETAILS[h.name] || {};
   const diffLabel = ['', '입문', '쉬움', '보통', '어려움'][h.diff] || '';
   const tagLabels = (d.tags || []).map(t => HERO_TAG_META[t]).join(' ');
-  return normalize([h.name, h.en || '', roleLabel[h.role], h.tag, h.desc, diffLabel, d.attack || '', d.range || '', tagLabels, d.coach || '', h.year === 2026 ? '2026 신규 new' : ''].join(' '));
+  const ins = (typeof HERO_INSIGHT !== 'undefined') && HERO_INSIGHT[h.name] || {};
+  const axisText = ins.axis ? Object.entries(ins.axis).map(([k, v]) => k + ' ' + v).join(' ') : '';
+  const flagText = heroFlags(h).map(f => HERO_FLAG_LABEL[f] + ' ' + HERO_TAG_META[f]).join(' ');
+  return normalize([h.name, h.en || '', roleLabel[h.role], h.tag, h.desc, diffLabel, d.attack || '', d.range || '', tagLabels, d.coach || '', axisText, flagText, ins.summary || '', h.year === 2026 ? '2026 신규 new' : ''].join(' '));
 }
 function applyHeroFilter() {
   const input = document.getElementById('hero-search');
@@ -403,7 +411,7 @@ function applyHeroFilter() {
     const h = heroes[i];
     const d = HERO_DETAILS[h.name] || { tags: [] };
     const roleOk = heroRole === 'all' || (heroRole === 'newbie' ? h.newbie : h.role === heroRole);
-    const tagOk = [...heroTags].every(t => t === 'new' ? h.year === 2026 : (d.tags || []).includes(t));
+    const tagOk = [...heroTags].every(t => t === 'new' ? h.year === 2026 : INSIGHT_FLAGS.has(t) ? heroFlags(h).includes(t) : (d.tags || []).includes(t));
     const textOk = !q || heroSearchText(h).includes(q);
     const show = roleOk && tagOk && textOk;
     card.classList.toggle('hidden', !show);
@@ -411,15 +419,26 @@ function applyHeroFilter() {
     const nameEl = card.querySelector('.hero-name');
     if (q && normalize(h.name).includes(q)) {
       const re = new RegExp(escapeRe(input.value.trim()), 'i');
-      nameEl.innerHTML = h.name.replace(re, m => `<mark class="hl">${m}</mark>`);
+      nameEl.innerHTML = h.name.replace(re, m => `<mark class="hl">${m}</mark>`) + heroFlagHtml(h);
     } else {
-      nameEl.textContent = h.name;
+      nameEl.innerHTML = h.name + heroFlagHtml(h);
     }
   });
   document.getElementById('hero-empty').style.display = visible ? 'none' : 'block';
   document.getElementById('hero-count').textContent = `${visible} / ${heroes.length}명`;
 }
 
+
+// ---------- 영웅 분류·강의 인사이트 (heroes-insight.js) ----------
+function insightCards(h) {
+  const ins = (typeof HERO_INSIGHT !== 'undefined') && HERO_INSIGHT[h.name];
+  if (!ins) return '';
+  const axis = ins.axis ? `<div class="axis-grid">${Object.entries(ins.axis).map(([k, v]) => `<div class="axis-item"><span>${k}</span><strong>${v}</strong></div>`).join('')}</div>` : '';
+  const refs = (ins.refs || []).map(k => INS_REF[k]).filter(Boolean);
+  const refHtml = refs.length ? `<div class="ins-refs">출처 · ${refs.map(r => `<a href="${r.u}" target="_blank" rel="noopener">${r.t}</a>`).join(' · ')}</div>` : '';
+  const pro = ins.pro && ins.pro.length ? `<div class="hm-card"><h4>📺 프로·해설 강의 요약</h4><ul class="ins-pro">${ins.pro.map(x => `<li>${x}</li>`).join('')}</ul></div>` : '';
+  return `<div class="hm-card"><h4>🧭 해설 기준 분류</h4>${axis}<p class="ins-summary">${ins.summary || ''}</p>${refHtml}</div>${pro}`;
+}
 // ---------- 영웅 상세 모달 ----------
 let lastFocus = null;
 function openHero(i) {
@@ -450,6 +469,7 @@ function openHero(i) {
           <div class="stats">${stat('기동성', d.mobility)}${stat('생존력', d.survive)}</div>
           <div class="hm-tags">${(d.tags || []).map(t => `<span class="pill">${HERO_TAG_META[t]}</span>`).join('') || '<span class="fig-muted">—</span>'}</div>
         </div>
+        ${insightCards(h)}
         <div class="hm-card hm-first"><h4>🥇 처음 잡으면 이것부터</h4><p>${d.first}</p></div>
         <div class="hm-card"><h4>🎯 운영 핵심 5</h4><ol class="steps">${d.core.map(c => `<li>${c}</li>`).join('')}</ol></div>
         <div class="hm-card"><h4>🚫 하지 말아야 할 행동</h4><ul class="dont">${d.dont.map(c => `<li>${c}</li>`).join('')}</ul></div>

@@ -16,6 +16,7 @@ data/
   maps/kings-row.js, lijiang-tower.js, circuit-royal.js   전술 지도 3개 (지형·포지션·루트·고지·위험·엄폐·힐팩·교전·퀴즈)
   map-situations.js 전술 지도 상황 목록, 레이어, "지금 어디 있어야 하지?" 규칙
   heroes.js         영웅 53명 기본 카드 (2025 벤데타, 2026 신규 8명 포함: 안란·엠레·도미나·미즈키·제트팩 캣·시에라·시온·D.Mon) (name, role, diff, newbie, tag, desc)
+  heroes-insight.js 영웅 분류·해설 인사이트 (HERO_INSIGHT: 해설 기준 4축·필터 플래그·분류 요약·프로 강의 요약·출처) — 옵치토크쇼 기본개념서 4편 + 투유/플레타/희성/말카 영웅별 강의 기반
   heroes-detail.js  영웅 상세 (HERO_DETAILS: 공격 방식, 운영 핵심 5, 하지 말아야 할 행동, 궁, 카운터, 조합, 태그, 플레이스타일 점수)
   situations.js     상황판단 문제 (SITUATIONS) + 카테고리/난이도/판정 메타
   situations-heroes.js  영웅별 추가 상황판단 문제 (SITUATIONS에 합쳐짐, 탭에서 역할→영웅으로 분류)
@@ -35,7 +36,7 @@ assets/             로고, OG 이미지
 ## 콘텐츠 추가 방법
 
 - **상황판단 문제**: `data/situations.js`의 `SITUATIONS` 배열에 객체 추가. `cat`이 `side`면 "사이드 vs 본대" 탭에, 그 외는 상황판단 탭에 자동 표시됩니다.
-- **영웅**: `data/heroes.js`에 카드 추가 후 `data/heroes-detail.js`에 같은 이름으로 상세 추가.
+- **영웅**: `data/heroes.js`에 카드 추가 후 `data/heroes-detail.js`에 같은 이름으로 상세 추가. `data/heroes-insight.js`에 axis/flags/summary를 넣으면 카드 배지·분류 필터·모달 분류 카드가 자동 표시됩니다.
 - **맵**: `data/maps.js`의 `MAPS`에 추가. 모드 키는 `MAP_MODES` 참고.
 - **용어**: `data/glossary.js`의 `GLOSSARY`에 추가. 전체 검색·용어 탭에 자동 반영.
 - **전술 지도 맵 추가**: ① StatBanana(https://overwatch.statbanana.com/images)에서 오버헤드 PNG를 받아 `assets/maps/<id>/<id>-overhead.png`에 저장하고 `attribution.txt` 작성 ② `data/maps/registry.js`에 `image/width/height` 지정 ③ `data/maps/kings-row.js`를 복사해 `data/maps/<id>.js` 작성 (좌표는 `P(px, py)`로 0~1 정규화) ④ `index.html`에 `<script src="data/maps/<id>.js">` 추가. 이미지가 없는 맵은 자동으로 "준비 중"으로 표시되며 가짜 지도는 만들지 않습니다. 공유 링크: `?map=<id>&hero=<이름>&sit=<상황>&pos=<포지션id>&detail=1#maps`
