@@ -193,7 +193,7 @@ const LEVELS = [
   { lv:6,  name:'상황판단 훈련생',    xp:1000 },
   { lv:7,  name:'전략가',             xp:1400 },
   { lv:8,  name:'전술가',             xp:1900 },
-  { lv:9,  name:'코치 지망생',        xp:2500 },
+  { lv:9,  name:'팀 리더',            xp:2500 },
   { lv:10, name:'게임 이해도 완성',   xp:3200 }
 ];
 const XP_RULES = { quizCorrect:10, quizWrong:3, sitGood:15, sitMixed:7, sitBad:3, daily:20, checklist:5, review:5, advisor:2, recommend:5, guide:10 };
