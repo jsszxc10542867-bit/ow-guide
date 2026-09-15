@@ -922,10 +922,18 @@ function renderStats() {
 }
 
 // ---------- 용어 사전 ----------
+let glossaryCat = '전체';
+const GLOSSARY_CATS = ['전체', '콜', '개념', '조합', '위치', '목표', '시스템', '은어', '밈'];
+function setGlossaryCat(c) { glossaryCat = c; renderGlossary(document.getElementById('glossary-search').value); }
+function renderGlossaryCats() {
+  const el = document.getElementById('glossary-cats'); if (!el) return;
+  el.innerHTML = GLOSSARY_CATS.map(c => `<button class="filter-btn${c === glossaryCat ? ' active' : ''}" onclick="setGlossaryCat('${c}')">${c}${c === '전체' ? '' : ` <small>${GLOSSARY.filter(g => (g.cat || '개념') === c).length}</small>`}</button>`).join('');
+}
 function renderGlossary(q) {
   const wrap = document.getElementById('glossary-list'); if (!wrap) return;
+  renderGlossaryCats();
   const nq = normalize(q || '');
-  const list = GLOSSARY.filter(g => !nq || normalize([g.term, ...(g.alias || []), g.def, g.use].join(' ')).includes(nq));
+  const list = GLOSSARY.filter(g => (glossaryCat === '전체' || (g.cat || '개념') === glossaryCat) && (!nq || normalize([g.term, ...(g.alias || []), g.def, g.use].join(' ')).includes(nq)));
   document.getElementById('glossary-count').textContent = `${list.length} / ${GLOSSARY.length}개`;
   wrap.innerHTML = list.length ? list.map(g => `
     <div class="gl-card" id="gl-${encodeURIComponent(g.term)}">
@@ -942,7 +950,7 @@ function hl(text, q) {
 }
 function searchGlossary(q) {
   const input = document.getElementById('glossary-search');
-  input.value = q; renderGlossary(q);
+  glossaryCat = '전체'; input.value = q; renderGlossary(q);
   if (currentSection !== 9) switchSection(9);
   input.focus();
 }

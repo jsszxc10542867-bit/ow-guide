@@ -1362,6 +1362,18 @@
         @media (max-width: 480px) { .logo-sub { display: none; } }
         .soon-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--warning); vertical-align: middle; margin-left: 2px; }
         .nav-tab.active .soon-dot { background: var(--accent-ink); opacity: .7; }
+        /* ===== 1단계: 체력 칩 · 참고 영상 ===== */
+        .hp-chip { display:inline-block; width:14px; height:14px; border-radius:3px; vertical-align:-2px; margin-right:.25rem; border:1px solid rgba(0,0,0,.15); }
+        .hp-white { background:#f4f4f4; } .hp-yellow { background:#f2c94c; } .hp-blue { background:#4fa3ff; } .hp-green { background:#4cd37b; }
+        body.dark-mode .hp-chip { border-color: rgba(255,255,255,.2); }
+        .ref-card { border-style: dashed; }
+        .ref-list { list-style:none; margin:.4rem 0 0; display:grid; gap:.5rem; }
+        .ref-list li { display:flex; flex-wrap:wrap; gap:.4rem .6rem; align-items:baseline; font-size:.93rem; }
+        .ref-list a { color: var(--accent); font-weight:600; text-decoration:none; }
+        .ref-list a:hover { text-decoration:underline; }
+        body.dark-mode .ref-list a { color:#ff8a86; }
+        .ref-list small { color: var(--text-3); }
+        .gl-cats { display:flex; flex-wrap:wrap; gap:.4rem; margin:.8rem 0 0; }
     </style>
 </head>
 <body>
@@ -2344,6 +2356,7 @@
                 </div>
                 <span class="hero-count" id="glossary-count"></span>
             </div>
+            <div class="gl-cats" id="glossary-cats"></div>
             <div id="glossary-list" style="margin-top:1rem"></div>
         </section>
 
@@ -2389,6 +2402,64 @@
             </div>
 
             <div class="card">
+                <h3><span class="card-icon">🚪</span>00 · 어디서 시작할까 — 경기 종류</h3>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>모드</th><th>이런 분께</th><th>메모</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>훈련장</strong></td><td>영웅을 처음 잡을 때</td><td>메뉴 → 훈련. 새 영웅은 <strong>5분만 기술을 눌러 보고</strong> 실전에 가세요. 쿨타임 감각이 잡힙니다</td></tr>
+                    <tr><td><strong>빠른 대결</strong></td><td>첫 50판</td><td>역할 고정 큐 기준. 승패 부담이 적어 <strong>이 교과서의 판단 기준을 연습하는 곳</strong>입니다</td></tr>
+                    <tr><td><strong>경쟁전</strong></td><td>기본기가 익숙해진 뒤</td><td>티어가 매겨집니다. 시작 전 <strong>영웅 밴</strong> 투표가 있고, 신규 계정은 빠른 대결 승수를 채워야 열립니다. 아군에게 부담을 주는 자리이니 기본기 다음에</td></tr>
+                    <tr><td><strong>아케이드 · 스타디움</strong></td><td>기분 전환</td><td>규칙이 다른 모드입니다. 스타디움은 라운드마다 강화를 사는 별개 모드라 이 교과서의 판단 기준이 그대로 적용되진 않습니다</td></tr>
+                    <tr><td><strong>사용자 지정</strong></td><td>맵 외우기</td><td>혼자 방 만들어 봇 없이 맵을 2분 걸어 보세요. 고지 올라가는 길·큰 힐팩·사이드 통로 3가지만</td></tr>
+                    </tbody>
+                </table></div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">⌨️</span>01 · 조작과 화면(HUD) 읽기</h3>
+                <p>기본 키는 이 정도만 알면 훈련장에 들어갈 수 있습니다. 키는 설정에서 바꿀 수 있습니다.</p>
+                <ul class="kv">
+                    <li><span>이동 · 점프 · 웅크리기</span><strong>WASD · Space · Ctrl. 웅크리기는 코너에서 머리만 내밀 때 씁니다</strong></li>
+                    <li><span>공격 · 보조 공격</span><strong>좌클릭 · 우클릭. 영웅마다 우클릭이 다릅니다(조준·산탄·보호막 등)</strong></li>
+                    <li><span>기술 1 · 2</span><strong>Shift · E. 대부분의 영웅은 Shift가 이동기, E가 보조 기술입니다</strong></li>
+                    <li><span>궁극기</span><strong>Q. 게이지가 100%일 때. 화면 하단 중앙 숫자가 충전량입니다</strong></li>
+                    <li><span>재장전 · 근접 공격</span><strong>R · V. 근접 공격은 체력이 조금 남은 적을 마무리할 때 총보다 빠릅니다</strong></li>
+                    <li><span>상호작용</span><strong>F. 영웅별 특수 동작(D.Va 자폭 후 메카 호출, 젠야타 구슬 등)과 특전 선택</strong></li>
+                    <li><span>핑 · 핑 휠</span><strong>G 짧게 · G 길게. 마이크 없이 "적 발견 / 집결 / 후퇴"를 알립니다</strong></li>
+                    <li><span>스코어보드 · 영웅 교체</span><strong>Tab · H. Tab에서 우리 팀 궁 %와 픽을 봅니다. 교체는 스폰룸 안에서만</strong></li>
+                </ul>
+                <p style="margin-top:.8rem"><strong>화면에서 반드시 볼 5곳</strong></p>
+                <ul class="kv">
+                    <li><span>왼쪽 위 · 팀원 초상화</span><strong>누가 살아 있는지. <strong>해골이 2개 이상이면 후퇴 신호</strong>입니다. 이 교과서에서 "잘렸다"고 할 때 보는 곳</strong></li>
+                    <li><span>왼쪽 아래 · 내 체력</span><strong>색깔이 곧 체력 종류입니다(아래 02 참고). 50% 밑이면 코너</strong></li>
+                    <li><span>가운데 아래 · 궁 게이지</span><strong>숫자가 100이면 Q. 죽어도 유지됩니다</strong></li>
+                    <li><span>오른쪽 위 · 킬 피드</span><strong>누가 누구를 잡았는지. 상대 힐러가 떴으면 지금이 들어갈 때, 우리 팀이 2명 떴으면 빠질 때</strong></li>
+                    <li><span>위 가운데 · 목표 게이지</span><strong>거점 % · 카트 거리 · 남은 시간. <strong>오버타임</strong> 표시가 뜨면 목표에서 떨어지는 순간 끝납니다</strong></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">❤️</span>02 · 체력 종류 · 치명타 · 회복</h3>
+                <p>체력 바의 <strong>색깔</strong>이 다르면 성질이 다릅니다. 이걸 모르면 "왜 저 사람은 안 죽지?"가 됩니다.</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>색</th><th>이름</th><th>성질</th></tr></thead>
+                    <tbody>
+                    <tr><td><span class="hp-chip hp-white"></span> 흰색</td><td><strong>체력</strong></td><td>기본. 힐러·힐팩·자동 회복으로만 찹니다</td></tr>
+                    <tr><td><span class="hp-chip hp-yellow"></span> 노란색</td><td><strong>방어력</strong></td><td>받는 피해가 줄어듭니다(특히 연사 무기에 강함). 탱커 대부분이 가지고 있어 자잘한 딜에 잘 안 깎입니다</td></tr>
+                    <tr><td><span class="hp-chip hp-blue"></span> 파란색</td><td><strong>보호막</strong></td><td>잠시 안 맞으면 <strong>저절로 다시 찹니다</strong>. 젠야타·자리야·시메트라. 코너 뒤 3초면 돌아옵니다</td></tr>
+                    <tr><td><span class="hp-chip hp-green"></span> 초록색</td><td><strong>과다 체력</strong></td><td>기술·궁으로 얻는 임시 체력(비트·정커퀸 외침·키리코 여우길 등). 시간이 지나면 사라집니다</td></tr>
+                    </tbody>
+                </table></div>
+                <ul class="kv" style="margin-top:.8rem">
+                    <li><span>치명타(헤드샷)</span><strong>머리에 맞으면 대부분 <strong>2배</strong> 피해. 위도우메이커가 한 방인 이유이고, 탱커는 역할 패시브로 치명타를 덜 받습니다</strong></li>
+                    <li><span>치유 감소(치감)</span><strong>딜러에게 맞으면 잠시 힐이 덜 들어옵니다. 그래서 "안 맞아도 되는 딜을 맞는 것"이 팀 손해입니다(자원 개념 참고)</strong></li>
+                    <li><span>회복 3가지</span><strong>① 힐러 ② 힐팩(작은 75 / 큰 250) ③ <strong>자동 회복</strong>(잠시 안 맞으면 모든 역할이 서서히, 지원가는 더 빨리). 코너 뒤 3초가 힐팩 하나입니다</strong></li>
+                    <li><span>스폰룸</span><strong>안에 있으면 무적이며 즉시 회복·영웅 교체가 됩니다. 나가면 다시 못 들어옵니다(문이 닫힘)</strong></li>
+                    <li><span>낙사</span><strong>맵 밖으로 떨어지면 체력과 무관하게 즉사합니다. 쟁탈 맵 다리·일리오스 우물 근처에서 밀쳐내기(루시우·브리기테)를 조심하세요</strong></li>
+                </ul>
+            </div>
+
+            <div class="card">
                 <h3><span class="card-icon">🗂️</span>게임 모드 6종 — 실전 용어로 정리했습니다</h3>
                 <div class="table-wrap"><table class="tbl">
                     <thead><tr><th>모드</th><th>승리 조건</th><th>핵심 노트</th></tr></thead>
@@ -2401,6 +2472,13 @@
                     <tr><td><strong>격돌</strong><br><small>Clash</small></td><td>일직선 5개 거점을 상대 쪽으로 밀며 <strong>5점</strong>을 먼저 얻으면 승리합니다</td><td>상대 마지막 거점(홈)을 따면 큰 점수지만 <strong>상대 스폰이 코앞</strong>이라 리스폰이 상대 5초 vs 우리 20초입니다. 올킬에 자신이 없으면 무리하지 마세요</td></tr>
                     </tbody>
                 </table></div>
+                <p style="margin-top:.8rem"><strong>모드별로 기억할 한 가지</strong></p>
+                <ul class="kv">
+                    <li><span>호위 · 혼합 수비</span><strong>카트는 1층으로만 갑니다. ① <strong>2층을 먼저 선점</strong> ② 카트가 <strong>좁은 골목</strong>을 지날 때 세우기 ③ 카트가 <strong>꺾이는 지점</strong>에서 막기 — 이 셋만 알면 수비 기본은 끝입니다</strong></li>
+                    <li><span>쟁탈</span><strong>맵이 좌우 대칭이라 <strong>첫 한타</strong>가 가장 큽니다. 먼저 먹은 팀은 낙사 다리·좁은 입구를 지키며 상대가 못 넘어오게 압박합니다. 자리를 고정하지 말고 상대 위치를 보며 움직이는 모드입니다</strong></li>
+                    <li><span>플래시포인트</span><strong>쟁탈 맵 5개를 이어 붙인 큰 맵. 기동성 좋은 영웅이 유리하고, 거리 조절이 어려워 초보가 힘들어합니다. 다음 거점으로 <strong>먼저 이동</strong>이 전부</strong></li>
+                    <li><span>밀기</span><strong>첫 구간은 쟁탈처럼, 그다음은 호위처럼(좁은 곳·꺾이는 곳·2층). 모든 모드의 개념이 다 들어가 있어 가장 까다롭습니다</strong></li>
+                </ul>
             </div>
 
             <div class="card">
@@ -2431,6 +2509,7 @@
                     <li><strong>리그룹</strong> — 죽은 팀원을 기다렸다가 5명으로 다시 시작합니다. → 2번으로 돌아갑니다</li>
                 </ol>
                 <p>결론: 오버워치는 <strong>"5명이 모인 채로 한타에 들어가느냐"</strong>의 게임입니다. 한 명씩 <strong>잘려 나가는 것(스태거)</strong>이 저티어 팀이 지는 첫 번째 이유입니다.</p>
+                <p><strong>오버타임(오타) 규칙:</strong> 시간이 끝나도 공격이 목표(거점·카트)에 한 명이라도 붙어 있으면 연장됩니다. 떨어지는 순간 끝. 그래서 오버타임에는 "리그룹" 원칙의 유일한 예외로 <strong>목표에 몸을 던집니다</strong>. 수비는 반대로 목표에 아무도 못 붙게 막으면 이깁니다.</p>
             </div>
 
             <div class="card">
@@ -2447,19 +2526,72 @@
                 </ul>
             </div>
 
+            <div class="card">
+                <h3><span class="card-icon">🧮</span>오버워치는 "자원 교환" 게임입니다</h3>
+                <p>자원은 <strong>평타 · 기술 · 궁 · 체력 · 포지션 · 시야</strong> 6가지입니다. 한타는 이 자원을 서로 교환하다가 <strong>먼저 바닥난 쪽이 지는</strong> 구조입니다. 그래서 "안 죽었으니 잘한 것"이 아닙니다.</p>
+                <ul class="kv">
+                    <li><span>체력도 자원</span><strong>안 맞아도 되는 딜을 맞는 순간: 힐러가 나에게 힐을 쓰고 → 치유 감소로 잘 안 차고 → 힐러가 수류탄·스즈까지 쓰고 → 재장전 → 만피가 늦어져 <strong>팀 전체 템포가 느려집니다</strong>. 그리고 정작 한타가 열리면 힐러 기술이 없습니다</strong></li>
+                    <li><span>기술 = 카드</span><strong>상대 슬립·스즈·불사가 남아 있는데 들어가는 건 "트럭에 머리 박고 트럭 너프 해달라는 것". <strong>킬각 = 상대 생존기가 빠진 뒤</strong>입니다. 킬을 못 내도 상대 생존기를 뽑아냈으면 이득입니다</strong></li>
+                    <li><span>의미 없는 딜</span><strong>맞출 수 없는 곳에 쏘는 딜은 내 <strong>위치 정보</strong>만 상대에게 줍니다. 안 쏘고 숨어 있는 것이 나을 때가 많습니다</strong></li>
+                    <li><span>없으면 기다리기</span><strong>자원이 없으면 억지로 유지하지 말고 <strong>포지션을 한 칸 물립니다</strong>. 자원이 다시 찰 때까지 기다릴 줄 아는 것이 실력입니다</strong></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🗺️</span>티어별로 배울 것 — 지금 내가 어디쯤인지</h3>
+                <p>한 번에 다 배우려 하지 마세요. 각 구간에는 <strong>그 구간을 벗어나게 해 주는 열쇠</strong>가 하나씩 있습니다.</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>티어</th><th>배울 것 3가지</th><th>열쇠</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>브론즈 · 실버</strong><br><small>하위 15%</small></td><td>맵(2층 가는 길·힐팩) · 영웅 이해(상대 기술에 대응, 유효 사거리) · <strong>엄폐물</strong></td><td>엄폐물 — 의식하지 않으면 안 늘어납니다</td></tr>
+                    <tr><td><strong>골드 · 플래티넘</strong><br><small>66%, 평균</small></td><td>영웅 상성 · <strong>고지대</strong> · 리그룹</td><td>고지대 — 상성은 하다 보면 알고, 리그룹은 팀이 같이 해야 하니 혼자 되는 건 고지</td></tr>
+                    <tr><td><strong>다이아몬드</strong><br><small>상위 18%</small></td><td>궁 카운트 · 영웅 숙련(숨은 테크닉) · <strong>턴 개념</strong></td><td>턴 — 내가 강한 턴엔 싸우고 약한 턴엔 사린다(예: 오리사 방벽 빠지면 엄폐로)</td></tr>
+                    <tr><td><strong>마스터</strong><br><small>상위 3%</small></td><td>양각 구도 · <strong>공간 개념</strong> · 선템포(먼저 궁 쓰는 쪽이 유리)</td><td>공간 — 게임을 3인칭으로 보는 단계</td></tr>
+                    <tr><td><strong>그랜드마스터</strong><br><small>상위 0.3%</small></td><td>기술 심리전 · 극한의 운영 · <strong>아군 위치 활용</strong></td><td>아군 위치 — 내 강한 턴이 있어도 팀 빌드업을 보고 같이 들어간다</td></tr>
+                    <tr><td><strong>챔피언</strong><br><small>0.1%</small></td><td>위 전부를 오차 없이 + <strong>브리핑(오더)</strong></td><td>탱커는 턴·포커싱 오더, 딜러는 포커싱 콜, 힐러는 궁 상황·템포 콜</td></tr>
+                    </tbody>
+                </table></div>
+                <p>에임은? "꾸준한 연습이 답" — 위 개념들이 먼저고, 에임은 훈련장 5분 워밍업으로 충분합니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">👀</span>조합 보는 눈 — 판 시작 전 2가지 질문</h3>
+                <p>5명 조합을 맞추는 건 대회 얘기입니다. 경쟁전은 안 맞추기 때문에 <strong>오히려 내 플레이를 조합에 맞추면 이득이 커집니다</strong>. Tab을 누르고 딱 두 가지만 물으세요. (탱커보다 <strong>딜러·힐러 조합</strong>을 먼저 봅니다)</p>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>질문</th><th>기준</th><th>이렇게 판단</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>① 들어가야 하나, 대치해야 하나?</strong></td><td>누가 <strong>리치가 길고 포킹이 강한가</strong></td><td>리치 짧고 포킹 약한 팀이 <strong>들어가야</strong> 합니다. 긴 팀은 자리만 먹고 대치를 유도합니다.<br>포킹 강: 위도우·애쉬·한조 / 젠야타·일리아리 · 붙어야 함: 겐지·트레이서·벤처·솜브라·시메트라·리퍼 / 루시우 · 중간: 캐서디·솔저·메이 / 바티스트·브리기테<br><em>상대적</em>입니다 — 우리에게 애쉬가 있어도 상대가 더 포킹이면 우리가 들어가야 합니다</td></tr>
+                    <tr><td><strong>② 정면이냐, 사이드냐?</strong></td><td>누가 <strong>화력이 세고 누가 기동성이 좋은가</strong></td><td>맵을 넓게 쓸 수 있으면(기동성) <strong>사이드</strong>, 못 쓰면 대부분 화력이 세니 <strong>정면을 꽉</strong> 잡습니다.<br>정면 강: 마우가·시그마·라마트라·로드호그·오리사·자리야 / 젠야타·아나·바티스트 / 메이·리퍼·캐서디·바스티온·애쉬 · 사이드형: 레킹볼·윈스턴·둠피스트·D.Va·정커퀸 / 모이라·메르시 / 겐지·벤처·위도우</td></tr>
+                    </tbody>
+                </table></div>
+                <p><strong>탱커에게:</strong> 탱커 픽은 이 판단에서 지분이 생각보다 작습니다. 뒤에 붙은 딜러·힐러가 플레이를 강제합니다 — 마우가인데 뒤가 위도우·트레이서·모이라·메르시면 정면을 못 가고 <strong>모이라를 데리고 돌아야</strong> 합니다. 이게 탱커가 스트레스받는 근본 이유입니다.</p>
+                <p><strong>응용:</strong> "어차피 우리가 들어가야 하면 애쉬 대신 트레이서" / "어차피 안 들어가면 브리기테 대신 젠야타로 포킹 보태기" — 우리 팀 컬러를 알면 픽을 바꿀 수 있습니다.</p>
+            </div>
+
             <div class="tip-box coach-note">
                 <div class="tip-title">🎯 핵심 노트 — 첫 10판 KPI</div>
                 <div class="tip-content">킬뎃은 보지 마세요. 볼 것은 세 가지입니다. <strong>① 팀과 같이 움직였는가 ② 죽고 나서 혼자 뛰어들지 않았는가 ③ 목표(거점·카트) 근처에 있었는가.</strong> 이 셋만 지키면 팀에 기여하는 플레이어입니다. 나머지는 나중에 자연스럽게 붙습니다.</div>
             </div>
 
+            <div class="card ref-card">
+                <h3><span class="card-icon">📺</span>이 레슨의 참고 영상</h3>
+                <p>이 페이지의 내용은 아래 영상을 참고해 교과서 문체로 다시 정리한 것입니다. 원 영상을 보시면 이해가 훨씬 빠릅니다.</p>
+                <ul class="ref-list">
+                    <li><a href="https://www.youtube.com/watch?v=hlXujUb8qLU" target="_blank" rel="noopener">그누그누 — '다음 티어'를 위한 기본 개념, 옵치교과서 오리엔테이션</a> <small>티어별 로드맵 · 모드별 수비 원칙</small></li>
+                    <li><a href="https://www.youtube.com/watch?v=UIDxjO-PMo8" target="_blank" rel="noopener">옵치토크쇼(장지수) — 조합 보는 눈을 기르는 방법</a> <small>2가지 질문</small></li>
+                    <li><a href="https://www.youtube.com/watch?v=EY3pMTdJI8Y" target="_blank" rel="noopener">R — 오버워치의 기본기</a> <small>자원 6종 · 턴</small></li>
+                    <li><a href="https://www.youtube.com/watch?v=KgPipNULLeQ" target="_blank" rel="noopener">옵치토크쇼(장지수) — 알고 가야 하는 오버워치 용어 가이드</a> <small>용어 사전</small></li>
+                </ul>
+            </div>
+
             <!-- Quiz 1-1 -->
             <div class="quiz-container">
                 <div class="quiz-title">퀴즈 1</div>
-                <div class="quiz-question">❓ 오버워치의 팀 구성은 무엇일까요?</div>
+                <div class="quiz-question">❓ 화면 왼쪽 위 팀원 초상화에 해골이 2개 떠 있습니다. 지금 해야 할 판단은?</div>
                 <div class="quiz-options">
-                    <button class="quiz-option" onclick="checkAnswer(0, 0)">1v1로 플레이합니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(0, 1)">5v5 팀 경기입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(0, 2)">10v10으로 플레이합니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(0, 0)">3:5라도 거점을 지켜야 하니 끝까지 싸운다</button>
+                    <button class="quiz-option" onclick="checkAnswer(0, 1)">후퇴 신호다. 빠져서 리그룹한 뒤 5명으로 다시 연다</button>
+                    <button class="quiz-option" onclick="checkAnswer(0, 2)">죽은 팀원 몫까지 내가 더 공격적으로 들어간다</button>
                 </div>
                 <div class="quiz-feedback" id="feedback-0"></div>
                 <div class="quiz-counter"></div>
@@ -2468,11 +2600,11 @@
             <!-- Quiz 1-2 -->
             <div class="quiz-container">
                 <div class="quiz-title">퀴즈 2</div>
-                <div class="quiz-question">❓ 오버워치에서 가장 중요한 것은 무엇일까요?</div>
+                <div class="quiz-question">❓ 상대 젠야타의 체력 바 일부가 파란색입니다. 무슨 뜻일까요?</div>
                 <div class="quiz-options">
-                    <button class="quiz-option" onclick="checkAnswer(1, 0)">내 킬(처치) 수를 늘리는 것입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(1, 1)">팀과 함께 승리하는 것입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(1, 2)">가장 높은 평점을 얻는 것입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(1, 0)">방어력이라 연사 무기에 잘 안 깎인다</button>
+                    <button class="quiz-option" onclick="checkAnswer(1, 1)">과다 체력이라 시간이 지나면 사라진다</button>
+                    <button class="quiz-option" onclick="checkAnswer(1, 2)">보호막이라 잠시 안 맞으면 저절로 다시 찬다 — 계속 압박해야 한다</button>
                 </div>
                 <div class="quiz-feedback" id="feedback-1"></div>
                 <div class="quiz-counter"></div>
@@ -2481,11 +2613,11 @@
             <!-- Quiz 1-3 -->
             <div class="quiz-container">
                 <div class="quiz-title">퀴즈 3</div>
-                <div class="quiz-question">❓ 팀의 역할 분담이 필요한 이유는 무엇일까요?</div>
+                <div class="quiz-question">❓ 우리 팀은 위도우·애쉬·젠야타, 상대는 겐지·트레이서·루시우입니다. 판 시작 전 판단은?</div>
                 <div class="quiz-options">
-                    <button class="quiz-option" onclick="checkAnswer(2, 0)">재미있기 때문입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(2, 1)">서로 다른 역할이 함께할 때 팀이 강해지기 때문입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(2, 2)">게임 규칙이기 때문입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(2, 0)">우리 리치가 길고 포킹이 강하니 자리만 먹고 대치를 유도한다</button>
+                    <button class="quiz-option" onclick="checkAnswer(2, 1)">리치가 길어도 먼저 들어가는 쪽이 유리하니 다이브한다</button>
+                    <button class="quiz-option" onclick="checkAnswer(2, 2)">조합은 대회에서나 의미 있으니 생각하지 않는다</button>
                 </div>
                 <div class="quiz-feedback" id="feedback-2"></div>
                 <div class="quiz-counter"></div>
@@ -2541,15 +2673,15 @@
     <script defer src="data/situations-new2026.js?v=4"></script>
     <script defer src="data/training.js?v=3"></script>
     <script defer src="data/maps.js?v=2"></script>
-    <script defer src="data/glossary.js?v=4"></script>
-    <script defer src="data/quizzes.js"></script>
+    <script defer src="data/glossary.js?v=6"></script>
+    <script defer src="data/quizzes.js?v=2"></script>
     <script defer src="data/counters.js?v=5"></script>
     <script defer src="data/guides.js?v=6"></script>
     <script defer src="data/maps/registry.js?v=2"></script>
     <script defer src="data/maps/kings-row.js?v=3"></script>
     <script defer src="data/map-situations.js?v=2"></script>
     <script defer src="tmap.js?v=4"></script>
-    <script defer src="home.js?v=4"></script>
-    <script defer src="app.js?v=26"></script>
+    <script defer src="home.js?v=5"></script>
+    <script defer src="app.js?v=27"></script>
 </body>
 </html>

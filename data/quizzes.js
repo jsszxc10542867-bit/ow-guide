@@ -2,9 +2,9 @@
 // cat: 결과 화면 분야별 점수용  topic: 추천 학습 순서용 키워드
 const QUIZ_CATS = { basics:'게임 기본', roles:'캐릭터 역할', tactics:'한타·전술', positioning:'포지셔닝', practical:'실전', advanced:'고급 전략', heroes:'영웅' };
 const quizAnswers = [
-  { correct: 1, cat:'basics',      topic:'regroup5', message: "정답! 오버워치는 5v5 팀 기반 게임입니다." },
-  { correct: 1, cat:'basics',      topic:'regroup5', message: "정답! 개인 점수보다 팀의 승리가 가장 중요합니다." },
-  { correct: 1, cat:'basics',      topic:'regroup5', message: "정답! 서로 다른 역할이 함께 일할 때 팀이 강해집니다." },
+  { correct: 1, cat:'basics',      topic:'regroup5', message: "정답! 해골 2개 = 후퇴 신호. 3:5로 버티는 것보다 리그룹해서 5:5로 여는 게 이깁니다." },
+  { correct: 2, cat:'basics',      topic:'hp50',     message: "정답! 파란색은 보호막. 안 맞으면 저절로 찹니다. 쉬게 두지 말고 계속 압박하세요." },
+  { correct: 0, cat:'basics',      topic:'swap',     message: "정답! 리치 길고 포킹 강한 쪽은 자리만 먹고 대치. 들어와야 하는 건 상대입니다." },
   { correct: 1, cat:'roles',       topic:'lookBack', message: "정답! 탱커는 생존이 쉽고 게임의 기본을 배우기에 최적입니다." },
   { correct: 1, cat:'roles',       topic:'lookBack', message: "정답! 탱커는 팀의 방패 역할을 합니다." },
   { correct: 1, cat:'roles',       topic:'healDeal', message: "정답! 힐러는 팀원들의 체력을 관리하는 것이 가장 중요합니다." },
@@ -26,9 +26,9 @@ const quizAnswers = [
 ];
 // 오답 시 한 줄 해설 (index = 퀴즈 번호)
 const QUIZ_EXPLAIN = [
-  '오버워치 2는 돌격 1 · 공격 2 · 지원 2의 5v5입니다. 5명이 같은 타이밍에 한타를 여는 팀이 이깁니다.',
-  '킬 수보다 "팀과 같이 움직였나 · 혼자 뛰어들지 않았나 · 목표 근처에 있었나"가 기여도입니다.',
-  '탱커가 공간을 만들고 딜러가 잘라내고 힐러가 살립니다. 한 역할이라도 빠지면 팀이 무너집니다.',
+  '왼쪽 위 초상화의 해골이 2개 이상이면 후퇴 신호입니다. 소수로 버티면 한 명씩 더 잘려 리스폰만 꼬입니다.',
+  '흰색 체력 · 노란 방어력(피해 감소) · 파란 보호막(자동 재생) · 초록 과다 체력(임시). 보호막은 쉬게 두면 다시 찹니다.',
+  '판 시작 전 질문 ①: 누가 리치가 길고 포킹이 강한가. 짧은 쪽이 들어가야 하고, 긴 쪽은 대치를 유도합니다.',
   '탱커는 체력이 많아 잘 죽지 않고, 맨 앞에서 "왜 이겼고 왜 졌는지"가 가장 잘 보입니다.',
   '탱커의 일은 킬이 아니라 팀이 딜을 넣을 공간을 만드는 것입니다.',
   '힐러의 우선순위는 ① 탱커 살려서 라인 유지 ② 지금 맞는 사람 ③ 여유 시 딜 ④ 내가 안 죽기.',
