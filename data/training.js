@@ -179,7 +179,7 @@ const DAILY_TOPICS = [
   { key:'ultSave',  title:'궁 아끼기', desc:'이미 이기는 한타에 궁은 낭비입니다. 같은 한타에 궁 3개 = 2개를 버린 것.', situation:'ult_02', mission:'다음 게임에서 이기고 있는 한타에 궁 쓰지 않기', section:2 },
   { key:'healLos',  title:'힐러 시야', desc:'힐러가 못 보면 힐은 없습니다. 후퇴는 "힐러 쪽으로" 하세요.', situation:'sv_07', mission:'다음 게임에서 후퇴할 때 힐러 방향으로만 빠지기', section:4 },
   { key:'swap',     title:'카운터 교체', desc:'같은 방식으로 두 번 죽었으면 픽을 바꾸세요. 교체는 죽은 직후 스폰에서.', situation:'ct_01', mission:'다음 게임에서 같은 영웅에게 2번 죽으면 픽 바꾸기', section:4 },
-  { key:'regroup5', title:'5명 모여서', desc:'오버워치는 "5명이 모인 채로 한타에 들어가느냐"의 게임입니다. 먼저 간 사람이 잘못한 것입니다.', situation:'tf_01', mission:'다음 게임에서 스폰 나갈 때 팀원 수 확인하고 같이 가기', section:0 },
+  { key:'regroup5', title:'5명 모여서', desc:'오버워치는 "5명이 모인 채로 한타에 들어가느냐"의 게임입니다. 먼저 간 사람이 잘못한 것입니다.', situation:'tf_01', mission:'다음 게임에서 스폰 나갈 때 팀원 수 확인하고 같이 가기', section:11 },
   { key:'healDeal', title:'힐러의 딜', desc:'체력 100%에 넣는 힐은 0입니다. 팀이 안전할 때 넣는 딜이 한타를 만듭니다.', situation:'pos_08', mission:'다음 게임에서 힐러라면 팀 체력 100%일 때 총 쏘기', section:1 }
 ];
 

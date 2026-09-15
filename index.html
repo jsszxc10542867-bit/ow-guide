@@ -1281,6 +1281,23 @@
         .tip-box, .remember { max-width: 900px; }
         .back-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.28); background: rgba(255,255,255,.12); color: #fff; font: inherit; font-size: 1.1rem; font-weight: 800; cursor: pointer; }
         .back-btn:hover { background: rgba(255,255,255,.22); }
+        /* ===== 홈 대시보드 ===== */
+        .home-group .nav-tab { font-weight: 800; }
+        .lesson-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+        @media (max-width: 900px) { .lesson-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 520px) { .lesson-grid { grid-template-columns: 1fr; } }
+        .learn-path[hidden] { display: none !important; }
+        .lesson-card { display: flex; flex-direction: column; gap: .3rem; padding: 1rem 1.1rem; border-radius: 14px; background: var(--bg-elev); border: 1px solid var(--line); text-align: left; color: var(--text); font: inherit; cursor: pointer; transition: transform .15s, border-color .15s, box-shadow .15s; position: relative; }
+        .lesson-card:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: var(--shadow-md); }
+        .lesson-card .lc-no { font-family: var(--font-display); font-size: .78rem; letter-spacing: .18em; color: var(--accent); }
+        .lesson-card b { font-size: 1.05rem; }
+        .lesson-card small { color: var(--text-3); font-size: .85rem; }
+        .lesson-card .lc-meta { margin-top: .2rem; font-size: .8rem; color: var(--text-3); display: flex; gap: .6rem; }
+        .lesson-card.done::after { content: "✓ 읽음"; position: absolute; top: .8rem; right: .9rem; font-size: .72rem; font-weight: 800; color: var(--success); }
+        .lesson-card.next { border-color: var(--accent); background: var(--accent-soft); }
+        .lesson-card.next::after { content: "다음"; position: absolute; top: .8rem; right: .9rem; font-size: .72rem; font-weight: 800; color: var(--accent); }
+        .section.home .hero-banner { margin-top: .4rem; }
+        .section.home .lesson-head { display: none; }
     </style>
 </head>
 <body>
@@ -1309,8 +1326,11 @@
 
     <div class="container">
         <nav class="nav-groups" role="tablist" aria-label="가이드 메뉴">
+            <div class="nav-group home-group"><div class="ng-tabs">
+                <button data-index="0" class="nav-tab active" role="tab" aria-selected="true" onclick="switchSection(0)">🏠 홈</button>
+            </div></div>
             <div class="nav-group"><span class="ng-label">📖 배우기</span><div class="ng-tabs">
-                <button data-index="0" class="nav-tab active" role="tab" aria-selected="true" onclick="switchSection(0)">🏠 게임 기본</button>
+                <button data-index="11" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(11)">🎮 게임 기본</button>
                 <button data-index="1" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(1)">👥 캐릭터 역할</button>
                 <button data-index="2" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(2)">🎯 기초 전술</button>
                 <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 맵과 포지셔닝</button>
@@ -1333,10 +1353,6 @@
 
         <!-- Section 1: Game Basics -->
         <section class="section home active">
-            <div class="section-title">
-                <span class="section-title-icon">🎮</span>
-                게임 기본 알아보기
-            </div>
             <div class="hero-banner">
                 <div class="hb-bg" aria-hidden="true"></div>
                 <div class="hb-inner">
@@ -1405,131 +1421,14 @@
                     </a>
                 </div>
             </section>
-            <section class="home-sec">
-                <div class="sec-head"><span class="kicker">LEARNING PATH</span><h2>학습 흐름</h2></div>
-            <div class="learn-path" aria-label="학습 흐름">
+            <section class="home-sec" id="learning-path">
+                <div class="sec-head"><span class="kicker">LEARNING PATH</span><h2>배우기 — 6단원</h2><span class="sec-side">순서대로 읽으면 30분</span></div>
+                <div class="lesson-grid" id="lesson-grid"></div>
+            <div class="learn-path" aria-label="학습 흐름" hidden>
                 <span class="lp-label">학습 흐름</span>
-                <button onclick="switchSection(0)">① 게임 이해</button><button onclick="switchSection(1)">② 역할</button><button onclick="switchSection(3)">③ 포지션</button><button onclick="switchSection(2)">④ 한타</button><button onclick="switchSection(4)">⑤ 안 죽기</button><button onclick="switchSection(5)">⑥ 궁·쿨</button><button onclick="switchSection(6)">⑦ 영웅 선택</button><button onclick="switchSection(7)">⑧ 상황판단</button><button onclick="switchSection(8)">⑨ 약점 확인</button>
+                <button onclick="switchSection(11)">① 게임 이해</button><button onclick="switchSection(1)">② 역할</button><button onclick="switchSection(3)">③ 포지션</button><button onclick="switchSection(2)">④ 한타</button><button onclick="switchSection(4)">⑤ 안 죽기</button><button onclick="switchSection(5)">⑥ 궁·쿨</button><button onclick="switchSection(6)">⑦ 영웅 선택</button><button onclick="switchSection(7)">⑧ 상황판단</button><button onclick="switchSection(8)">⑨ 약점 확인</button>
             </div>
             </section>
-            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>오버워치는 "5명이 모인 채로 한타에 들어가느냐"의 게임입니다. 먼저 뛰어나가 죽는 순간 4:5가 확정됩니다.</p></div></div>
-
-            <div class="coach-intro">
-                <div class="coach-avatar">🎯</div>
-                <div>
-                    <div class="coach-kicker">COACH'S PLAYBOOK</div>
-                    <p>이 교과서는 프로 경기·상위 티어 플레이를 보며 <strong>"뉴비가 무엇을 몰라서 지는지"</strong>를 역으로 정리한 문서입니다. 작성자도 같은 일반 유저입니다. 이론 설명은 최소화하고, <strong>경기 안에서 바로 쓸 수 있는 판단 기준</strong> 위주로 안내합니다. 용어는 실제 인게임·커뮤니티에서 쓰는 말 그대로 사용합니다. 모르는 말이 나오면 <strong>고급 전략 → 용어 사전</strong>을 참고해 주세요.</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3><span class="card-icon">❓</span>오버워치 2, 한 문장 정의</h3>
-                <p><strong>5v5 · 돌격 1 / 공격 2 / 지원 2</strong>(역할 고정 큐). 목표를 놓고 <strong>한타</strong>를 반복하는 게임입니다.</p>
-                <p>에임이 좋은 사람이 이기는 게임이 아닙니다. <strong>같은 타이밍에 5명이 같은 자리에서 한타를 여는 팀</strong>이 이깁니다. 브론즈부터 그랜드마스터까지, 지는 이유의 80%는 이 문장을 지키지 못해서입니다.</p>
-            </div>
-
-            <div class="card">
-                <h3><span class="card-icon">🗂️</span>게임 모드 6종 — 실전 용어로 정리했습니다</h3>
-                <div class="table-wrap"><table class="tbl">
-                    <thead><tr><th>모드</th><th>승리 조건</th><th>핵심 노트</th></tr></thead>
-                    <tbody>
-                    <tr><td><strong>호위</strong><br><small>Escort · "카트"</small></td><td>공격이 화물(카트)을 끝까지 밀면 승리합니다. 공수 교대 후 더 멀리 민 팀이 이깁니다</td><td>카트 근처에 있으면 공격팀은 <strong>자동 회복</strong>됩니다. 공격이면 카트 옆·뒤에 붙고, 수비면 카트가 지나갈 <strong>다음 코너</strong>를 먼저 잡아 주세요. 카트 위에는 서지 마세요 — 광역 궁을 전부 맞게 됩니다</td></tr>
-                    <tr><td><strong>혼합</strong><br><small>Hybrid</small></td><td>1거점을 점령한 뒤 카트를 호위합니다</td><td>1거점을 뚫는 것이 가장 어렵습니다. 초크 정면으로 들어가지 말고 <strong>5명이 모여서 한 번에</strong> 들어가세요. 궁 하나를 들고 들어가면 훨씬 쉬워집니다</td></tr>
-                    <tr><td><strong>쟁탈</strong><br><small>Control · "점령전"</small></td><td>중앙 거점을 100%까지 채우면 1라운드를 가져갑니다. <strong>2선승제</strong>입니다</td><td>거점 안에 5명이 서 있을 필요는 없습니다. <strong>1명만 발을 걸쳐도 게이지가 찹니다.</strong> 나머지는 고지에서 싸우세요. 99% 대 99% 상황이면 <strong>궁 개수</strong>가 승부를 가릅니다</td></tr>
-                    <tr><td><strong>밀기</strong><br><small>Push · "로봇"</small></td><td>로봇(TS-1)을 더 멀리 민 팀이 승리합니다</td><td>로봇은 바리케이드를 밀어야 전진합니다. <strong>전진 스폰</strong>이 열리는 순간 리스폰 유불리가 뒤집힙니다. 시간이 끝나기 직전의 무리한 진입은 사실상 경기를 던지는 것입니다</td></tr>
-                    <tr><td><strong>플래시포인트</strong><br><small>Flashpoint</small></td><td>5개 거점이 순서대로 활성화되며, 먼저 <strong>3점</strong>을 얻으면 승리합니다</td><td>다음 거점 위치는 상단 UI에 미리 표시됩니다. <strong>먼저 도착해서 고지를 차지한 팀</strong>이 그 거점을 가져갑니다. 이동 중에는 한타를 열지 마세요</td></tr>
-                    <tr><td><strong>격돌</strong><br><small>Clash</small></td><td>일직선 5개 거점을 상대 쪽으로 밀며 <strong>5점</strong>을 먼저 얻으면 승리합니다</td><td>상대 마지막 거점(홈)을 따면 큰 점수지만 <strong>상대 스폰이 코앞</strong>이라 리스폰이 상대 5초 vs 우리 20초입니다. 올킬에 자신이 없으면 무리하지 마세요</td></tr>
-                    </tbody>
-                </table></div>
-            </div>
-
-            <div class="card">
-                <h3><span class="card-icon">🔁</span>한 판의 루프 — 이 5단계가 무한 반복됩니다</h3>
-                <div class="figure">
-                    <svg viewBox="0 0 640 240" role="img" aria-label="한 판의 루프: 픽과 준비, 이동, 한타, 리스폰, 리그룹이 순환">
-                        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="fig-accent"/></marker></defs>
-                        <g class="fig-accent-stroke" fill="none" stroke-width="2.5" marker-end="url(#arr)">
-                            <path d="M120 70h72"/><path d="M256 70h72"/><path d="M392 70h72"/>
-                            <path d="M478 100v66c0 12-10 22-22 22h-66"/><path d="M250 188h-158c-12 0-22-10-22-22v-66"/>
-                        </g>
-                        <g class="fig-text" font-size="14" text-anchor="middle">
-                            <rect x="20" y="40" width="100" height="60" rx="14" class="fig-ground" stroke-width="1.5"/><text x="70" y="66">픽 &amp; 준비</text><text x="70" y="86" class="fig-sub" font-size="11">스폰 · 상대 조합 확인</text>
-                            <rect x="156" y="40" width="100" height="60" rx="14" class="fig-ground" stroke-width="1.5"/><text x="206" y="66">이동</text><text x="206" y="86" class="fig-sub" font-size="11">5명이 같이</text>
-                            <rect x="292" y="40" width="100" height="60" rx="14" class="fig-accent"/><text x="342" y="66" class="fig-on-accent">한타</text><text x="342" y="86" class="fig-on-accent" font-size="11" font-weight="500">20~40초 · 승부처</text>
-                            <rect x="428" y="40" width="100" height="60" rx="14" class="fig-ground" stroke-width="1.5"/><text x="478" y="66">리스폰</text><text x="478" y="86" class="fig-sub" font-size="11">약 10초 + 복귀</text>
-                            <rect x="250" y="160" width="140" height="56" rx="14" class="fig-high" stroke-width="1.5"/><text x="320" y="184">리그룹</text><text x="320" y="203" class="fig-sub" font-size="11">5명 모일 때까지 대기</text>
-                        </g>
-                        <text x="320" y="136" class="fig-muted" font-size="11" text-anchor="middle">잘린 팀원을 기다렸다가 → 다시 이동</text>
-                    </svg>
-                    <div class="figure-cap">한 판은 이 다섯 단계가 계속 돕니다. 고리가 끊기는 곳(혼자 먼저 죽기)이 패배의 시작입니다.</div>
-                </div>
-                <ol class="steps">
-                    <li><strong>픽 & 준비</strong> — 상대 조합을 보고 픽합니다. 모르겠으면 <strong>스폰에서 언제든 교체</strong>(H)할 수 있으니 부담 갖지 마세요. 경쟁전은 <strong>영웅 밴</strong> 단계가 먼저 있습니다</li>
-                    <li><strong>이동(로테이션)</strong> — 5명이 같이 목표로 이동합니다. 먼저 뛰어나가서 죽는 순간 <strong>4:5 한타</strong>가 확정됩니다</li>
-                    <li><strong>한타</strong> — 20~40초입니다. 여기서 게임이 결정됩니다</li>
-                    <li><strong>리스폰</strong> — 사망 후 <strong>약 10초</strong>. 먼 맵은 복귀까지 +10초입니다. 그래서 "잘리면" 20초를 통째로 잃게 됩니다</li>
-                    <li><strong>리그룹</strong> — 죽은 팀원을 기다렸다가 5명으로 다시 시작합니다. → 2번으로 돌아갑니다</li>
-                </ol>
-                <p>결론: 오버워치는 <strong>"5명이 모인 채로 한타에 들어가느냐"</strong>의 게임입니다. 한 명씩 <strong>잘려 나가는 것(스태거)</strong>이 저티어 팀이 지는 첫 번째 이유입니다.</p>
-            </div>
-
-            <div class="card">
-                <h3><span class="card-icon">🎮</span>첫날 반드시 알아 두셔야 할 시스템</h3>
-                <ul class="kv">
-                    <li><span>핑 (G)</span><strong>적을 보고 누르면 "적 발견!" 마커가 찍힙니다. 마이크가 없어도 이것만으로 충분히 콜이 됩니다. 길게 누르면 핑 휠(집결·후퇴·공격)이 열립니다</strong></li>
-                    <li><span>자동 회복 (패시브)</span><strong>피해를 받지 않고 잠시 지나면 모든 역할이 서서히 회복됩니다. 지원가는 더 빠릅니다. "코너 뒤 3초"가 힐팩 하나와 같습니다</strong></li>
-                    <li><span>힐팩</span><strong>작은 팩 75 · 큰 팩 250입니다. 각각 약 10초 / 15초마다 리스폰됩니다. 맵당 큰 팩 위치만 외워 두세요</strong></li>
-                    <li><span>궁극기 (Q)</span><strong>피해·치유를 넣으면 충전되고, 시간 경과로도 조금씩 찹니다. <strong>죽어도 충전량은 유지됩니다</strong>. 죽기 직전에 급하게 "버리지" 마세요</strong></li>
-                    <li><span>영웅 교체 (H)</span><strong>스폰룸 안에서만 가능합니다. 카운터를 당하면 바꾸는 것이 정상입니다. 단, <strong>죽은 직후 스폰에서</strong> 바꾸세요 — 걸어서 돌아가면 그 사이 팀은 4명이 됩니다</strong></li>
-                    <li><span>특전 (Perk)</span><strong>경기 중 레벨업하면 영웅별 소특전 → 대특전을 선택합니다. 처음엔 아무거나 골라도 괜찮습니다. 나중에 "이 특전이 이 매치업에 좋다"가 보이기 시작합니다</strong></li>
-                    <li><span>Tab</span><strong>우리 팀 궁 %·픽·킬뎃을 확인합니다. 한타를 열기 전에 한 번씩 보는 습관을 들이세요</strong></li>
-                    <li><span>훈련장</span><strong>메뉴 → 훈련에서 들어갑니다. 새 영웅은 훈련장을 5분 돌고 실전에 가세요. 기술 쿨타임 감각이 잡힙니다</strong></li>
-                </ul>
-            </div>
-
-            <div class="tip-box coach-note">
-                <div class="tip-title">🎯 핵심 노트 — 첫 10판 KPI</div>
-                <div class="tip-content">킬뎃은 보지 마세요. 볼 것은 세 가지입니다. <strong>① 팀과 같이 움직였는가 ② 죽고 나서 혼자 뛰어들지 않았는가 ③ 목표(거점·카트) 근처에 있었는가.</strong> 이 셋만 지키면 팀에 기여하는 플레이어입니다. 나머지는 나중에 자연스럽게 붙습니다.</div>
-            </div>
-
-            <!-- Quiz 1-1 -->
-            <div class="quiz-container">
-                <div class="quiz-title">퀴즈 1</div>
-                <div class="quiz-question">❓ 오버워치의 팀 구성은 무엇일까요?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="checkAnswer(0, 0)">1v1로 플레이합니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(0, 1)">5v5 팀 경기입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(0, 2)">10v10으로 플레이합니다</button>
-                </div>
-                <div class="quiz-feedback" id="feedback-0"></div>
-                <div class="quiz-counter"></div>
-            </div>
-
-            <!-- Quiz 1-2 -->
-            <div class="quiz-container">
-                <div class="quiz-title">퀴즈 2</div>
-                <div class="quiz-question">❓ 오버워치에서 가장 중요한 것은 무엇일까요?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="checkAnswer(1, 0)">내 킬(처치) 수를 늘리는 것입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(1, 1)">팀과 함께 승리하는 것입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(1, 2)">가장 높은 평점을 얻는 것입니다</button>
-                </div>
-                <div class="quiz-feedback" id="feedback-1"></div>
-                <div class="quiz-counter"></div>
-            </div>
-
-            <!-- Quiz 1-3 -->
-            <div class="quiz-container">
-                <div class="quiz-title">퀴즈 3</div>
-                <div class="quiz-question">❓ 팀의 역할 분담이 필요한 이유는 무엇일까요?</div>
-                <div class="quiz-options">
-                    <button class="quiz-option" onclick="checkAnswer(2, 0)">재미있기 때문입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(2, 1)">서로 다른 역할이 함께할 때 팀이 강해지기 때문입니다</button>
-                    <button class="quiz-option" onclick="checkAnswer(2, 2)">게임 규칙이기 때문입니다</button>
-                </div>
-                <div class="quiz-feedback" id="feedback-2"></div>
-                <div class="quiz-counter"></div>
-            </div>
         </section>
 
         <!-- Section 2: Character Roles -->
@@ -2399,6 +2298,131 @@
                 <div class="guide-reader-top" style="margin-top:1.5rem"><button class="btn btn-outline" onclick="closeGuide()">← 목록으로</button><button class="btn btn-primary" onclick="stepGuide(1)">다음 가이드 →</button></div>
             </article>
         </section>
+        <!-- Section 12: Game Basics (LESSON 01) -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">🎮</span>
+                게임 기본 알아보기
+            </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>오버워치는 "5명이 모인 채로 한타에 들어가느냐"의 게임입니다. 먼저 뛰어나가 죽는 순간 4:5가 확정됩니다.</p></div></div>
+
+            <div class="coach-intro">
+                <div class="coach-avatar">🎯</div>
+                <div>
+                    <div class="coach-kicker">COACH'S PLAYBOOK</div>
+                    <p>이 교과서는 프로 경기·상위 티어 플레이를 보며 <strong>"뉴비가 무엇을 몰라서 지는지"</strong>를 역으로 정리한 문서입니다. 작성자도 같은 일반 유저입니다. 이론 설명은 최소화하고, <strong>경기 안에서 바로 쓸 수 있는 판단 기준</strong> 위주로 안내합니다. 용어는 실제 인게임·커뮤니티에서 쓰는 말 그대로 사용합니다. 모르는 말이 나오면 <strong>고급 전략 → 용어 사전</strong>을 참고해 주세요.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">❓</span>오버워치 2, 한 문장 정의</h3>
+                <p><strong>5v5 · 돌격 1 / 공격 2 / 지원 2</strong>(역할 고정 큐). 목표를 놓고 <strong>한타</strong>를 반복하는 게임입니다.</p>
+                <p>에임이 좋은 사람이 이기는 게임이 아닙니다. <strong>같은 타이밍에 5명이 같은 자리에서 한타를 여는 팀</strong>이 이깁니다. 브론즈부터 그랜드마스터까지, 지는 이유의 80%는 이 문장을 지키지 못해서입니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🗂️</span>게임 모드 6종 — 실전 용어로 정리했습니다</h3>
+                <div class="table-wrap"><table class="tbl">
+                    <thead><tr><th>모드</th><th>승리 조건</th><th>핵심 노트</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>호위</strong><br><small>Escort · "카트"</small></td><td>공격이 화물(카트)을 끝까지 밀면 승리합니다. 공수 교대 후 더 멀리 민 팀이 이깁니다</td><td>카트 근처에 있으면 공격팀은 <strong>자동 회복</strong>됩니다. 공격이면 카트 옆·뒤에 붙고, 수비면 카트가 지나갈 <strong>다음 코너</strong>를 먼저 잡아 주세요. 카트 위에는 서지 마세요 — 광역 궁을 전부 맞게 됩니다</td></tr>
+                    <tr><td><strong>혼합</strong><br><small>Hybrid</small></td><td>1거점을 점령한 뒤 카트를 호위합니다</td><td>1거점을 뚫는 것이 가장 어렵습니다. 초크 정면으로 들어가지 말고 <strong>5명이 모여서 한 번에</strong> 들어가세요. 궁 하나를 들고 들어가면 훨씬 쉬워집니다</td></tr>
+                    <tr><td><strong>쟁탈</strong><br><small>Control · "점령전"</small></td><td>중앙 거점을 100%까지 채우면 1라운드를 가져갑니다. <strong>2선승제</strong>입니다</td><td>거점 안에 5명이 서 있을 필요는 없습니다. <strong>1명만 발을 걸쳐도 게이지가 찹니다.</strong> 나머지는 고지에서 싸우세요. 99% 대 99% 상황이면 <strong>궁 개수</strong>가 승부를 가릅니다</td></tr>
+                    <tr><td><strong>밀기</strong><br><small>Push · "로봇"</small></td><td>로봇(TS-1)을 더 멀리 민 팀이 승리합니다</td><td>로봇은 바리케이드를 밀어야 전진합니다. <strong>전진 스폰</strong>이 열리는 순간 리스폰 유불리가 뒤집힙니다. 시간이 끝나기 직전의 무리한 진입은 사실상 경기를 던지는 것입니다</td></tr>
+                    <tr><td><strong>플래시포인트</strong><br><small>Flashpoint</small></td><td>5개 거점이 순서대로 활성화되며, 먼저 <strong>3점</strong>을 얻으면 승리합니다</td><td>다음 거점 위치는 상단 UI에 미리 표시됩니다. <strong>먼저 도착해서 고지를 차지한 팀</strong>이 그 거점을 가져갑니다. 이동 중에는 한타를 열지 마세요</td></tr>
+                    <tr><td><strong>격돌</strong><br><small>Clash</small></td><td>일직선 5개 거점을 상대 쪽으로 밀며 <strong>5점</strong>을 먼저 얻으면 승리합니다</td><td>상대 마지막 거점(홈)을 따면 큰 점수지만 <strong>상대 스폰이 코앞</strong>이라 리스폰이 상대 5초 vs 우리 20초입니다. 올킬에 자신이 없으면 무리하지 마세요</td></tr>
+                    </tbody>
+                </table></div>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🔁</span>한 판의 루프 — 이 5단계가 무한 반복됩니다</h3>
+                <div class="figure">
+                    <svg viewBox="0 0 640 240" role="img" aria-label="한 판의 루프: 픽과 준비, 이동, 한타, 리스폰, 리그룹이 순환">
+                        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="fig-accent"/></marker></defs>
+                        <g class="fig-accent-stroke" fill="none" stroke-width="2.5" marker-end="url(#arr)">
+                            <path d="M120 70h72"/><path d="M256 70h72"/><path d="M392 70h72"/>
+                            <path d="M478 100v66c0 12-10 22-22 22h-66"/><path d="M250 188h-158c-12 0-22-10-22-22v-66"/>
+                        </g>
+                        <g class="fig-text" font-size="14" text-anchor="middle">
+                            <rect x="20" y="40" width="100" height="60" rx="14" class="fig-ground" stroke-width="1.5"/><text x="70" y="66">픽 &amp; 준비</text><text x="70" y="86" class="fig-sub" font-size="11">스폰 · 상대 조합 확인</text>
+                            <rect x="156" y="40" width="100" height="60" rx="14" class="fig-ground" stroke-width="1.5"/><text x="206" y="66">이동</text><text x="206" y="86" class="fig-sub" font-size="11">5명이 같이</text>
+                            <rect x="292" y="40" width="100" height="60" rx="14" class="fig-accent"/><text x="342" y="66" class="fig-on-accent">한타</text><text x="342" y="86" class="fig-on-accent" font-size="11" font-weight="500">20~40초 · 승부처</text>
+                            <rect x="428" y="40" width="100" height="60" rx="14" class="fig-ground" stroke-width="1.5"/><text x="478" y="66">리스폰</text><text x="478" y="86" class="fig-sub" font-size="11">약 10초 + 복귀</text>
+                            <rect x="250" y="160" width="140" height="56" rx="14" class="fig-high" stroke-width="1.5"/><text x="320" y="184">리그룹</text><text x="320" y="203" class="fig-sub" font-size="11">5명 모일 때까지 대기</text>
+                        </g>
+                        <text x="320" y="136" class="fig-muted" font-size="11" text-anchor="middle">잘린 팀원을 기다렸다가 → 다시 이동</text>
+                    </svg>
+                    <div class="figure-cap">한 판은 이 다섯 단계가 계속 돕니다. 고리가 끊기는 곳(혼자 먼저 죽기)이 패배의 시작입니다.</div>
+                </div>
+                <ol class="steps">
+                    <li><strong>픽 & 준비</strong> — 상대 조합을 보고 픽합니다. 모르겠으면 <strong>스폰에서 언제든 교체</strong>(H)할 수 있으니 부담 갖지 마세요. 경쟁전은 <strong>영웅 밴</strong> 단계가 먼저 있습니다</li>
+                    <li><strong>이동(로테이션)</strong> — 5명이 같이 목표로 이동합니다. 먼저 뛰어나가서 죽는 순간 <strong>4:5 한타</strong>가 확정됩니다</li>
+                    <li><strong>한타</strong> — 20~40초입니다. 여기서 게임이 결정됩니다</li>
+                    <li><strong>리스폰</strong> — 사망 후 <strong>약 10초</strong>. 먼 맵은 복귀까지 +10초입니다. 그래서 "잘리면" 20초를 통째로 잃게 됩니다</li>
+                    <li><strong>리그룹</strong> — 죽은 팀원을 기다렸다가 5명으로 다시 시작합니다. → 2번으로 돌아갑니다</li>
+                </ol>
+                <p>결론: 오버워치는 <strong>"5명이 모인 채로 한타에 들어가느냐"</strong>의 게임입니다. 한 명씩 <strong>잘려 나가는 것(스태거)</strong>이 저티어 팀이 지는 첫 번째 이유입니다.</p>
+            </div>
+
+            <div class="card">
+                <h3><span class="card-icon">🎮</span>첫날 반드시 알아 두셔야 할 시스템</h3>
+                <ul class="kv">
+                    <li><span>핑 (G)</span><strong>적을 보고 누르면 "적 발견!" 마커가 찍힙니다. 마이크가 없어도 이것만으로 충분히 콜이 됩니다. 길게 누르면 핑 휠(집결·후퇴·공격)이 열립니다</strong></li>
+                    <li><span>자동 회복 (패시브)</span><strong>피해를 받지 않고 잠시 지나면 모든 역할이 서서히 회복됩니다. 지원가는 더 빠릅니다. "코너 뒤 3초"가 힐팩 하나와 같습니다</strong></li>
+                    <li><span>힐팩</span><strong>작은 팩 75 · 큰 팩 250입니다. 각각 약 10초 / 15초마다 리스폰됩니다. 맵당 큰 팩 위치만 외워 두세요</strong></li>
+                    <li><span>궁극기 (Q)</span><strong>피해·치유를 넣으면 충전되고, 시간 경과로도 조금씩 찹니다. <strong>죽어도 충전량은 유지됩니다</strong>. 죽기 직전에 급하게 "버리지" 마세요</strong></li>
+                    <li><span>영웅 교체 (H)</span><strong>스폰룸 안에서만 가능합니다. 카운터를 당하면 바꾸는 것이 정상입니다. 단, <strong>죽은 직후 스폰에서</strong> 바꾸세요 — 걸어서 돌아가면 그 사이 팀은 4명이 됩니다</strong></li>
+                    <li><span>특전 (Perk)</span><strong>경기 중 레벨업하면 영웅별 소특전 → 대특전을 선택합니다. 처음엔 아무거나 골라도 괜찮습니다. 나중에 "이 특전이 이 매치업에 좋다"가 보이기 시작합니다</strong></li>
+                    <li><span>Tab</span><strong>우리 팀 궁 %·픽·킬뎃을 확인합니다. 한타를 열기 전에 한 번씩 보는 습관을 들이세요</strong></li>
+                    <li><span>훈련장</span><strong>메뉴 → 훈련에서 들어갑니다. 새 영웅은 훈련장을 5분 돌고 실전에 가세요. 기술 쿨타임 감각이 잡힙니다</strong></li>
+                </ul>
+            </div>
+
+            <div class="tip-box coach-note">
+                <div class="tip-title">🎯 핵심 노트 — 첫 10판 KPI</div>
+                <div class="tip-content">킬뎃은 보지 마세요. 볼 것은 세 가지입니다. <strong>① 팀과 같이 움직였는가 ② 죽고 나서 혼자 뛰어들지 않았는가 ③ 목표(거점·카트) 근처에 있었는가.</strong> 이 셋만 지키면 팀에 기여하는 플레이어입니다. 나머지는 나중에 자연스럽게 붙습니다.</div>
+            </div>
+
+            <!-- Quiz 1-1 -->
+            <div class="quiz-container">
+                <div class="quiz-title">퀴즈 1</div>
+                <div class="quiz-question">❓ 오버워치의 팀 구성은 무엇일까요?</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" onclick="checkAnswer(0, 0)">1v1로 플레이합니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(0, 1)">5v5 팀 경기입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(0, 2)">10v10으로 플레이합니다</button>
+                </div>
+                <div class="quiz-feedback" id="feedback-0"></div>
+                <div class="quiz-counter"></div>
+            </div>
+
+            <!-- Quiz 1-2 -->
+            <div class="quiz-container">
+                <div class="quiz-title">퀴즈 2</div>
+                <div class="quiz-question">❓ 오버워치에서 가장 중요한 것은 무엇일까요?</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" onclick="checkAnswer(1, 0)">내 킬(처치) 수를 늘리는 것입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(1, 1)">팀과 함께 승리하는 것입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(1, 2)">가장 높은 평점을 얻는 것입니다</button>
+                </div>
+                <div class="quiz-feedback" id="feedback-1"></div>
+                <div class="quiz-counter"></div>
+            </div>
+
+            <!-- Quiz 1-3 -->
+            <div class="quiz-container">
+                <div class="quiz-title">퀴즈 3</div>
+                <div class="quiz-question">❓ 팀의 역할 분담이 필요한 이유는 무엇일까요?</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" onclick="checkAnswer(2, 0)">재미있기 때문입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(2, 1)">서로 다른 역할이 함께할 때 팀이 강해지기 때문입니다</button>
+                    <button class="quiz-option" onclick="checkAnswer(2, 2)">게임 규칙이기 때문입니다</button>
+                </div>
+                <div class="quiz-feedback" id="feedback-2"></div>
+                <div class="quiz-counter"></div>
+            </div>
+        </section>
     </div>
 
 
@@ -2433,7 +2457,7 @@
     <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
     <footer>
         <div class="footer-grid">
-            <div><strong>배우기</strong><a onclick="switchSection(0)">게임 기본</a><a onclick="switchSection(1)">캐릭터 역할</a><a onclick="switchSection(2)">기초 전술</a><a onclick="switchSection(5)">고급 전략</a></div>
+            <div><strong>배우기</strong><a onclick="switchSection(11)">게임 기본</a><a onclick="switchSection(1)">캐릭터 역할</a><a onclick="switchSection(2)">기초 전술</a><a onclick="switchSection(5)">고급 전략</a></div>
             <div><strong>훈련하기</strong><a onclick="switchSection(7)">상황판단 훈련</a><a onclick="switchSection(3)">전술 지도</a><a onclick="switchSection(6)">영웅 도감</a><a onclick="switchSection(8)">나의 학습 분석</a></div>
             <div><strong>참고</strong><a onclick="switchSection(9)">용어 사전</a><a onclick="switchSection(10)">심화 가이드</a><a onclick="openSearch()">전체 검색 (/)</a><a href="https://overwatch.statbanana.com/images" target="_blank" rel="noopener">맵 이미지: StatBanana</a></div>
         </div>
@@ -2457,7 +2481,7 @@
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=3"></script>
-    <script src="home.js?v=1"></script>
-    <script src="app.js?v=17"></script>
+    <script src="home.js?v=2"></script>
+    <script src="app.js?v=18"></script>
 </body>
 </html>

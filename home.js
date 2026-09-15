@@ -6,7 +6,7 @@
 
 // ---------- 레슨 메타 (배우기 6단계) ----------
 const LESSON_META = {
-  0: { no: '01', en: 'GAME FUNDAMENTALS', min: 8, diff: 1, headline: '오버워치는 "5명이 모여서 한타에 들어가느냐"의 게임입니다.', objectives: ['승리 조건과 모드별 목표를 이해한다', '왜 뭉쳐야 이기는지 설명할 수 있다', '첫 10판에서 지켜야 할 것을 정한다'] },
+  11: { no: '01', en: 'GAME FUNDAMENTALS', min: 8, diff: 1, headline: '오버워치는 "5명이 모여서 한타에 들어가느냐"의 게임입니다.', objectives: ['승리 조건과 모드별 목표를 이해한다', '왜 뭉쳐야 이기는지 설명할 수 있다', '첫 10판에서 지켜야 할 것을 정한다'] },
   1: { no: '02', en: 'ROLES', min: 9, diff: 1, headline: '탱커가 선 곳이 팀의 위치, 딜러는 각, 힐러는 "지금 맞는 사람".', objectives: ['1-2-2와 역할 패시브를 이해한다', '내 역할이 한타에서 해야 할 한 가지를 안다', '어떤 역할부터 시작할지 정한다'] },
   2: { no: '03', en: 'TACTICAL FUNDAMENTALS', min: 12, diff: 2, headline: '한타는 "누가 먼저 죽느냐"가 아니라 "누가 먼저 준비됐느냐"입니다.', objectives: ['한타의 시작·중간·끝을 구분한다', '궁 어드밴티지를 계산한다', '리그룹 타이밍을 판단한다'] },
   3: { no: '04', en: 'POSITIONING', min: 10, diff: 2, headline: '좋은 포지션은 "안 죽는 자리"가 아니라 "선택지가 많은 자리"입니다.', objectives: ['좋은 포지션의 조건을 이해한다', '실제 맵에서 고지·코너·시야선을 읽는다', '공격과 후퇴의 기준을 판단한다'] },
@@ -14,6 +14,7 @@ const LESSON_META = {
   5: { no: '06', en: 'ADVANCED STRATEGY', min: 14, diff: 3, headline: '상위 티어는 상대의 자원(궁·쿨·체력)을 보고 싸웁니다.', objectives: ['조합(다이브·브롤·포크)의 승리 조건을 안다', '쿨·궁 트래킹을 시작한다', '카운터픽 판단 기준을 세운다'] }
 };
 
+const LESSON_ORDER = [11, 1, 2, 3, 4, 5];
 // ---------- PRO MINDSET (사고 단계) ----------
 const PRO_MINDSET = [
   { tier: '초보', see: '적이 보인다.', think: '→ 공격한다.', note: '보이는 것에 반응합니다. 위치·자원은 생각하지 않습니다.' },
@@ -31,7 +32,7 @@ function growthMetrics() {
   return {
     a,
     rows: [
-      { key: 'gameiq', label: 'GAME IQ', ko: '게임 이해', pct: a.quiz.solved ? a.quiz.pct : null, hint: a.quiz.solved ? `${a.quiz.correct}/${a.quiz.solved} 정답` : '퀴즈를 풀면 채워집니다', go: 0 },
+      { key: 'gameiq', label: 'GAME IQ', ko: '게임 이해', pct: a.quiz.solved ? a.quiz.pct : null, hint: a.quiz.solved ? `${a.quiz.correct}/${a.quiz.solved} 정답` : '퀴즈를 풀면 채워집니다', go: 11 },
       { key: 'positioning', label: 'POSITIONING', ko: '포지셔닝', pct: avg([cat('positioning'), cat('side')]), hint: '포지션·사이드 판단', go: 3 },
       { key: 'teamfight', label: 'TEAMFIGHT', ko: '한타', pct: avg([cat('teamfight'), cat('ultimate'), cat('regroup')]), hint: '한타·궁·리그룹 판단', go: 2 },
       { key: 'decision', label: 'DECISION MAKING', ko: '판단력', pct: a.judgment, hint: a.sit.n ? `상황판단 ${a.sit.n}문제 기준` : '상황판단을 풀면 채워집니다', go: 7 }
@@ -54,7 +55,7 @@ function nextLesson() {
     const s = SITUATIONS.find(x => x.cat === a.weakest.key && state.sit[x.id] === undefined);
     if (s) return { kind: 'sit', title: s.title, sub: `${a.weakest.icon} ${a.weakest.label} 약점 보강 · ${s.hero}`, min: 3, diff: s.diff === 'beginner' ? 1 : s.diff === 'intermediate' ? 2 : 3, go: () => openSituation(s.id) };
   }
-  const lessonIdx = [0, 1, 2, 3, 4, 5].find(i => !(state.lessons || {})[i]);
+  const lessonIdx = LESSON_ORDER.find(i => !(state.lessons || {})[i]);
   if (lessonIdx !== undefined) { const m = LESSON_META[lessonIdx]; return { kind: 'lesson', title: progressDots[lessonIdx].textContent.trim().replace(/^\S+\s/, ''), sub: `LESSON ${m.no} · ${m.en}`, min: m.min, diff: m.diff, go: () => switchSection(lessonIdx) }; }
   if (state.sit[t.situation] === undefined) return { kind: 'daily', title: t.title, sub: '오늘의 훈련 · ' + t.desc, min: 5, diff: 2, go: () => goToDailySituation() };
   const s = SITUATIONS.find(x => x.cat !== 'side' && state.sit[x.id] === undefined);
@@ -74,6 +75,7 @@ const starTxt = n => '★'.repeat(n) + '☆'.repeat(Math.max(0, 5 - n));
 
 // ---------- MY PROGRESS (홈) ----------
 function renderHomeProgress() {
+  renderLessonGrid();
   const el = document.getElementById('my-progress'); if (!el) return;
   const g = growthMetrics(); const nx = nextLesson(); _nextLessonGo = nx.go;
   const mistakes = mistakeList();
@@ -97,6 +99,14 @@ function renderHomeProgress() {
     </div>`;
 }
 
+// ---------- 홈: 배우기 6단원 그리드 ----------
+function renderLessonGrid() {
+  const el = document.getElementById('lesson-grid'); if (!el) return;
+  const read = state.lessons || {};
+  const nextIdx = LESSON_ORDER.find(i => !read[i]);
+  el.innerHTML = LESSON_ORDER.map(i => { const m = LESSON_META[i]; const name = progressDots[i].textContent.trim().replace(/^\S+\s/, '');
+    return `<button class="lesson-card ${read[i] ? 'done' : ''} ${i === nextIdx ? 'next' : ''}" onclick="switchSection(${i})"><span class="lc-no">LESSON ${m.no}</span><b>${name}</b><small>${m.headline}</small><span class="lc-meta"><span>⏱ ${m.min}분</span><span class="stars">${starTxt(m.diff)}</span></span></button>`; }).join('');
+}
 // ---------- PRO MINDSET (홈, 정적) ----------
 function renderProMindset() {
   const el = document.getElementById('pro-mindset'); if (!el) return;
@@ -118,9 +128,7 @@ function renderLessonHeads() {
     head.innerHTML = `<div class="lh-top"><span class="kicker">LESSON ${m.no}</span><span class="kicker muted">${m.en}</span><span class="lh-meta">⏱ ${m.min}분 <span class="stars">${starTxt(m.diff)}</span></span></div>
       <p class="lh-headline">${m.headline}</p>
       <div class="lh-obj"><span class="kicker">LEARNING OBJECTIVES</span><ul>${m.objectives.map(o => `<li>${o}</li>`).join('')}</ul></div>`;
-    // 홈(0)은 히어로 아래에, 나머지는 제목 바로 아래
-    if (i === 0) { const hb = sec.querySelector('.hero-banner'); if (hb) hb.insertAdjacentElement('afterend', head); else title.insertAdjacentElement('afterend', head); }
-    else title.insertAdjacentElement('afterend', head);
+    title.insertAdjacentElement('afterend', head);
   });
 }
 function markLessonRead(i) { if (LESSON_META[i]) { state.lessons = state.lessons || {}; if (!state.lessons[i]) { state.lessons[i] = todayKey(); saveState(); } } }

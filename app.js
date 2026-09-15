@@ -6,9 +6,9 @@
 
 // ---------- 상수 ----------
 const TOTAL_QUIZ = quizAnswers.length;
-const SECTION_COUNT = 11;
+const SECTION_COUNT = 12;
 const STORAGE_KEY = 'ow-guide-progress';
-const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary','guides'];
+const SECTION_HASH = ['home','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary','guides','basics'];
 const HASH_ALIAS = { tactical: 3 };
 const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
@@ -126,7 +126,7 @@ function switchSection(index, opts) {
 }
 // ---------- 모바일 하단 탭바 · 시트 ----------
 const NAV_ITEMS = [
-  { i: 0, ic: '🏠', t: '게임 기본', d: '규칙 · 모드 · 승리 조건', g: 'learn' },
+  { i: 11, ic: '🎮', t: '게임 기본', d: '규칙 · 모드 · 승리 조건', g: 'learn' },
   { i: 1, ic: '👥', t: '캐릭터 역할', d: '탱커 · 딜러 · 힐러가 하는 일', g: 'learn' },
   { i: 2, ic: '🎯', t: '기초 전술', d: '한타 · 궁 관리 · 리그룹', g: 'learn' },
   { i: 3, ic: '🗺️', t: '맵과 포지셔닝', d: '실제 맵 위 전술 지도', g: 'learn' },
@@ -138,7 +138,7 @@ const NAV_ITEMS = [
   { i: 8, ic: '📊', t: '나의 학습 분석', d: '약점 · 점수 · 초기화', g: 'record' },
   { i: 9, ic: '📚', t: '용어 사전', d: '스태거 · 각 · 스즈…', g: 'record' }
 ];
-function bnKeyOf(i) { return i === 0 ? 'home' : i === 7 ? 'train' : i === 6 ? 'heroes' : i <= 5 ? 'learn' : 'more'; }
+function bnKeyOf(i) { return i === 0 ? 'home' : i === 7 ? 'train' : i === 6 ? 'heroes' : (i === 11 || i <= 5) ? 'learn' : 'more'; }
 function updateBottomNav() {
   const k = bnKeyOf(currentSection);
   document.querySelectorAll('.bn-btn').forEach(b => b.classList.toggle('active', b.dataset.bn === k));
@@ -1049,7 +1049,7 @@ function buildSearchIndex() {
   SITUATIONS.forEach(s => idx.push({ cat: '상황판단', title: s.title, sub: `${SITUATION_CATS[s.cat].label} · ${s.sub} · ${s.hero}`, text: normalize([s.title, s.sub, s.hero, ...s.team, ...s.enemy, ...s.facts, s.q, s.keyPoint, ...s.choices.map(c => c.t)].join(' ')), go: () => { switchSection(7); const tool = s.cat === 'side' ? 'side' : 'situations'; showTrainTool(tool, document.querySelector(`.subtab[data-tool="${tool}"]`)); if (tool === 'situations') { sitCat = 'all'; sitDiff = 'all'; sitRole = 'all'; sitHero = 'all'; renderSituationFilters(); renderSituations(false); } setTimeout(() => { const el = document.getElementById('sit-' + s.id); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('flash'); } }, 80); } }));
   // 전략 카드 (h3 제목 + 본문)
   document.querySelectorAll('.section').forEach((sec, si) => {
-    if (si >= 7) return;
+    if (si >= 7 && si !== 11) return;
     sec.querySelectorAll('.card').forEach(card => {
       const h = card.querySelector('h3'); if (!h || card.id === 'quiz-result') return;
       const title = h.textContent.trim();
