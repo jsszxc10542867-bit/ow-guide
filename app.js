@@ -93,8 +93,14 @@ function toast(msg) {
 }
 
 // ---------- 탭 / 섹션 ----------
+// 사이트 안 이동 기록 (헤더 ← 버튼용: 브라우저 밖으로 나가지 않음)
+const NAV_STACK = []; let _navBack = false;
+function goBackInSite() { if (!NAV_STACK.length) return; _navBack = true; const i = NAV_STACK.pop(); switchSection(i); _navBack = false; }
+function updateBackBtn() { const b = document.getElementById('back-btn'); if (b) b.hidden = NAV_STACK.length === 0; }
 function switchSection(index, opts) {
   index = Math.max(0, Math.min(SECTION_COUNT - 1, index));
+  if (typeof currentSection === 'number' && index !== currentSection && !_navBack) { NAV_STACK.push(currentSection); if (NAV_STACK.length > 50) NAV_STACK.shift(); }
+  updateBackBtn();
   sections.forEach(section => section.classList.remove('active'));
   progressDots.forEach(dot => { dot.classList.remove('active'); dot.setAttribute('aria-selected', 'false'); dot.setAttribute('tabindex', '-1'); });
   currentSection = index;

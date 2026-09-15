@@ -1279,6 +1279,8 @@
         .card { margin-bottom: 1.4rem; }
         .card + .card, .quiz-container + .quiz-container, .card + .quiz-container, .quiz-container + .card { margin-top: 1.4rem; }
         .tip-box, .remember { max-width: 900px; }
+        .back-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.28); background: rgba(255,255,255,.12); color: #fff; font: inherit; font-size: 1.1rem; font-weight: 800; cursor: pointer; }
+        .back-btn:hover { background: rgba(255,255,255,.22); }
     </style>
 </head>
 <body>
@@ -1295,6 +1297,7 @@
                 <span class="logo-text"><b>오버워치 교과서</b><small class="logo-sub">OVERWATCH TEXTBOOK</small></span>
             </div>
             <div style="display:flex;gap:.5rem;align-items:center;">
+            <button class="back-btn" id="back-btn" hidden onclick="goBackInSite()" title="이전 화면으로" aria-label="이전 화면으로">←</button>
             <button class="level-pill" id="level-pill" onclick="switchSection(8)" title="나의 학습 분석 보기" aria-label="현재 레벨과 XP. 누르면 학습 분석으로 이동"></button>
             <button class="search-btn" onclick="openSearch()" aria-label="전체 검색 열기">🔍 <span class="search-label">검색</span> <kbd>/</kbd></button>
             <button class="theme-toggle" onclick="toggleTheme()" title="다크모드 전환" aria-label="다크모드 전환">
@@ -2455,6 +2458,6 @@
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=3"></script>
     <script src="home.js?v=1"></script>
-    <script src="app.js?v=16"></script>
+    <script src="app.js?v=17"></script>
 </body>
 </html>
