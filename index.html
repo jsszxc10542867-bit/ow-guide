@@ -989,6 +989,10 @@
         .md .chk { list-style: none; margin-left: 0; }
         .md .chk li::before { content: "☐ "; color: var(--text-3); }
         .md .chk li.on::before { content: "☑ "; color: #2fae6c; }
+        .hero-badge.badge-new { background:#2fae6c; color:#fff; }
+        .md a.md-hero { color:var(--accent); font-weight:700; text-decoration:underline dotted; text-underline-offset:3px; cursor:pointer; }
+        .md pre a.md-hero { text-decoration:none; border-bottom:1px dotted var(--accent); }
+        body.dark-mode .md a.md-hero { color:#ff8a86; }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -2120,7 +2124,7 @@
         <p style="margin-top: .4rem;">21개의 실전 퀴즈와 100여 개의 역할·영웅별 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
     </footer>
 
-    <script src="data/heroes.js?v=2"></script>
+    <script src="data/heroes.js?v=3"></script>
     <script src="data/heroes-detail.js?v=2"></script>
     <script src="data/situations.js"></script>
     <script src="data/situations-heroes.js"></script>
@@ -2135,6 +2139,6 @@
     <script src="data/maps/kings-row.js"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=8"></script>
+    <script src="app.js?v=9"></script>
 </body>
 </html>

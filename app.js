@@ -13,7 +13,7 @@ const HASH_ALIAS = { tactical: 3 };
 const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
 const HERO_TAG_META = {
-  'aim-easy':'🎯 에임 쉬움', 'low-ops':'🧠 운영 난이도 낮음', 'mobile':'⚡ 기동성 높음',
+  'new':'🆕 2026 신규', 'aim-easy':'🎯 에임 쉬움', 'low-ops':'🧠 운영 난이도 낮음', 'mobile':'⚡ 기동성 높음',
   'aggressive':'🔥 공격적', 'stable':'🛡️ 안정적', 'solo':'👥 팀 의존도 낮음'
 };
 
@@ -302,7 +302,7 @@ function renderHeroes() {
   grid.innerHTML = heroes.map((h, i) => `
     <div class="hero-card" data-role="${h.role}" data-newbie="${h.newbie}" role="button" tabindex="0" aria-label="${h.name} 상세 보기" onclick="openHero(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHero(${i});}">
       <div class="hero-head">
-        <span class="hero-name">${h.name}${h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : ''}</span>
+        <span class="hero-name">${h.name}${h.year === 2026 ? ' <span class="hero-badge badge-new">NEW</span>' : ''}${h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : ''}</span>
         <span class="hero-role role-${h.role}"><svg><use href="#${roleIcon[h.role]}"/></svg>${roleLabel[h.role]}</span>
       </div>
       <div class="hero-meta"><span class="hero-diff" title="난이도 ${h.diff}/4">${'★'.repeat(h.diff)}${'☆'.repeat(4 - h.diff)}</span><span class="hero-tag">${h.tag}</span></div>
@@ -336,7 +336,7 @@ function heroSearchText(h) {
   const d = HERO_DETAILS[h.name] || {};
   const diffLabel = ['', '입문', '쉬움', '보통', '어려움'][h.diff] || '';
   const tagLabels = (d.tags || []).map(t => HERO_TAG_META[t]).join(' ');
-  return normalize([h.name, roleLabel[h.role], h.tag, h.desc, diffLabel, d.attack || '', d.range || '', tagLabels, d.coach || ''].join(' '));
+  return normalize([h.name, h.en || '', roleLabel[h.role], h.tag, h.desc, diffLabel, d.attack || '', d.range || '', tagLabels, d.coach || '', h.year === 2026 ? '2026 신규 new' : ''].join(' '));
 }
 function applyHeroFilter() {
   const input = document.getElementById('hero-search');
@@ -347,13 +347,13 @@ function applyHeroFilter() {
     const h = heroes[i];
     const d = HERO_DETAILS[h.name] || { tags: [] };
     const roleOk = heroRole === 'all' || (heroRole === 'newbie' ? h.newbie : h.role === heroRole);
-    const tagOk = [...heroTags].every(t => (d.tags || []).includes(t));
+    const tagOk = [...heroTags].every(t => t === 'new' ? h.year === 2026 : (d.tags || []).includes(t));
     const textOk = !q || heroSearchText(h).includes(q);
     const show = roleOk && tagOk && textOk;
     card.classList.toggle('hidden', !show);
     if (show) visible++;
     const nameEl = card.querySelector('.hero-name');
-    const badge = h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : '';
+    const badge = (h.year === 2026 ? ' <span class="hero-badge badge-new">NEW</span>' : '') + (h.newbie ? ' <span class="hero-badge">뉴비 추천</span>' : '');
     if (q && normalize(h.name).includes(q)) {
       const re = new RegExp(escapeRe(input.value.trim()), 'i');
       nameEl.innerHTML = h.name.replace(re, m => `<mark class="hl">${m}</mark>`) + badge;
@@ -939,8 +939,20 @@ function stepGuide(d) {
 }
 // 아주 작은 마크다운 렌더러 (제목·목록·코드펜스·표·인용·굵게·체크박스) — 외부 라이브러리 없음
 function escHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+// 가이드 본문의 영웅 이름(한글·영문)을 도감 상세 링크로 — 긴 이름부터 매칭, 영문은 단어 경계
+let HERO_LINK_RE = null, HERO_LINK_MAP = null;
+function linkHeroes(html) {
+  if (!HERO_LINK_RE) {
+    HERO_LINK_MAP = {}; const keys = [];
+    heroes.forEach((h, i) => { [h.name, h.en].filter(Boolean).forEach(n => { HERO_LINK_MAP[n.toLowerCase()] = i; keys.push(n); }); });
+    keys.sort((a, b) => b.length - a.length);
+    const esc = k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    HERO_LINK_RE = new RegExp('(?<![A-Za-z가-힣])(' + keys.map(esc).join('|') + ')(?![A-Za-z가-힣])', 'g');
+  }
+  return html.replace(HERO_LINK_RE, m => { const i = HERO_LINK_MAP[m.toLowerCase()]; return i === undefined ? m : `<a class="md-hero" onclick="openHero(${i})" title="${heroes[i].name} 도감 보기">${m}</a>`; });
+}
 function mdInline(t) {
-  return escHtml(t)
+  return linkHeroes(escHtml(t))
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>')
@@ -957,7 +969,7 @@ function renderMarkdown(md) {
       // 원문에는 펜스 안에 또 ``` 가 끼어 있는 곳이 있어, 닫는 펜스는 "다음 내용이 일반 마크다운(제목·굵게·목록·표·구분선·문장)"일 때만 인정
       const closes = k => { let n = k + 1; while (n < lines.length && lines[n].trim() === '') n++; return n >= lines.length || /^(#{1,4}\s|\*\*|[-*+]\s|\d+[.)]\s|\||>|-{3,}\s*$|[가-힣A-Za-z"“(])/.test(lines[n]); };
       while (i < lines.length && !(/^```\s*$/.test(lines[i]) && closes(i))) { if (!/^```\s*$/.test(lines[i])) buf.push(lines[i]); i++; }
-      i++; out.push('<pre><code>' + escHtml(buf.join('\n')) + '</code></pre>'); continue;
+      i++; out.push('<pre><code>' + linkHeroes(escHtml(buf.join('\n'))) + '</code></pre>'); continue;
     }
     const h = l.match(/^(#{1,4})\s+(.+)/);
     if (h) { const lv = h[1].length; hn++; out.push(`<h${lv} id="gh-${hn}">${mdInline(h[2].replace(/\s+#+$/, ''))}</h${lv}>`); i++; continue; }
