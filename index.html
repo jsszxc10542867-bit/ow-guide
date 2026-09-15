@@ -1332,7 +1332,9 @@
         .hero-avatar { --sz: 48px; width: var(--sz); height: var(--sz); border-radius: 50%; flex: none; display: inline-flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: var(--role-c, var(--accent)); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: calc(var(--sz) * .42); box-shadow: 0 0 0 3px var(--bg-elev), 0 0 0 4.5px var(--role-c, var(--accent)); }
         .hero-avatar.role-tank { --role-c: #3d7bd9; } .hero-avatar.role-dps { --role-c: #e04a4a; } .hero-avatar.role-support { --role-c: #2fae6c; }
         .hero-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-        .hero-avatar b { position: relative; z-index: 0; }
+        .hero-avatar .av-fallback { width: 55%; height: 55%; fill: #fff; opacity: .9; display: none; }
+        .hero-avatar.noimg .av-fallback { display: block; }
+        .hero-avatar img { background: #0f1b33; }
         .hero-title { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
         .hero-name { font-size: 1.15rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .hero-badges { display: flex; flex-wrap: wrap; gap: .25rem; }
@@ -2121,50 +2123,6 @@
                 <div class="tip-title">🎯 핵심 노트 — 마지막</div>
                 <div class="tip-content">여기까지 이해하셨다면 <strong>게임 이해도는 이미 플래티넘 이상</strong>입니다. 남은 것은 한 판에 하나씩 적용하는 것입니다. 오늘은 스태거, 내일은 궁 어드밴티지. 한 번에 다 하려고 하면 하나도 되지 않습니다.</div>
             </div>
-        </section>
-
-        <!-- Section 7: Hero Guide -->
-        <section class="section">
-            <div class="section-title">
-                <span class="section-title-icon">🦸</span>
-                영웅 도감
-            </div>
-            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>영웅 풀은 역할당 2~3개면 충분합니다. 카드를 누르면 운영 핵심·하지 말아야 할 행동·궁 사용법이 열립니다.</p></div></div>
-
-            <div class="card">
-                <p>한국 서버 <strong>공식 표기</strong> 기준 전체 로스터. <strong>★</strong>이 적을수록 입문이 쉽고, <span class="hero-badge">뉴비 추천</span>이 붙은 영웅부터 잡아 보세요. 각 카드의 핵심 한마디는 실제 인게임에서 쓰는 말 그대로입니다.</p>
-            </div>
-            <div class="hero-toolbar">
-                <div class="hero-search-wrap" id="hero-search-wrap">
-                    <input class="hero-search" id="hero-search" type="search" placeholder="영웅 이름·역할·태그로 검색 (예: 아나, 다이브, 히트스캔)" oninput="applyHeroFilter()" autocomplete="off">
-                    <button class="hero-search-clear" type="button" title="지우기" onclick="clearHeroSearch()">✕</button>
-                </div>
-                <span class="hero-count" id="hero-count"></span>
-            </div>
-            <div class="hero-filters" id="hero-filters" role="group" aria-label="역할 필터">
-                <button class="filter-btn active" aria-pressed="true" onclick="filterHeroes('all',this)">전체</button>
-                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('tank',this)">🛡️ 돌격</button>
-                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('dps',this)">⚔️ 공격</button>
-                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('support',this)">💚 지원</button>
-                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('newbie',this)">⭐ 뉴비 추천만</button>
-            </div>
-            <div class="hero-filters" id="hero-tag-filters" role="group" aria-label="플레이스타일 필터" style="margin:.5rem 0 1.25rem"></div>
-            <div class="hero-grid" id="hero-grid"></div>
-            <div class="hero-empty" id="hero-empty" style="display:none;">조건에 맞는 영웅이 없습니다.</div>
-
-            <div class="card" style="margin-top:1.5rem">
-                <h3><span class="card-icon">🧭</span>나에게 맞는 영웅 찾기 — 플레이스타일 추천</h3>
-                <p>좋아하는 플레이를 골라 주세요 (여러 개 가능). 점수 계산으로 가장 잘 맞는 영웅 3명을 추천합니다.</p>
-                <div id="style-quiz" style="margin-top:.8rem"></div>
-                <div class="style-row">
-                    <label for="style-role" class="sr-only">역할 제한</label>
-                    <select id="style-role"><option value="all">역할 상관없음</option><option value="tank">🛡️ 돌격만</option><option value="dps">⚔️ 공격만</option><option value="support">💚 지원만</option></select>
-                    <button class="btn btn-primary" id="style-submit" onclick="runStyleQuiz()" disabled>항목을 골라 주세요</button>
-                </div>
-                <div id="style-result"></div>
-            </div>
-
-            <!-- Quiz 19 -->
             <div class="quiz-container">
                 <div class="quiz-title">퀴즈 19 - 영웅 도감</div>
                 <div class="quiz-question">❓ 딜러 입문에 가장 추천되는 영웅은 누구일까요?</div>
@@ -2207,6 +2165,37 @@
                 <h3><span class="card-icon">🏁</span>퀴즈 결과</h3>
                 <div id="result-body"><p style="color:var(--text-3);"><span class="quiz-total">21</span>문제를 모두 풀면 결과가 여기에 표시됩니다.</p></div>
             </div>
+        </section>
+
+        <!-- Section 7: Hero Guide -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">🦸</span>
+                영웅 도감
+            </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>영웅 풀은 역할당 2~3개면 충분합니다. 카드를 누르면 운영 핵심·하지 말아야 할 행동·궁 사용법이 열립니다.</p></div></div>
+
+            <div class="card">
+                <p>한국 서버 <strong>공식 표기</strong> 기준 전체 로스터. <strong>★</strong>이 적을수록 입문이 쉽고, <span class="hero-badge">뉴비 추천</span>이 붙은 영웅부터 잡아 보세요. 각 카드의 핵심 한마디는 실제 인게임에서 쓰는 말 그대로입니다.</p>
+            </div>
+            <div class="hero-toolbar">
+                <div class="hero-search-wrap" id="hero-search-wrap">
+                    <input class="hero-search" id="hero-search" type="search" placeholder="영웅 이름·역할·태그로 검색 (예: 아나, 다이브, 히트스캔)" oninput="applyHeroFilter()" autocomplete="off">
+                    <button class="hero-search-clear" type="button" title="지우기" onclick="clearHeroSearch()">✕</button>
+                </div>
+                <span class="hero-count" id="hero-count"></span>
+            </div>
+            <div class="hero-filters" id="hero-filters" role="group" aria-label="역할 필터">
+                <button class="filter-btn active" aria-pressed="true" onclick="filterHeroes('all',this)">전체</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('tank',this)">🛡️ 돌격</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('dps',this)">⚔️ 공격</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('support',this)">💚 지원</button>
+                <button class="filter-btn" aria-pressed="false" onclick="filterHeroes('newbie',this)">⭐ 뉴비 추천만</button>
+            </div>
+            <div class="hero-filters" id="hero-tag-filters" role="group" aria-label="플레이스타일 필터" style="margin:.5rem 0 1.25rem"></div>
+            <div class="hero-grid" id="hero-grid"></div>
+            <div class="hero-empty" id="hero-empty" style="display:none;">조건에 맞는 영웅이 없습니다.</div>
+
         </section>
 
         <!-- Section 8: Situational Training -->
@@ -2310,6 +2299,19 @@
             <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>점수는 순위가 아니라 "다음에 무엇을 공부할지"를 알려 주는 나침반입니다. 가장 낮은 분야 하나만 고쳐도 승률이 오릅니다.</p></div></div>
             <div id="mistakes" class="home-sec" style="margin-top:0"></div>
             <div id="stats-body"></div>
+            <div class="card" style="margin-top:1.5rem" id="style-card">
+                <h3><span class="card-icon">🧭</span>나에게 맞는 영웅 찾기 — 플레이스타일 추천</h3>
+                <p>좋아하는 플레이를 골라 주세요 (여러 개 가능). 점수 계산으로 가장 잘 맞는 영웅 3명을 추천합니다.</p>
+                <div id="style-quiz" style="margin-top:.8rem"></div>
+                <div class="style-row">
+                    <label for="style-role" class="sr-only">역할 제한</label>
+                    <select id="style-role"><option value="all">역할 상관없음</option><option value="tank">🛡️ 돌격만</option><option value="dps">⚔️ 공격만</option><option value="support">💚 지원만</option></select>
+                    <button class="btn btn-primary" id="style-submit" onclick="runStyleQuiz()" disabled>항목을 골라 주세요</button>
+                </div>
+                <div id="style-result"></div>
+            </div>
+
+            <!-- Quiz 19 -->
         </section>
 
         <!-- Section 10: Glossary -->
@@ -2532,6 +2534,6 @@
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=3"></script>
     <script src="home.js?v=3"></script>
-    <script src="app.js?v=20"></script>
+    <script src="app.js?v=21"></script>
 </body>
 </html>
