@@ -18,7 +18,7 @@ data/
   heroes-detail.js  영웅 상세 (HERO_DETAILS: 공격 방식, 운영 핵심 5, 하지 말아야 할 행동, 궁, 카운터, 조합, 태그, 플레이스타일 점수)
   situations.js     상황판단 문제 (SITUATIONS) + 카테고리/난이도/판정 메타
   situations-heroes.js  영웅별 추가 상황판단 문제 (SITUATIONS에 합쳐짐, 탭에서 역할→영웅으로 분류)
-  situations-new2026.js 2026 신규 영웅 상황판단 문제 (영웅당 1개)
+  situations-new2026.js 2026 신규 영웅 상황판단 문제 (영웅당 3개)
   training.js       "지금 뭘 해야 하지?" 규칙(ADVISOR_RULES), 한타 상태(FIGHT_STATES), 체크리스트, 복기 항목, 오늘의 훈련 주제, 레벨/XP
   maps.js           맵 12개 (고지·초크·루트·힐팩·역할별 위치·흔한 실수)
   glossary.js       용어 62개 (정의·실전 표현·반대 행동·관련 개념)
