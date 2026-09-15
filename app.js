@@ -102,7 +102,7 @@ function closeDd() { document.querySelectorAll('.nav-dd.open').forEach(d => { d.
 document.addEventListener('click', e => { if (!e.target.closest('.nav-dd')) closeDd(); });
 function updateDdState(index) {
   document.querySelectorAll('.nav-dd').forEach(dd => { const inGroup = !!dd.querySelector(`.nav-tab[data-index="${index}"]`); dd.querySelector('.nav-dd-btn').classList.toggle('in-group', inGroup); });
-  const cur = document.getElementById('dd-learn-cur'); if (cur) { const t = document.querySelector(`#dd-learn .nav-tab[data-index="${index}"]`); cur.textContent = t ? t.textContent.replace(/^\d+\s*/, '').trim() : ''; }
+  const cur = document.getElementById('dd-learn-cur'); if (cur) { const t = document.querySelector(`#dd-learn .nav-tab[data-index="${index}"]`); cur.textContent = t ? t.textContent.replace(/^[^가-힣A-Za-z]+/, '').trim() : ''; }
 }
 function updateBackBtn() { const b = document.getElementById('back-btn'); if (b) b.hidden = NAV_STACK.length === 0; }
 function switchSection(index, opts) {
@@ -141,7 +141,7 @@ const NAV_ITEMS = [
   { i: 4, ic: '🔥', t: '실전 팁', d: '안 죽는 법 · 콜 · 습관', g: 'learn' },
   { i: 5, ic: '🧠', t: '고급 전략', d: '조합 · 카운터 · 템포', g: 'learn' },
   { i: 7, ic: '🧪', t: '상황판단 훈련', d: '역할 → 영웅별 실전 판단', g: 'train' },
-  { i: 6, ic: '🦸', t: '영웅 도감', d: '52명 상세 · 플레이스타일 추천', g: 'train' },
+  { i: 6, ic: '🦸', t: '영웅별 핵심 공략', d: '53명 상세 · 운영 핵심 · 카운터', g: 'train' },
   { i: 10, ic: '📖', t: '심화 가이드', d: '멘탈 · 랭크 · 훈련 로드맵', g: 'train' },
   { i: 8, ic: '📊', t: '나의 학습 분석', d: '약점 · 점수 · 초기화', g: 'record' },
   { i: 9, ic: '📚', t: '용어 사전', d: '스태거 · 각 · 스즈…', g: 'record' }

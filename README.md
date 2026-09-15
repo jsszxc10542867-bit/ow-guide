@@ -15,7 +15,7 @@ data/
   maps/schema.js   전술 지도 데이터 구조 설명 + TACTICAL_MAPS 선언
   maps/kings-row.js, lijiang-tower.js, circuit-royal.js   전술 지도 3개 (지형·포지션·루트·고지·위험·엄폐·힐팩·교전·퀴즈)
   map-situations.js 전술 지도 상황 목록, 레이어, "지금 어디 있어야 하지?" 규칙
-  heroes.js         영웅 52명 기본 카드 (2026 신규 8명 포함: 안란·엠레·도미나·미즈키·제트팩 캣·시에라·시온·D.Mon) (name, role, diff, newbie, tag, desc)
+  heroes.js         영웅 53명 기본 카드 (2025 벤데타, 2026 신규 8명 포함: 안란·엠레·도미나·미즈키·제트팩 캣·시에라·시온·D.Mon) (name, role, diff, newbie, tag, desc)
   heroes-detail.js  영웅 상세 (HERO_DETAILS: 공격 방식, 운영 핵심 5, 하지 말아야 할 행동, 궁, 카운터, 조합, 태그, 플레이스타일 점수)
   situations.js     상황판단 문제 (SITUATIONS) + 카테고리/난이도/판정 메타
   situations-heroes.js  영웅별 추가 상황판단 문제 (SITUATIONS에 합쳐짐, 탭에서 역할→영웅으로 분류)

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오버워치 교과서</title>
-    <meta name="description" content="일반 유저가 직접 정리한 오버워치 교과서 — 역할, 전술, 실제 맵 포지셔닝, 영웅 52명 도감, 상황판단 훈련 156문제, 랭크·멘탈 심화 가이드">
+    <meta name="description" content="일반 유저가 직접 정리한 오버워치 교과서 — 역할, 전술, 실제 맵 포지셔닝, 영웅 53명 도감, 상황판단 훈련 156문제, 랭크·멘탈 심화 가이드">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="오버워치 교과서">
     <meta property="og:title" content="오버워치 교과서">
-    <meta property="og:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 52명 · 상황판단 156문제 · 실제 맵 전술 지도">
+    <meta property="og:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 53명 · 상황판단 156문제 · 실제 맵 전술 지도">
     <meta property="og:url" content="https://jsszxc10542867-bit.github.io/ow-guide/">
     <meta property="og:image" content="https://jsszxc10542867-bit.github.io/ow-guide/assets/og.png">
     <meta property="og:image:width" content="1200">
@@ -16,7 +16,7 @@
     <meta property="og:locale" content="ko_KR">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="오버워치 교과서">
-    <meta name="twitter:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 52명 · 상황판단 156문제 · 실제 맵 전술 지도">
+    <meta name="twitter:description" content="오버워치 교과서. 배우기 → 훈련 → 분석. 영웅 53명 · 상황판단 156문제 · 실제 맵 전술 지도">
     <meta name="twitter:image" content="https://jsszxc10542867-bit.github.io/ow-guide/assets/og.png">
     <meta name="theme-color" content="#0f1b33">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1347,6 +1347,11 @@
         .hero-emblem { right: 8px; bottom: 6px; width: 56px; height: 56px; opacity: .06; }
         .hm-head .hero-avatar { --sz: 72px; box-shadow: 0 0 0 3px var(--bg-soft), 0 0 0 5px var(--role-c); }
         @media (max-width: 600px) { .hero-grid { grid-template-columns: 1fr; } }
+        /* 내비 v3.1: 자료 드롭다운 제거, 배우기 메뉴 안 구분선 */
+        .dd-sep { border-top: 1px solid var(--line); margin-top: .35rem; padding-top: .55rem; }
+        .nav-groups { justify-content: flex-start; }
+        .nav-primary { width: 100%; }
+        @media (min-width: 769px) and (max-width: 1000px) { .nav-tab { font-size: .88rem; padding: .5rem .7rem; } }
     </style>
 </head>
 <body>
@@ -1387,19 +1392,15 @@
                         <button data-index="3" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)"><i>04</i> 맵과 포지셔닝</button>
                         <button data-index="4" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(4)"><i>05</i> 실전 팁</button>
                         <button data-index="5" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(5)"><i>06</i> 고급 전략</button>
+                        <div class="dd-title dd-sep">자료</div>
+                        <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
+                        <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
                     </div>
                 </div>
+                <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅별 핵심 공략</button>
                 <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
                 <button data-index="3" class="nav-tab nav-dup" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(3)">🗺️ 실전 맵</button>
                 <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 학습 분석</button>
-            </div>
-            <div class="nav-dd nav-dd-right" id="dd-ref">
-                <button class="nav-tab nav-dd-btn secondary" type="button" aria-haspopup="true" aria-expanded="false" onclick="toggleDd('dd-ref')">자료 <span class="dd-caret">▾</span></button>
-                <div class="nav-dd-menu right" role="menu">
-                    <button data-index="6" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(6)">🦸 영웅 도감</button>
-                    <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
-                    <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
-                </div>
             </div>
         </nav>
 
@@ -1418,7 +1419,7 @@
                         <button class="btn btn-ghost" onclick="switchSection(3)">실제 맵 전술 지도</button>
                     </div>
                     <div class="hb-stats">
-                        <div><b id="hb-heroes">52</b><span>영웅 분석</span></div>
+                        <div><b id="hb-heroes">53</b><span>영웅 분석</span></div>
                         <div><b id="hb-sits">156</b><span>상황 판단</span></div>
                         <div><b id="hb-quiz">21</b><span>실전 훈련</span></div>
                         <div><b id="hb-gl">62</b><span>핵심 용어</span></div>
@@ -2124,7 +2125,7 @@
                 <div class="tip-content">여기까지 이해하셨다면 <strong>게임 이해도는 이미 플래티넘 이상</strong>입니다. 남은 것은 한 판에 하나씩 적용하는 것입니다. 오늘은 스태거, 내일은 궁 어드밴티지. 한 번에 다 하려고 하면 하나도 되지 않습니다.</div>
             </div>
             <div class="quiz-container">
-                <div class="quiz-title">퀴즈 19 - 영웅 도감</div>
+                <div class="quiz-title">퀴즈 19 - 영웅 선택</div>
                 <div class="quiz-question">❓ 딜러 입문에 가장 추천되는 영웅은 누구일까요?</div>
                 <div class="quiz-options">
                     <button class="quiz-option" onclick="checkAnswer(18, 0)">겐지 — 기동력이 좋습니다</button>
@@ -2137,7 +2138,7 @@
 
             <!-- Quiz 20 -->
             <div class="quiz-container">
-                <div class="quiz-title">퀴즈 20 - 영웅 도감</div>
+                <div class="quiz-title">퀴즈 20 - 영웅 선택</div>
                 <div class="quiz-question">❓ 상대 파라가 계속 공중에서 괴롭힙니다. 어떤 픽으로 바꿔야 할까요?</div>
                 <div class="quiz-options">
                     <button class="quiz-option" onclick="checkAnswer(19, 0)">캐서디 · 애쉬 같은 히트스캔</button>
@@ -2150,7 +2151,7 @@
 
             <!-- Quiz 21 -->
             <div class="quiz-container">
-                <div class="quiz-title">퀴즈 21 - 영웅 도감</div>
+                <div class="quiz-title">퀴즈 21 - 영웅 선택</div>
                 <div class="quiz-question">❓ 메르시의 부활(레즈)은 언제 쓰는 것이 좋을까요?</div>
                 <div class="quiz-options">
                     <button class="quiz-option" onclick="checkAnswer(20, 0)">아군이 죽으면 즉시 씁니다</button>
@@ -2171,7 +2172,7 @@
         <section class="section">
             <div class="section-title">
                 <span class="section-title-icon">🦸</span>
-                영웅 도감
+                영웅별 핵심 공략
             </div>
             <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>영웅 풀은 역할당 2~3개면 충분합니다. 카드를 누르면 운영 핵심·하지 말아야 할 행동·궁 사용법이 열립니다.</p></div></div>
 
@@ -2497,7 +2498,7 @@
         <button class="bn-btn" data-bn="home" onclick="switchSection(0)"><span class="bn-ic">🏠</span><span>홈</span></button>
         <button class="bn-btn" data-bn="learn" onclick="openSheet('learn')"><span class="bn-ic">📖</span><span>배우기</span></button>
         <button class="bn-btn" data-bn="train" onclick="switchSection(7)"><span class="bn-ic">🧪</span><span>훈련</span></button>
-        <button class="bn-btn" data-bn="heroes" onclick="switchSection(6)"><span class="bn-ic">🦸</span><span>도감</span></button>
+        <button class="bn-btn" data-bn="heroes" onclick="switchSection(6)"><span class="bn-ic">🦸</span><span>영웅 공략</span></button>
         <button class="bn-btn" data-bn="more" onclick="openSheet('more')"><span class="bn-ic">☰</span><span>더보기</span></button>
     </nav>
     <div class="sheet-backdrop" id="sheet-backdrop" hidden onclick="closeSheet()"></div>
@@ -2510,30 +2511,30 @@
     <footer>
         <div class="footer-grid">
             <div><strong>배우기</strong><a onclick="switchSection(11)">게임 기본</a><a onclick="switchSection(1)">캐릭터 역할</a><a onclick="switchSection(2)">기초 전술</a><a onclick="switchSection(5)">고급 전략</a></div>
-            <div><strong>훈련하기</strong><a onclick="switchSection(7)">상황판단 훈련</a><a onclick="switchSection(3)">전술 지도</a><a onclick="switchSection(6)">영웅 도감</a><a onclick="switchSection(8)">나의 학습 분석</a></div>
+            <div><strong>훈련하기</strong><a onclick="switchSection(7)">상황판단 훈련</a><a onclick="switchSection(3)">전술 지도</a><a onclick="switchSection(6)">영웅별 핵심 공략</a><a onclick="switchSection(8)">나의 학습 분석</a></div>
             <div><strong>참고</strong><a onclick="switchSection(9)">용어 사전</a><a onclick="switchSection(10)">심화 가이드</a><a onclick="openSearch()">전체 검색 (/)</a><a href="https://overwatch.statbanana.com/images" target="_blank" rel="noopener">맵 이미지: StatBanana</a></div>
         </div>
         <p>© 2026 오버워치 교과서 | 뉴비부터 다이아까지, 배우고 → 훈련하고 → 분석합니다</p>
         <p style="margin-top: .4rem;">21개의 실전 퀴즈와 100여 개의 역할·영웅별 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
     </footer>
 
-    <script src="data/heroes.js?v=5"></script>
-    <script src="data/heroes-detail.js?v=4"></script>
+    <script src="data/heroes.js?v=6"></script>
+    <script src="data/heroes-detail.js?v=5"></script>
     <script src="data/situations.js?v=2"></script>
     <script src="data/situations-heroes.js?v=2"></script>
-    <script src="data/situations-heroes2.js?v=2"></script>
+    <script src="data/situations-heroes2.js?v=3"></script>
     <script src="data/situations-new2026.js?v=3"></script>
     <script src="data/training.js?v=2"></script>
     <script src="data/maps.js"></script>
     <script src="data/glossary.js?v=3"></script>
     <script src="data/quizzes.js"></script>
-    <script src="data/counters.js?v=3"></script>
+    <script src="data/counters.js?v=4"></script>
     <script src="data/guides.js?v=4"></script>
     <script src="data/maps/registry.js"></script>
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=3"></script>
     <script src="home.js?v=3"></script>
-    <script src="app.js?v=21"></script>
+    <script src="app.js?v=22"></script>
 </body>
 </html>
