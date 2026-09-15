@@ -107,7 +107,8 @@ function switchSection(index, opts) {
   saveState();
   updateProgress();
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
-  if (!(opts && opts.noHash)) history.replaceState(null, '', '#' + SECTION_HASH[index]);
+  // 탭 이동은 브라우저 기록에 남깁니다(뒤로가기로 이전 탭 복귀). 같은 탭이면 기록을 늘리지 않습니다.
+  if (!(opts && opts.noHash)) { const h = '#' + SECTION_HASH[index]; if (location.hash !== h) history.pushState(null, '', h); }
   updateBottomNav();
   document.querySelectorAll('.nav-dup').forEach(b => { const on = Number(b.dataset.index) === index; b.classList.toggle('active', on); b.setAttribute('aria-selected', on); });
   if (typeof markLessonRead === 'function') markLessonRead(index);
@@ -958,7 +959,7 @@ function openGuide(id, heading) {
   toc.innerHTML = hs.map(h => `<a onclick="document.getElementById('${h.id}').scrollIntoView({behavior:'smooth',block:'start'})">${h.textContent}</a>`).join('');
   toc.hidden = hs.length === 0;
   if (!state.guides[g.id]) { state.guides[g.id] = todayKey(); touchStudy(); saveState(); addXP(XP_RULES.guide || 10, `가이드 열람: ${g.title}`); }
-  history.replaceState(null, '', '#guides');
+  if (location.hash !== '#guides') history.pushState(null, '', '#guides');
   const target = heading && hs.find(h => h.textContent.trim() === heading);
   setTimeout(() => target ? target.scrollIntoView({ behavior: 'smooth', block: 'start' }) : window.scrollTo(0, 0), 30);
 }
@@ -1139,5 +1140,5 @@ window.addEventListener('DOMContentLoaded', () => {
   if (typeof renderLessonHeads === 'function') { renderLessonHeads(); renderProMindset(); renderHomeProgress(); }
   const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   setTxt('hb-heroes', heroes.length); setTxt('hb-sits', SITUATIONS.length); setTxt('hb-quiz', TOTAL_QUIZ); setTxt('hb-gl', GLOSSARY.length); setTxt('hf-sits', SITUATIONS.length + '문제');
-  window.addEventListener('hashchange', () => { const i = sectionFromHash(); if (i !== null && i !== currentSection) switchSection(i, { noHash: true }); });
+  window.addEventListener('hashchange', () => { let i = sectionFromHash(); if (i === null && location.hash === '') i = 0; if (i !== null && i !== currentSection) switchSection(i, { noHash: true }); if (typeof closeSheet === 'function') closeSheet(); });
 });
