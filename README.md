@@ -23,6 +23,8 @@ data/
   glossary.js       용어 62개 (정의·실전 표현·반대 행동·관련 개념)
   quizzes.js        객관식 퀴즈 정답·분야·오답 해설 (문항 HTML은 index.html)
   counters.js       카운터 픽 표, 조합 상성
+  guides.js         심화 가이드 9편 (GUIDES: 마크다운 원문 포함, 사이트 내 리더로 렌더) — guides/phase3/*.md 에서 생성
+guides/phase3/      심화 가이드 마크다운 원본 (Phase 3: 캐릭터·역할·팀 전술·랭크·카운터·포지셔닝·훈련 로드맵·멘탈·프로 사례)
 assets/             로고, OG 이미지
 ```
 

@@ -949,6 +949,46 @@
         .filter-btn.hero-chip.active small { color:inherit; opacity:.8; }
         .sit-hero-hint { font-size:.85rem; color:var(--text-2); margin:-.2rem 0 .8rem; }
         @media (max-width:600px) { .sit-role-tabs { grid-template-columns:repeat(2,1fr); } }
+        /* ===== 심화 가이드 (마크다운 리더) ===== */
+        .guide-group { margin: 1.2rem 0 .6rem; font-size: .78rem; font-weight: 800; letter-spacing: .12em; color: var(--text-3); text-transform: uppercase; }
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .8rem; }
+        .guide-card { text-align: left; display: flex; gap: .8rem; padding: 1rem; border-radius: 14px; border: 1.5px solid var(--line); background: var(--bg-elev); color: var(--text); font: inherit; cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; position: relative; }
+        .guide-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--accent); }
+        .guide-card .gc-icon { font-size: 1.6rem; line-height: 1; }
+        .guide-card b { display: block; font-size: 1rem; margin-bottom: .2rem; padding-right: 3rem; }
+        .guide-card p { font-size: .84rem; color: var(--text-2); margin: 0 0 .4rem; }
+        .guide-card small { font-size: .74rem; color: var(--text-3); }
+        .guide-card.read { border-color: #2fae6c; }
+        .guide-card.read::after { content: "✓ 읽음"; position: absolute; top: .6rem; right: .7rem; font-size: .72rem; font-weight: 800; color: #2fae6c; }
+        .guide-progress { display: flex; align-items: center; gap: .8rem; margin-bottom: .4rem; font-size: .9rem; color: var(--text-2); }
+        .guide-progress .bar { flex: 1; height: 8px; border-radius: 99px; background: var(--bg-soft); overflow: hidden; border: 1px solid var(--line); }
+        .guide-progress .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #2fae6c); transition: width .3s; }
+        .guide-reader-top { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: 1rem; }
+        .guide-nav-btns { margin-left: auto; display: flex; gap: .4rem; }
+        .guide-toc { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.2rem; padding: .8rem; border-radius: 12px; background: var(--bg-soft); border: 1px solid var(--line); }
+        .guide-toc a { font-size: .8rem; padding: .3rem .65rem; border-radius: 999px; background: var(--bg-elev); border: 1px solid var(--line); color: var(--text-2); text-decoration: none; cursor: pointer; }
+        .guide-toc a:hover { border-color: var(--accent); color: var(--text); }
+        .md { line-height: 1.75; font-size: .98rem; max-width: 860px; }
+        .md h1 { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.2; margin: 0 0 .8rem; }
+        .md h2 { font-size: 1.35rem; margin: 2rem 0 .7rem; padding: .5rem .8rem; border-left: 5px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; scroll-margin-top: 90px; }
+        .md h3 { font-size: 1.1rem; margin: 1.4rem 0 .5rem; color: var(--text); scroll-margin-top: 90px; }
+        .md h4 { font-size: 1rem; margin: 1.1rem 0 .4rem; color: var(--accent); }
+        body.dark-mode .md h4 { color: #ff8a86; }
+        .md p { margin: .5rem 0; }
+        .md ul, .md ol { margin: .5rem 0 .8rem 1.3rem; }
+        .md li { margin: .2rem 0; }
+        .md pre { background: var(--bg-soft); border: 1px solid var(--line); border-left: 4px solid var(--line-strong); border-radius: 10px; padding: .9rem 1rem; overflow-x: auto; font-family: ui-monospace, Consolas, "Malgun Gothic", monospace; font-size: .86rem; line-height: 1.6; white-space: pre; margin: .7rem 0 1rem; }
+        .md code { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: .05rem .35rem; font-size: .88em; }
+        .md pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+        .md blockquote { margin: .8rem 0; padding: .6rem 1rem; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
+        .md hr { border: 0; border-top: 1px dashed var(--line-strong); margin: 1.6rem 0; }
+        .md table { width: 100%; border-collapse: collapse; margin: .8rem 0 1rem; font-size: .9rem; }
+        .md th, .md td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+        .md th { background: var(--bg-soft); font-weight: 800; }
+        .md .tbl-wrap { overflow-x: auto; }
+        .md .chk { list-style: none; margin-left: 0; }
+        .md .chk li::before { content: "☐ "; color: var(--text-3); }
+        .md .chk li.on::before { content: "☑ "; color: #2fae6c; }
         /* ===== 코치 컴포넌트 ===== */
         .coach-intro {
             display: flex; gap: 1.1rem; align-items: flex-start;
@@ -1006,6 +1046,7 @@
             <button data-index="7" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(7)">🧪 상황판단 훈련</button>
             <button data-index="8" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(8)">📊 나의 학습 분석</button>
             <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
+            <button data-index="10" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(10)">📖 심화 가이드</button>
         </div>
         <div class="toolbar-row">
             <div class="mode-switch" role="group" aria-label="학습 수준">
@@ -2030,6 +2071,26 @@
             </div>
             <div id="glossary-list" style="margin-top:1rem"></div>
         </section>
+
+        <!-- Section 11: Phase 3 Guides (markdown) -->
+        <section class="section">
+            <div class="section-title">
+                <span class="section-title-icon">📖</span>
+                심화 가이드
+            </div>
+            <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>여기는 "읽는 훈련"입니다. 한 번에 다 읽지 마시고, 지금 막히는 주제 하나만 골라 읽고 바로 게임에 적용해 보세요. 읽은 가이드는 자동으로 체크되고 XP가 쌓입니다.</p></div></div>
+            <div id="guide-index"></div>
+            <article id="guide-reader" hidden>
+                <div class="guide-reader-top">
+                    <button class="btn btn-outline" onclick="closeGuide()">← 목록으로</button>
+                    <span class="hero-count" id="guide-pos"></span>
+                    <div class="guide-nav-btns"><button class="btn btn-outline" id="guide-prev" onclick="stepGuide(-1)">이전</button><button class="btn btn-primary" id="guide-next" onclick="stepGuide(1)">다음 가이드 →</button></div>
+                </div>
+                <nav class="guide-toc" id="guide-toc" aria-label="가이드 목차"></nav>
+                <div class="md" id="guide-body"></div>
+                <div class="guide-reader-top" style="margin-top:1.5rem"><button class="btn btn-outline" onclick="closeGuide()">← 목록으로</button><button class="btn btn-primary" onclick="stepGuide(1)">다음 가이드 →</button></div>
+            </article>
+        </section>
     </div>
 
 
@@ -2053,7 +2114,7 @@
         <div class="footer-grid">
             <div><strong>배우기</strong><a onclick="switchSection(0)">게임 기본</a><a onclick="switchSection(1)">캐릭터 역할</a><a onclick="switchSection(2)">기초 전술</a><a onclick="switchSection(5)">고급 전략</a></div>
             <div><strong>훈련하기</strong><a onclick="switchSection(7)">상황판단 훈련</a><a onclick="switchSection(3)">전술 지도</a><a onclick="switchSection(6)">영웅 도감</a><a onclick="switchSection(8)">나의 학습 분석</a></div>
-            <div><strong>참고</strong><a onclick="switchSection(9)">용어 사전</a><a onclick="openSearch()">전체 검색 (/)</a><a href="https://overwatch.statbanana.com/images" target="_blank" rel="noopener">맵 이미지: StatBanana</a></div>
+            <div><strong>참고</strong><a onclick="switchSection(9)">용어 사전</a><a onclick="switchSection(10)">심화 가이드</a><a onclick="openSearch()">전체 검색 (/)</a><a href="https://overwatch.statbanana.com/images" target="_blank" rel="noopener">맵 이미지: StatBanana</a></div>
         </div>
         <p>© 2026 오버워치 뉴비 완벽 가이드 | 초보자를 위해 만들었습니다</p>
         <p style="margin-top: .4rem;">21개의 실전 퀴즈와 100여 개의 역할·영웅별 상황판단 훈련으로 게임 감각을 키워 보세요! · 모든 데이터는 이 기기에만 저장됩니다.</p>
@@ -2068,10 +2129,11 @@
     <script src="data/glossary.js"></script>
     <script src="data/quizzes.js"></script>
     <script src="data/counters.js"></script>
+    <script src="data/guides.js"></script>
     <script src="data/maps/registry.js"></script>
     <script src="data/maps/kings-row.js"></script>
     <script src="data/map-situations.js"></script>
     <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=7"></script>
 </body>
 </html>

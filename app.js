@@ -6,9 +6,9 @@
 
 // ---------- 상수 ----------
 const TOTAL_QUIZ = quizAnswers.length;
-const SECTION_COUNT = 10;
+const SECTION_COUNT = 11;
 const STORAGE_KEY = 'ow-guide-progress';
-const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary'];
+const SECTION_HASH = ['basics','roles','tactics','maps','tips','advanced','heroes','training','stats','glossary','guides'];
 const HASH_ALIAS = { tactical: 3 };
 const roleLabel = { tank:'돌격', dps:'공격', support:'지원' };
 const roleIcon = { tank:'i-tank', dps:'i-dps', support:'i-support' };
@@ -42,7 +42,7 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) state = Object.assign(state, JSON.parse(raw));
   } catch (e) { /* 저장된 데이터가 없거나 손상됨 */ }
-  ['answers', 'sit', 'deaths', 'daily', 'checklist', 'tmap'].forEach(k => { if (!state[k] || typeof state[k] !== 'object') state[k] = {}; });
+  ['answers', 'sit', 'deaths', 'daily', 'checklist', 'tmap', 'guides'].forEach(k => { if (!state[k] || typeof state[k] !== 'object') state[k] = {}; });
   if (typeof state.xp !== 'number') state.xp = 0;
 }
 function saveState() {
@@ -53,7 +53,7 @@ function touchStudy() { state.lastStudy = todayKey(); }
 function resetProgress() {
   if (!confirm('퀴즈 답안, 상황판단 기록, XP 등 학습 진행도를 모두 초기화하시겠습니까?')) return;
   const mode = state.mode;
-  state = { answers: {}, section: 0, sit: {}, xp: 0, deaths: {}, daily: {}, checklist: {}, lastStudy: null, mode, reco: null, tmap: {} };
+  state = { answers: {}, section: 0, sit: {}, xp: 0, deaths: {}, daily: {}, checklist: {}, lastStudy: null, mode, reco: null, tmap: {}, guides: {} };
   saveState();
   location.reload();
 }
@@ -107,6 +107,7 @@ function switchSection(index, opts) {
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   if (!(opts && opts.noHash)) history.replaceState(null, '', '#' + SECTION_HASH[index]);
   if (index === 8) renderStats();
+  if (index === 10) renderGuideIndex();
   if (index === 3 && typeof tmInit === 'function') tmInit();
 }
 function sectionFromHash() {
@@ -899,6 +900,97 @@ function openSearch() {
   const i = document.getElementById('global-search'); i.value = ''; i.focus();
   document.getElementById('search-results').innerHTML = '<p class="fig-muted">영웅 · 용어 · 맵 · 전략 · 상황판단 · 퀴즈를 한 번에 검색합니다. 예: "사이드", "스즈", "파라"</p>';
 }
+/* ===== 심화 가이드 (마크다운 리더) ===== */
+let currentGuide = null;
+function renderGuideIndex() {
+  const el = document.getElementById('guide-index'); if (!el || typeof GUIDES === 'undefined') return;
+  const read = GUIDES.filter(g => state.guides[g.id]).length;
+  const groups = ['기초', '전략', '성장'];
+  const groupDesc = { '기초': '먼저 읽으세요 — 영웅과 역할을 제대로 이해하는 단계', '전략': '골드 이상을 노린다면 — 조합·카운터·포지셔닝·랭크별 전략', '성장': '꾸준히 오르려면 — 훈련 계획·멘탈·프로 경기에서 배우기' };
+  el.innerHTML = `<div class="guide-progress"><span>읽은 가이드 <b>${read}</b> / ${GUIDES.length}</span><div class="bar"><i style="width:${Math.round(read / GUIDES.length * 100)}%"></i></div><span>총 ${GUIDES.reduce((a, g) => a + g.min, 0)}분 분량</span></div>` +
+    groups.map(gr => `<div class="guide-group">${gr} <span style="font-weight:600;letter-spacing:0;text-transform:none">· ${groupDesc[gr]}</span></div><div class="guide-grid">` +
+      GUIDES.filter(g => g.group === gr).map(g => `<button class="guide-card ${state.guides[g.id] ? 'read' : ''}" onclick="openGuide('${g.id}')"><span class="gc-icon">${g.icon}</span><span><b>${g.title}</b><p>${g.sub}</p><small>약 ${g.min}분 · ${g.file.split('/').pop()}</small></span></button>`).join('') + '</div>').join('');
+}
+function openGuide(id, heading) {
+  const g = (typeof GUIDES !== 'undefined' ? GUIDES : []).find(x => x.id === id); if (!g) return;
+  if (currentSection !== 10) switchSection(10);
+  currentGuide = id;
+  document.getElementById('guide-index').hidden = true;
+  const reader = document.getElementById('guide-reader'); reader.hidden = false;
+  const body = document.getElementById('guide-body'); body.innerHTML = renderMarkdown(g.md);
+  const i = GUIDES.indexOf(g);
+  document.getElementById('guide-pos').textContent = `${g.icon} ${i + 1} / ${GUIDES.length} · 약 ${g.min}분`;
+  document.getElementById('guide-prev').disabled = i === 0;
+  document.getElementById('guide-next').textContent = i === GUIDES.length - 1 ? '목록으로' : '다음 가이드 →';
+  const toc = document.getElementById('guide-toc');
+  const hs = [...body.querySelectorAll('h2')];
+  toc.innerHTML = hs.map(h => `<a onclick="document.getElementById('${h.id}').scrollIntoView({behavior:'smooth',block:'start'})">${h.textContent}</a>`).join('');
+  toc.hidden = hs.length === 0;
+  if (!state.guides[g.id]) { state.guides[g.id] = todayKey(); touchStudy(); saveState(); addXP(XP_RULES.guide || 10, `가이드 열람: ${g.title}`); }
+  history.replaceState(null, '', '#guides');
+  const target = heading && hs.find(h => h.textContent.trim() === heading);
+  setTimeout(() => target ? target.scrollIntoView({ behavior: 'smooth', block: 'start' }) : window.scrollTo(0, 0), 30);
+}
+function closeGuide() { currentGuide = null; document.getElementById('guide-reader').hidden = true; document.getElementById('guide-index').hidden = false; renderGuideIndex(); window.scrollTo(0, 0); }
+function stepGuide(d) {
+  const i = GUIDES.findIndex(g => g.id === currentGuide); const n = i + d;
+  if (n < 0) return; if (n >= GUIDES.length) { closeGuide(); return; }
+  openGuide(GUIDES[n].id);
+}
+// 아주 작은 마크다운 렌더러 (제목·목록·코드펜스·표·인용·굵게·체크박스) — 외부 라이브러리 없음
+function escHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function mdInline(t) {
+  return escHtml(t)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>')
+    .replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+function renderMarkdown(md) {
+  const lines = md.replace(/\r/g, '').split('\n');
+  const out = []; let i = 0, hn = 0;
+  const isBlockStart = l => /^(#{1,4}\s|```|\||>|\s*([-*+]|\d+[.)])\s|\s*-{3,}\s*$)/.test(l);
+  while (i < lines.length) {
+    const l = lines[i];
+    if (/^```/.test(l)) { // 코드 펜스 — 닫는 펜스까지 그대로
+      const buf = []; i++;
+      // 원문에는 펜스 안에 또 ``` 가 끼어 있는 곳이 있어, 닫는 펜스는 "다음 내용이 일반 마크다운(제목·굵게·목록·표·구분선·문장)"일 때만 인정
+      const closes = k => { let n = k + 1; while (n < lines.length && lines[n].trim() === '') n++; return n >= lines.length || /^(#{1,4}\s|\*\*|[-*+]\s|\d+[.)]\s|\||>|-{3,}\s*$|[가-힣A-Za-z"“(])/.test(lines[n]); };
+      while (i < lines.length && !(/^```\s*$/.test(lines[i]) && closes(i))) { if (!/^```\s*$/.test(lines[i])) buf.push(lines[i]); i++; }
+      i++; out.push('<pre><code>' + escHtml(buf.join('\n')) + '</code></pre>'); continue;
+    }
+    const h = l.match(/^(#{1,4})\s+(.+)/);
+    if (h) { const lv = h[1].length; hn++; out.push(`<h${lv} id="gh-${hn}">${mdInline(h[2].replace(/\s+#+$/, ''))}</h${lv}>`); i++; continue; }
+    if (/^\s*(-{3,}|\*{3,})\s*$/.test(l)) { out.push('<hr>'); i++; continue; }
+    if (/^\|/.test(l)) {
+      const rows = []; while (i < lines.length && /^\|/.test(lines[i])) { rows.push(lines[i]); i++; }
+      const cells = r => r.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+      const body = rows.filter(r => !/^\|\s*:?-{2,}/.test(r));
+      if (body.length) {
+        out.push('<div class="tbl-wrap"><table><thead><tr>' + cells(body[0]).map(c => '<th>' + mdInline(c) + '</th>').join('') + '</tr></thead><tbody>' +
+          body.slice(1).map(r => '<tr>' + cells(r).map(c => '<td>' + mdInline(c) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>');
+      }
+      continue;
+    }
+    if (/^>/.test(l)) { const buf = []; while (i < lines.length && /^>/.test(lines[i])) { buf.push(lines[i].replace(/^>\s?/, '')); i++; } out.push('<blockquote>' + mdInline(buf.join(' ')) + '</blockquote>'); continue; }
+    const li = l.match(/^(\s*)([-*+]|\d+[.)])\s+(.*)/);
+    if (li) {
+      const ordered = /\d/.test(li[2]); const items = []; let chk = false;
+      while (i < lines.length) {
+        const m = lines[i].match(/^(\s*)([-*+]|\d+[.)])\s+(.*)/);
+        if (m) { const t = m[3]; const c = t.match(/^\[( |x|X)\]\s*(.*)/); if (c) { chk = true; items.push(`<li class="${c[1] !== ' ' ? 'on' : ''}">${mdInline(c[2])}</li>`); } else items.push('<li>' + mdInline(t) + '</li>'); i++; }
+        else if (/^\s{2,}\S/.test(lines[i]) && items.length) { items[items.length - 1] = items[items.length - 1].replace(/<\/li>$/, '<br>' + mdInline(lines[i].trim()) + '</li>'); i++; }
+        else break;
+      }
+      out.push(`<${ordered ? 'ol' : 'ul'}${chk ? ' class="chk"' : ''}>` + items.join('') + `</${ordered ? 'ol' : 'ul'}>`); continue;
+    }
+    if (l.trim() === '') { i++; continue; }
+    const buf = []; while (i < lines.length && lines[i].trim() !== '' && !isBlockStart(lines[i])) { buf.push(lines[i]); i++; }
+    if (buf.length) out.push('<p>' + mdInline(buf.join(' ')) + '</p>'); else i++;
+  }
+  return out.join('\n');
+}
+
 function buildSearchIndex() {
   const idx = [];
   heroes.forEach((h, i) => { const d = HERO_DETAILS[h.name] || {}; idx.push({ cat: '영웅', title: h.name, sub: `${roleLabel[h.role]} · ${h.tag}`, text: heroSearchText(h), go: () => { switchSection(6); openHero(i); } }); });
@@ -917,6 +1009,14 @@ function buildSearchIndex() {
       const q = qc.querySelector('.quiz-question'); if (!q) return;
       idx.push({ cat: '퀴즈', title: q.textContent.replace('❓', '').trim(), sub: progressDots[si].textContent.trim(), text: normalize(qc.textContent), go: () => { switchSection(si); setTimeout(() => qc.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60); } });
     });
+  });
+  // 심화 가이드: 가이드 전체 + h2 소제목 단위
+  (typeof GUIDES !== 'undefined' ? GUIDES : []).forEach(g => {
+    idx.push({ cat: '가이드', title: g.title, sub: g.sub, text: normalize(g.title + ' ' + g.sub), go: () => openGuide(g.id) });
+    let cur = null, buf = [];
+    const flush = () => { if (cur) { const c = cur; idx.push({ cat: '가이드', title: c, sub: g.icon + ' ' + g.title, text: normalize(c + ' ' + buf.join(' ')), go: () => openGuide(g.id, c) }); } };
+    g.md.split('\n').forEach(l => { const m = l.match(/^##\s+(.+)/); if (m) { flush(); cur = m[1].trim(); buf = []; } else if (cur) buf.push(l); });
+    flush();
   });
   ['tank', 'dps', 'support'].forEach(r => idx.push({ cat: '역할', title: roleLabel[r], sub: '캐릭터 역할 파트', text: normalize(roleLabel[r] + ' 역할 ' + (r === 'tank' ? '탱커 돌격' : r === 'dps' ? '딜러 공격' : '힐러 지원')), go: () => switchSection(1) }));
   return idx;
@@ -981,6 +1081,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object.entries(state.answers).forEach(([i, a]) => { if (quizAnswers[i]) checkAnswer(Number(i), a, true); });
   const fromHash = sectionFromHash();
   switchSection(fromHash !== null ? fromHash : Math.min(state.section || 0, SECTION_COUNT - 1), { noHash: fromHash === null });
+  try { const gq = new URLSearchParams(location.search).get('guide'); if (gq) openGuide(gq); } catch (e) {}
   // 키보드: 탭 좌우 이동, ESC로 모달 닫기, / 로 검색
   document.querySelector('.nav-tabs').addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); switchSection(currentSection + (e.key === 'ArrowRight' ? 1 : -1)); progressDots[currentSection].focus(); }
