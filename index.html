@@ -1230,6 +1230,22 @@
         .mk-key { font-weight: 700; color: var(--text); }
         .mistake-body .btn { justify-self: start; }
         @media (max-width: 600px) { .mistake-head { grid-template-columns: 32px 1fr; } .mk-verdict { grid-column: 2; justify-self: start; } }
+        /* ----- 밀도 조정: 세로 공백 축소, 퀴즈 컴팩트, 홈 중복 제목 제거 ----- */
+        .container { padding-top: 1.1rem; }
+        .nav-groups { margin-bottom: 1.1rem; }
+        .home-sec { margin: 1.9rem 0; }
+        .section-title { margin-bottom: 1.1rem; }
+        .section.home .section-title { display: none; }
+        .section.home .hero-banner { margin-top: .2rem; }
+        .quiz-container { padding: 1.1rem 1.2rem; }
+        .quiz-options { display: grid; gap: .45rem; }
+        .quiz-option { padding: .65rem .9rem; border-radius: 10px; }
+        .quiz-question { margin-bottom: .7rem; }
+        .quiz-counter { margin-top: .5rem; }
+        .card { padding: 1.25rem 1.35rem; }
+        .card + .card, .quiz-container + .quiz-container, .card + .quiz-container, .quiz-container + .card { margin-top: 1rem; }
+        .lesson-head { padding: .9rem 0 1.1rem; margin-bottom: 1.2rem; }
+        .hero-banner { padding: 2rem 2rem 1.8rem; }
     </style>
 </head>
 <body>
@@ -1278,10 +1294,9 @@
                 <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
             </div></div>
         </nav>
-        </div>
 
         <!-- Section 1: Game Basics -->
-        <section class="section active">
+        <section class="section home active">
             <div class="section-title">
                 <span class="section-title-icon">🎮</span>
                 게임 기본 알아보기
