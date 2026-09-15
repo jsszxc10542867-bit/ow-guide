@@ -1,4 +1,4 @@
-# 오버워치 뉴비 완벽 가이드 — Coach Playbook
+# 오버워치 교과서 — Coach Playbook
 
 정적 웹 + JavaScript + localStorage로만 동작하는 오버워치 2 입문 학습 사이트입니다. 서버·로그인·AI API 호출이 없습니다.
 

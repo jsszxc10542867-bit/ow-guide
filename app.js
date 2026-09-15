@@ -1,5 +1,5 @@
 /* =====================================================================
-   오버워치 뉴비 완벽 가이드 — app.js
+   오버워치 교과서 — app.js
    데이터: data/*.js (heroes, heroes-detail, situations, training, maps, glossary, quizzes, counters)
    저장: localStorage (서버·AI 호출 없음)
    ===================================================================== */
