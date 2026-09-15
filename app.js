@@ -142,8 +142,6 @@ function openSheet(kind) {
     document.getElementById('sheet-title').textContent = '☰ 더보기';
     body.innerHTML = `<div class="sheet-section">훈련하기</div>` + NAV_ITEMS.filter(n => n.g === 'train').map(n => item(n)).join('') +
       `<div class="sheet-section">내 기록</div>` + NAV_ITEMS.filter(n => n.g === 'record').map(n => item(n)).join('') +
-      `<div class="sheet-section">학습 수준</div><div class="mode-switch" style="padding:.2rem 0">` +
-      ['newbie', 'normal', 'advanced'].map(m => `<button class="mode-btn ${state.mode === m ? 'active' : ''}" aria-pressed="${state.mode === m}" onclick="setMode('${m}'); openSheet('more')">${{ newbie: '🟢 뉴비', normal: '🔵 일반', advanced: '🔴 심화' }[m]}</button>`).join('') + `</div>` +
       `<button class="sheet-item" onclick="closeSheet(); openSearch()"><span class="si-ic">🔍</span><span><b>전체 검색</b><small>영웅 · 용어 · 상황 · 가이드</small></span></button>`;
   }
   sheet.hidden = false; bd.hidden = false; document.body.style.overflow = 'hidden';
@@ -173,19 +171,7 @@ function updateProgress() {
 }
 
 // ---------- 학습 모드 (뉴비 / 일반 / 심화) ----------
-function setMode(mode, silent) {
-  state.mode = mode;
-  document.body.classList.remove('mode-newbie', 'mode-advanced');
-  if (mode === 'newbie') document.body.classList.add('mode-newbie');
-  if (mode === 'advanced') document.body.classList.add('mode-advanced');
-  document.querySelectorAll('.mode-btn').forEach(b => {
-    const on = b.dataset.mode === mode;
-    b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  saveState();
-  if (typeof tmRenderDetail === 'function' && TM && TM.inited) tmRenderDetail();
-  if (!silent) toast(mode === 'newbie' ? '🟢 뉴비 모드: 핵심만 간단히 보여 드립니다' : mode === 'advanced' ? '🔴 심화 모드: 자원 교환·타이밍 노트가 열립니다' : '🔵 일반 모드');
-}
+function setMode(mode, silent) { state.mode = mode; saveState(); } // 학습 수준 스위치는 제거됨 — 심화 카드는 항상 표시(🔬 배지)
 
 // ---------- 퀴즈 ----------
 function initQuizCounters() {

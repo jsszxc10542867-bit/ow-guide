@@ -610,12 +610,11 @@
         .remember strong { display:block; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:.15rem; }
         body.dark-mode .remember strong { color:#ff8a86; }
         .remember p { color:var(--text); font-weight:600; font-size:.98rem; }
-        body.mode-newbie .adv-only { display:none !important; }
-        .deep-only { display:none; }
-        body.mode-advanced .deep-only { display:block; }
+        .adv-only, .deep-only { position:relative; }
+        .adv-only > h3::before, .deep-only > h3::before { content:"🔬 심화"; display:inline-block; font-size:.74rem; font-weight:800; letter-spacing:.06em; padding:.15rem .55rem; border-radius:999px; background:#fde8e8; color:#a32d2d; margin-right:.5rem; vertical-align:middle; }
+        body.dark-mode .adv-only > h3::before, body.dark-mode .deep-only > h3::before { background:#4a1b1b; color:#ffb3b0; }
         .mode-note { display:none; font-size:.85rem; color:var(--text-2); background:var(--bg-soft); border:1px dashed var(--line-strong); border-radius:var(--radius-sm); padding:.7rem 1rem; margin-bottom:1rem; }
-        body.mode-newbie .mode-note.newbie, body.mode-advanced .mode-note.advanced { display:block; }
-        .diff-badge { display:inline-block; font-size:.72rem; font-weight:800; padding:.18rem .55rem; border-radius:999px; background:var(--bg-soft); color:var(--text-2); }
+                .diff-badge { display:inline-block; font-size:.72rem; font-weight:800; padding:.18rem .55rem; border-radius:999px; background:var(--bg-soft); color:var(--text-2); }
         .diff-badge.d-beginner { background:rgba(34,160,107,.14); color:var(--success); }
         .diff-badge.d-intermediate { background:rgba(242,178,51,.18); color:#b07a00; }
         body.dark-mode .diff-badge.d-intermediate { color:#f5c451; }
@@ -1118,13 +1117,6 @@
                 <button data-index="9" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" onclick="switchSection(9)">📚 용어 사전</button>
             </div></div>
         </nav>
-        <div class="toolbar-row">
-            <div class="mode-switch" role="group" aria-label="학습 수준">
-                <span>학습 수준</span>
-                <button class="mode-btn" data-mode="newbie" aria-pressed="false" onclick="setMode('newbie')">🟢 뉴비</button>
-                <button class="mode-btn active" data-mode="normal" aria-pressed="true" onclick="setMode('normal')">🔵 일반</button>
-                <button class="mode-btn" data-mode="advanced" aria-pressed="false" onclick="setMode('advanced')">🔴 심화</button>
-            </div>
         </div>
 
         <!-- Section 1: Game Basics -->
@@ -1157,8 +1149,6 @@
                 <button onclick="switchSection(0)">① 게임 이해</button><button onclick="switchSection(1)">② 역할</button><button onclick="switchSection(3)">③ 포지션</button><button onclick="switchSection(2)">④ 한타</button><button onclick="switchSection(4)">⑤ 안 죽기</button><button onclick="switchSection(5)">⑥ 궁·쿨</button><button onclick="switchSection(6)">⑦ 영웅 선택</button><button onclick="switchSection(7)">⑧ 상황판단</button><button onclick="switchSection(8)">⑨ 약점 확인</button>
             </div>
             <div class="daily-box" id="daily-box"></div>
-            <div class="mode-note newbie">🟢 뉴비 모드입니다. 어려운 카드(쿨 트래킹·궁 콤보 등)는 숨기고 핵심만 보여 드립니다.</div>
-            <div class="mode-note advanced">🔴 심화 모드입니다. 자원 교환·타이밍·승리 조건 같은 심화 노트가 각 파트 끝에 열립니다.</div>
             <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>오버워치는 "5명이 모인 채로 한타에 들어가느냐"의 게임입니다. 먼저 뛰어나가 죽는 순간 4:5가 확정됩니다.</p></div></div>
 
             <div class="coach-intro">
@@ -1491,7 +1481,6 @@
                 맵과 포지셔닝
             </div>
             <div class="remember"><span class="r-icon">💡</span><div><strong>이것만 기억하세요</strong><p>"좋은 위치"가 아니라 "왜 그 위치에 있는가"가 중요합니다. 실제 맵 위의 마커를 누르면 어디 · 왜 · 언제 · 무엇을 노림 · 언제 빠짐을 알려 드립니다.</p></div></div>
-            <div class="mode-note advanced">🔴 심화 모드: 포지션 설명이 오프앵글·자원 교환 관점의 문장으로 바뀝니다.</div>
             <!-- ===== MapViewer: 실제 오버헤드 맵 + SVG 전술 오버레이 ===== -->
             <div class="card tm-controls" id="tm-map-viewer">
                 <div class="tm-row"><span class="tm-row-label">맵 선택</span>
@@ -2203,7 +2192,7 @@
     <script src="data/maps/registry.js"></script>
     <script src="data/maps/kings-row.js?v=2"></script>
     <script src="data/map-situations.js"></script>
-    <script src="tmap.js?v=2"></script>
-    <script src="app.js?v=13"></script>
+    <script src="tmap.js?v=3"></script>
+    <script src="app.js?v=14"></script>
 </body>
 </html>

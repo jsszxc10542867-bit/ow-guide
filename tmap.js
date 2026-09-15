@@ -234,7 +234,6 @@ function tmRenderDetail() {
     return;
   }
   const { kind, id } = TM.selected; const o = tmFind(kind, id); if (!o) return;
-  const adv = document.body.classList.contains('mode-advanced');
   if (kind === 'position') {
     const st = tmStars(o.score);
     const sits = o.situations.map(s => MAP_SITUATIONS.find(x => x.key === s)).filter(Boolean).map(s => `<span class="diff-badge">${s.icon} ${s.label}</span>`).join(' ');
@@ -247,7 +246,7 @@ function tmRenderDetail() {
       </div>
       <ul class="kv small tm-formula">
         <li><span>📍 어디?</span><strong>${o.where}</strong></li>
-        <li><span>❓ 왜?</span><strong>${adv && o.whyAdv ? o.whyAdv : o.why}</strong></li>
+        <li><span>❓ 왜?</span><strong>${o.why}</strong>${o.whyAdv ? `<br><small>🔬 심화: ${o.whyAdv}</small>` : ''}</li>
         <li><span>⏱️ 언제 사용?</span><strong>${o.when}</strong></li>
         <li><span>🎯 무엇을 노림?</span><strong>${o.target}</strong></li>
         <li><span>🏃 언제 빠짐?</span><strong>${o.leave}</strong></li>
