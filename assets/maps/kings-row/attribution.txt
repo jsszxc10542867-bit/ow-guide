@@ -1,6 +1,6 @@
 King's Row overhead map
 Source: StatBanana — Overwatch Overhead Maps (https://overwatch.statbanana.com/images)
-File: kings-row-overhead.png (1000x989, low-resolution version, corner logo retained)
+File: kings-row-overhead.webp (converted from the 1000x989 PNG for web delivery, corner logo retained)
 Usage terms (from the source page): free (non-commercial) works only; do not redistribute unaltered; keep the corner logo or credit "Overhead map courtesy of https://statbanana.com".
 This guide is free and non-commercial. Attribution is displayed under the map. Re-check terms before any commercial use.
 Tactical annotations (positions, routes, zones) are created for this guide and are not part of the source image.

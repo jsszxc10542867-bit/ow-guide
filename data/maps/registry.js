@@ -7,7 +7,7 @@
 // 좌표계: 모든 전술 데이터는 0~1 정규화 좌표 (x = px / width, y = px / height)
 const TACTICAL_MAPS = {};
 const MAP_REGISTRY = [
-  { id:'kings-row',      name:'왕의 길',          en:"King's Row",           mode:'hybrid',  image:'assets/maps/kings-row/kings-row-overhead.png', width:1000, height:989,
+  { id:'kings-row',      name:'왕의 길',          en:"King's Row",           mode:'hybrid',  image:'assets/maps/kings-row/kings-row-overhead.webp', width:1000, height:989,
     attribution:'Overhead map courtesy of https://statbanana.com/', source:'https://overwatch.statbanana.com/images' },
   { id:'eichenwalde',    name:'아이헨발데',        en:'Eichenwalde',          mode:'hybrid',  image:null },
   { id:'dorado',         name:'도라도',            en:'Dorado',               mode:'escort',  image:null },
