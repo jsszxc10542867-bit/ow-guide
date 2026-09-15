@@ -11,7 +11,7 @@ const LESSON_META = {
   2: { no: '03', en: 'TACTICAL FUNDAMENTALS', min: 12, diff: 2, headline: '한타는 "누가 먼저 죽느냐"가 아니라 "누가 먼저 준비됐느냐"입니다.', objectives: ['한타의 시작·중간·끝을 구분한다', '궁 어드밴티지를 계산한다', '리그룹 타이밍을 판단한다'] },
   3: { no: '04', en: 'POSITIONING', min: 10, diff: 2, headline: '좋은 포지션은 "안 죽는 자리"가 아니라 "선택지가 많은 자리"입니다.', objectives: ['좋은 포지션의 조건을 이해한다', '맵의 고지·코너·시야선을 읽는다', '공격과 후퇴의 기준을 판단한다'] },
   4: { no: '05', en: 'SURVIVAL & HABITS', min: 8, diff: 2, headline: '죽지 않는 것이 가장 큰 딜입니다.', objectives: ['죽는 원인 5가지를 안다', '콜 3가지를 습관화한다', '판당 데스 목표를 세운다'] },
-  5: { no: '06', en: 'ADVANCED STRATEGY', min: 14, diff: 3, headline: '상위 티어는 상대의 자원(궁·쿨·체력)을 보고 싸웁니다.', objectives: ['조합(다이브·브롤·포크)의 승리 조건을 안다', '쿨·궁 트래킹을 시작한다', '카운터픽 판단 기준을 세운다'] }
+  5: { no: '06', en: 'ADVANCED STRATEGY', min: 14, diff: 3, headline: '상위 티어는 상대의 자원(궁·쿨·체력)을 보고 싸웁니다.', objectives: ['조합(다이브·러시·포킹)의 승리 조건을 안다', '쿨·궁 트래킹을 시작한다', '카운터픽 판단 기준을 세운다'] }
 };
 
 const LESSON_ORDER = [11, 1, 2, 3, 4, 5];
