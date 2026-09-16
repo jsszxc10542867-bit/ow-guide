@@ -74,7 +74,7 @@ const SIDE_JUDGE_FIELDS = [
   { key:'allySupportSafe', label:'아군 지원가가 안전한 위치', yes:'안전', no:'위험' },
   { key:'enemyTankOnMain', label:'적 탱커가 우리 본대를 보고 있음', yes:'본대를 봄', no:'다른 곳' },
   { key:'enemyDpsNotWatching', label:'적 딜러가 사이드를 보고 있지 않음', yes:'안 봄', no:'이미 봄' },
-  { key:'enemyCdDown', label:'적 주요 쿨다운(스즈·불사·슬립) 빠짐', yes:'빠짐', no:'살아 있음' },
+  { key:'enemyCdDown', label:'적 주요 쿨다운(수주·불사·슬립) 빠짐', yes:'빠짐', no:'살아 있음' },
   { key:'escapeRoute', label:'내 이탈기·탈출 경로', yes:'있음', no:'없음' },
   { key:'numbers', label:'인원', options:[['adv','우리 우위'],['even','같음'],['dis','우리 열세']] }
 ];

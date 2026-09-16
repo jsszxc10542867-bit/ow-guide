@@ -149,7 +149,7 @@ const NAV_ITEMS = [
   { i: 6, ic: '🦸', t: '영웅별 핵심 공략', d: '53명 상세 · 운영 핵심 · 카운터', g: 'train' },
   { i: 10, ic: '📖', t: '심화 가이드', d: '멘탈 · 랭크 · 훈련 로드맵', g: 'train' },
   { i: 8, ic: '📊', t: '나의 학습 분석', d: '약점 · 점수 · 초기화', g: 'record' },
-  { i: 9, ic: '📚', t: '용어 사전', d: '스태거 · 각 · 스즈…', g: 'record' }
+  { i: 9, ic: '📚', t: '용어 사전', d: '스태거 · 각 · 수주…', g: 'record' }
 ];
 function bnKeyOf(i) { return i === 0 ? 'home' : i === 7 ? 'train' : i === 6 ? 'heroes' : (i === 11 || i <= 5) ? 'learn' : 'more'; }
 function updateBottomNav() {
@@ -981,7 +981,7 @@ function openSearch() {
   lastFocus = document.activeElement;
   m.hidden = false; document.body.classList.add('modal-open');
   const i = document.getElementById('global-search'); i.value = ''; i.focus();
-  document.getElementById('search-results').innerHTML = '<p class="fig-muted">영웅 · 용어 · 맵 · 전략 · 상황판단 · 퀴즈를 한 번에 검색합니다. 예: "사이드", "스즈", "파라"</p>';
+  document.getElementById('search-results').innerHTML = '<p class="fig-muted">영웅 · 용어 · 맵 · 전략 · 상황판단 · 퀴즈를 한 번에 검색합니다. 예: "사이드", "수주", "파라"</p>';
 }
 /* ===== 심화 가이드 (마크다운 리더) ===== */
 let currentGuide = null;
